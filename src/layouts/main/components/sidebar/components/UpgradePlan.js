@@ -8,6 +8,7 @@
 import clsx from 'clsx'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import { Typography, Button, colors } from '@material-ui/core'
 
@@ -45,8 +46,8 @@ const UpgradePlan = props => {
 			className={clsx(classes.root, className)}>
 			<div className={classes.media}>
 				<img
-					alt='Upgrade to PRO'
-					src='/images/undraw_resume_folder_2_arse.svg' />
+					alt='Upgrade from FREE'
+					src='/images/upgrade.svg' />
 			</div>
 
 			<div className={classes.content}>
@@ -54,22 +55,22 @@ const UpgradePlan = props => {
 					variant='h6'
 					gutterBottom
 					align='center'>
-					Upgrade to PRO
+					Upgrade Subscription
         		</Typography>
 
 				<Typography
 					align='center'
 					variant='body2'>
-					Upgrade to Devias Kit PRO and get even more components
+					Upgrade your Subscription to recieve all signals
         		</Typography>
 			</div>
 
 			<div className={classes.actions}>
 				<Button
-					component='a'
 					color='primary'
-					variant='contained'
-					href='https://devias.io/products/devias-kit-pro'>
+					component={Link}
+					to='/subscription'
+					variant='contained'>
 					Upgrade
         		</Button>
 			</div>

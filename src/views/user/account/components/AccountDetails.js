@@ -30,12 +30,12 @@ const AccountDetails = props => {
 	const classes = useStyles()
 
 	const [values, setValues] = useState({
-		phone: '',
-		country: 'USA',
-		lastName: 'Zhi',
-		state: 'Alabama',
-		firstName: 'Shen',
-		email: 'shen.zhi@devias.io'
+		country: 'Sudan',
+		state: 'Khartoum',
+		lastName: 'Mohamed',
+		firstName: 'Abdeen',
+		phone: '+249125570888',
+		email: 'abdeen.mohamed@outlook.com'
 	})
 
 	const handleChange = event => {

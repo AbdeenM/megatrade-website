@@ -45,6 +45,7 @@
 		"react-perfect-scrollbar": "^1.5.3",
 		"react-router-dom": "^5.1.2",
 		"react-scripts": "3.2.0",
+		"uuid": "^3.3.3",
 		"validate.js": "^0.13.1"
 	},
 	"scripts": {

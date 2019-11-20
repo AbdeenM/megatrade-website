@@ -8,16 +8,12 @@
 import clsx from 'clsx'
 import React from 'react'
 import PropTypes from 'prop-types'
-import ImageIcon from '@material-ui/icons/Image'
 import { makeStyles } from '@material-ui/styles'
-import PeopleIcon from '@material-ui/icons/People'
 import { Divider, Drawer } from '@material-ui/core'
-import LockOpenIcon from '@material-ui/icons/LockOpen'
 import SettingsIcon from '@material-ui/icons/Settings'
 import DashboardIcon from '@material-ui/icons/Dashboard'
-import AccountBoxIcon from '@material-ui/icons/AccountBox'
-import TextFieldsIcon from '@material-ui/icons/TextFields'
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
+import SubscriptionIcon from '@material-ui/icons/Payment'
+import AccountIcon from '@material-ui/icons/AccountCircle'
 
 import Profile from './components/Profile'
 import SidebarNav from './components/SidebarNav'
@@ -32,11 +28,11 @@ const useStyles = makeStyles(theme => ({
 		}
 	},
 	root: {
-		backgroundColor: theme.palette.white,
+		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
-		height: '100%',
-		padding: theme.spacing(2)
+		padding: theme.spacing(2),
+		backgroundColor: theme.palette.white
 	},
 	divider: {
 		margin: theme.spacing(2, 0)
@@ -58,60 +54,40 @@ const Sidebar = props => {
 			icon: <DashboardIcon />
 		},
 		{
-			title: 'Users',
-			href: '/users',
-			icon: <PeopleIcon />
-		},
-		{
-			title: 'Products',
-			href: '/products',
-			icon: <ShoppingBasketIcon />
-		},
-		{
-			title: 'Authentication',
-			href: '/sign-in',
-			icon: <LockOpenIcon />
-		},
-		{
-			title: 'Typography',
-			href: '/typography',
-			icon: <TextFieldsIcon />
-		},
-		{
-			title: 'Icons',
-			href: '/icons',
-			icon: <ImageIcon />
-		},
-		{
 			title: 'Account',
 			href: '/account',
-			icon: <AccountBoxIcon />
+			icon: <AccountIcon />
 		},
 		{
 			title: 'Settings',
 			href: '/settings',
 			icon: <SettingsIcon />
+		},
+		{
+			title: 'Subscription',
+			href: '/subscription',
+			icon: <SubscriptionIcon />
 		}
 	]
 
 	return (
 		<Drawer
-			anchor='left'
-			classes={{ paper: classes.drawer }}
-			onClose={onClose}
 			open={open}
+			anchor='left'
+			onClose={onClose}
 			variant={variant}
-		>
+			classes={{ paper: classes.drawer }}>
 			<div
 				{...rest}
-				className={clsx(classes.root, className)}
-			>
+				className={clsx(classes.root, className)}>
 				<Profile />
+
 				<Divider className={classes.divider} />
+
 				<SidebarNav
-					className={classes.nav}
 					pages={pages}
-				/>
+					className={classes.nav} />
+
 				<UpgradePlan />
 			</div>
 		</Drawer>
@@ -119,8 +95,8 @@ const Sidebar = props => {
 }
 
 Sidebar.propTypes = {
-	className: PropTypes.string,
 	onClose: PropTypes.func,
+	className: PropTypes.string,
 	open: PropTypes.bool.isRequired,
 	variant: PropTypes.string.isRequired
 }

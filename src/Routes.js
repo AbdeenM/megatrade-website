@@ -19,6 +19,7 @@ import NotFound from './views/web/notFound/NotFound'
 import AccountUser from './views/user/account/Account'
 import SettingsUser from './views/user/settings/Settings'
 import DashboardUser from './views/user/dashboard/Dashboard'
+import SubscriptionUser from './views/user/subscription/Subscription'
 
 const Routes = () => {
 	return (
@@ -39,6 +40,12 @@ const Routes = () => {
 				path='/account'
 				layout={MainLayout}
 				component={AccountUser} />
+
+			<RouteWithLayout
+				exact
+				layout={MainLayout}
+				path='/subscription'
+				component={SubscriptionUser} />
 
 			<RouteWithLayout
 				exact

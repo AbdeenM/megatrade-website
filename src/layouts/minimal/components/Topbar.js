@@ -33,7 +33,7 @@ const Topbar = props => {
 				<RouterLink to='/'>
 					<img
 						alt='Logo'
-						src='/images/logos/logo--white.svg' />
+						src='/images/logo_white.png' />
 				</RouterLink>
 			</Toolbar>
 		</AppBar>

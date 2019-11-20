@@ -47,11 +47,11 @@ const AccountProfile = props => {
 	const classes = useStyles()
 
 	const user = {
-		country: 'USA',
-		name: 'Shen Zhi',
+		city: 'Khartoum',
+		country: 'Sudan',
 		timezone: 'GTM-7',
-		city: 'Los Angeles',
-		avatar: '/images/avatars/avatar_11.png'
+		name: 'Abdeen Mohamed',
+		avatar: '/images/avatar.png'
 	}
 
 	return (

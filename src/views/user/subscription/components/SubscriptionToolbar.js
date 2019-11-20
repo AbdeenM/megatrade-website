@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import { Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
-import { SearchInput } from 'components'
+import SearchInput from '../../../../components/SearchInput'
 
 const useStyles = makeStyles(theme => ({
 	root: {},
