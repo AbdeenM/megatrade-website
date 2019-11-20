@@ -5,12 +5,10 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-
-import App from './App'
-import * as serviceWorker from './serviceWorker'
-
-ReactDOM.render(<App />, document.getElementById('root'))
-
-serviceWorker.unregister()
+export default {
+	contained: {
+		backgroundColor: '#FFFFFF',
+		boxShadow:
+			'0 1px 1px 0 rgba(0,0,0,0.14), 0 2px 1px -1px rgba(0,0,0,0.12), 0 1px 3px 0 rgba(0,0,0,0.20)'
+	}
+}

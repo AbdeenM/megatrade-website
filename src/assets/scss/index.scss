@@ -5,12 +5,27 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
+ * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-import App from './App'
-import * as serviceWorker from './serviceWorker'
+html {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-ReactDOM.render(<App />, document.getElementById('root'))
+body {
+  background-color: #f4f6f8;
+  height: 100%;
+}
 
-serviceWorker.unregister()
+a {
+  text-decoration: none;
+}
+
+#root {
+  height: 100%;
+}

@@ -5,12 +5,8 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-
-import App from './App'
-import * as serviceWorker from './serviceWorker'
-
-ReactDOM.render(<App />, document.getElementById('root'))
-
-serviceWorker.unregister()
+export default {
+    gutterBottom: {
+        marginBottom: 8
+    }
+}

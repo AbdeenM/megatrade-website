@@ -1,11 +1,48 @@
 {
 	"name": "megatrade-website",
 	"version": "0.1.0",
-	"private": true,
+	"description": "MegaTrade Website - World Class Trading Signals",
+	"keywords": [
+		"react",
+		"finance",
+		"reactjs",
+		"trading",
+		"dashboard",
+		"Megatrade",
+		"Mega Trade",
+		"trading signals",
+		"dashboard-react"
+	],
+	"homepage": "https://megatrade.world",
+	"bugs": {
+		"email": "abdeen.mohamed@outlook.com",
+		"url": "https://github.com/AbdeenM/megatrade-website/issues"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Abdeen Mohamed",
+		"url": "https://github.com/AbdeenM",
+		"email": "abdeen.mohamed@outlook.com"
+	},
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AbdeenM/megatrade-website"
+	},
 	"dependencies": {
+		"@material-ui/core": "^4.6.1",
+		"@material-ui/icons": "^4.5.1",
+		"@material-ui/styles": "^4.6.0",
+		"clsx": "^1.0.4",
+		"history": "^4.10.1",
+		"node-sass": "^4.13.0",
+		"prop-types": "^15.7.2",
 		"react": "^16.12.0",
+		"react-chartjs-2": "^2.8.0",
 		"react-dom": "^16.12.0",
-		"react-scripts": "3.2.0"
+		"react-router-dom": "^5.1.2",
+		"react-scripts": "3.2.0",
+		"validate.js": "^0.13.1"
 	},
 	"scripts": {
 		"start": "react-scripts start",
@@ -13,6 +50,7 @@
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
 	},
+	"private": true,
 	"eslintConfig": {
 		"extends": "react-app"
 	},

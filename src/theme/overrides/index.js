@@ -5,12 +5,18 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
+import MuiPaper from './MuiPaper'
+import MuiButton from './MuiButton'
+import MuiTableCell from './MuiTableCell'
+import MuiTableHead from './MuiTableHead'
+import MuiIconButton from './MuiIconButton'
+import MuiTypography from './MuiTypography'
 
-import App from './App'
-import * as serviceWorker from './serviceWorker'
-
-ReactDOM.render(<App />, document.getElementById('root'))
-
-serviceWorker.unregister()
+export default {
+    MuiPaper,
+    MuiButton,
+    MuiTableCell,
+    MuiTableHead,
+    MuiIconButton,
+    MuiTypography
+}

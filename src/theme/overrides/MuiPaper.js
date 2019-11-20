@@ -5,12 +5,8 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-
-import App from './App'
-import * as serviceWorker from './serviceWorker'
-
-ReactDOM.render(<App />, document.getElementById('root'))
-
-serviceWorker.unregister()
+export default {
+	elevation1: {
+		boxShadow: '0 0 0 1px rgba(63,63,68,0.05), 0 1px 3px 0 rgba(63,63,68,0.15)'
+	}
+}
