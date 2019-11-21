@@ -46,8 +46,8 @@ const UpgradePlan = props => {
 			className={clsx(classes.root, className)}>
 			<div className={classes.media}>
 				<img
-					alt='Upgrade from FREE'
-					src='/images/upgrade.svg' />
+					alt='upgrade'
+					src='/images/sidebar_upgrade.svg' />
 			</div>
 
 			<div className={classes.content}>

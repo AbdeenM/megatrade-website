@@ -8,12 +8,14 @@
 import React from 'react'
 import { Switch, Redirect } from 'react-router-dom'
 
+import WebLayout from './layouts/web/Web'
 import MainLayout from './layouts/main/Main'
 import MinimalLayout from './layouts/minimal/Minimal'
 import RouteWithLayout from './components/RouteWithLayout'
 
 import SignUp from './views/web/signUp/SignUp'
 import SignIn from './views/web/signIn/SignIn'
+import Landing from './views/web/landing/Landing'
 import NotFound from './views/web/notFound/NotFound'
 
 import AccountUser from './views/user/account/Account'
@@ -24,10 +26,11 @@ import SubscriptionUser from './views/user/subscription/Subscription'
 const Routes = () => {
 	return (
 		<Switch>
-			<Redirect
+			<RouteWithLayout
 				exact
-				from='/'
-				to='/dashboard' />
+				path='/'
+				layout={WebLayout}
+				component={Landing} />
 
 			<RouteWithLayout
 				exact

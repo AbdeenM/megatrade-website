@@ -58,7 +58,7 @@ const SubscriptionCard = props => {
 			<CardContent>
 				<div className={classes.imageContainer}>
 					<img
-						alt='Subscription'
+						alt='subscription'
 						className={classes.image}
 						src={subscription.imageUrl} />
 				</div>

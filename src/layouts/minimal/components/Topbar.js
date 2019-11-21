@@ -32,7 +32,7 @@ const Topbar = props => {
 			<Toolbar>
 				<RouterLink to='/'>
 					<img
-						alt='Logo'
+						alt='logo'
 						src='/images/logo_white.png' />
 				</RouterLink>
 			</Toolbar>
