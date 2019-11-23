@@ -42,7 +42,7 @@ const Alerts = props => {
 			<form>
 				<CardHeader
 					title='Alerts'
-					subheader='Manage the notifications' />
+					subheader='Manage how you want to recieve your notifications' />
 
 				<Divider />
 
@@ -64,6 +64,14 @@ const Alerts = props => {
               				</Typography>
 
 							<FormControlLabel
+								label='Dashboard'
+								control={
+									<Checkbox
+										color='primary'
+										defaultChecked />
+								} />
+
+							<FormControlLabel
 								label='Email'
 								control={
 									<Checkbox
@@ -72,19 +80,14 @@ const Alerts = props => {
 								} />
 
 							<FormControlLabel
-								label='Push Alerts'
+								label='Text Messages'
 								control={
 									<Checkbox
-										color='primary'
-										defaultChecked />
+										color='primary' />
 								} />
 
 							<FormControlLabel
-								label='Text Messages'
-								control={<Checkbox color='primary' />} />
-
-							<FormControlLabel
-								label='Phone calls'
+								label='Phone Calls'
 								control={
 									<Checkbox
 										color='primary'
@@ -101,11 +104,11 @@ const Alerts = props => {
 							<Typography
 								variant='h6'
 								gutterBottom>
-								Messages
+								Promotions
               				</Typography>
 
 							<FormControlLabel
-								label='Email'
+								label='Dashboard'
 								control={
 									<Checkbox
 										color='primary'
@@ -113,11 +116,22 @@ const Alerts = props => {
 								} />
 
 							<FormControlLabel
-								label='Push Alerts'
-								control={<Checkbox color='primary' />} />
+								label='Email'
+								control={
+									<Checkbox
+										color='primary' />
+								} />
 
 							<FormControlLabel
-								label='Phone calls'
+								label='Text Messages'
+								control={
+									<Checkbox
+										color='primary'
+										defaultChecked />
+								} />
+
+							<FormControlLabel
+								label='Phone Calls'
 								control={
 									<Checkbox
 										color='primary'

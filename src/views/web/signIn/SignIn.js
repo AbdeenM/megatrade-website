@@ -47,12 +47,12 @@ const useStyles = makeStyles(theme => ({
 	grid: {
 		height: '100%'
 	},
-	quoteContainer: {
+	imageContainer: {
 		[theme.breakpoints.down('md')]: {
 			display: 'none'
 		}
 	},
-	quote: {
+	image: {
 		height: '100%',
 		display: 'flex',
 		alignItems: 'center',
@@ -61,22 +61,14 @@ const useStyles = makeStyles(theme => ({
 		backgroundPosition: 'center',
 		backgroundRepeat: 'no-repeat',
 		backgroundColor: theme.palette.neutral,
-		backgroundImage: 'url(/images/auth.jpg)'
-	},
-	quoteInner: {
-		flexBasis: '600px',
-		textAlign: 'center'
-	},
-	quoteText: {
-		fontWeight: 300,
-		color: theme.palette.white
+		backgroundImage: 'url(/images/auth-background.jpg)'
 	},
 	name: {
-		color: theme.palette.white,
+		color: theme.palette.text,
 		marginTop: theme.spacing(3)
 	},
 	bio: {
-		color: theme.palette.white
+		color: theme.palette.text
 	},
 	contentContainer: {},
 	content: {
@@ -194,31 +186,8 @@ const SignIn = props => {
 				<Grid
 					item
 					lg={5}
-					className={classes.quoteContainer}>
-					<div className={classes.quote}>
-						<div className={classes.quoteInner}>
-							<Typography
-								variant='h1'
-								className={classes.quoteText}>
-								Hella narwhal Cosby sweater McSweeney's, salvia kitsch before
-                                they sold out High Life.
-              				</Typography>
-
-							<div className={classes.person}>
-								<Typography
-									variant='body1'
-									className={classes.name}>
-									Takamaru Ayako
-                				</Typography>
-
-								<Typography
-									variant='body2'
-									className={classes.bio}>
-									Manager at inVision
-                				</Typography>
-							</div>
-						</div>
-					</div>
+					className={classes.imageContainer}>
+					<div className={classes.image} />
 				</Grid>
 
 				<Grid

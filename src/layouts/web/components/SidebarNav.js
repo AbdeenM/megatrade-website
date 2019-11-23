@@ -10,14 +10,33 @@ import PropTypes from 'prop-types'
 import React, { forwardRef } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { NavLink as RouterLink } from 'react-router-dom'
-import { List, ListItem, Button, colors } from '@material-ui/core'
+import { List, ListItem, Button, colors, Typography } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {},
+	imageContainer: {
+		width: 64,
+		height: 64,
+		display: 'flex',
+		margin: '0 auto',
+		overflow: 'hidden',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	image: {},
+	company: {
+		marginTop: theme.spacing(4),
+		[theme.breakpoints.up('sm')]: {
+			marginTop: theme.spacing(3)
+		}
+	},
 	item: {
 		paddingTop: 0,
 		display: 'flex',
 		paddingBottom: 0
+	},
+	buttonContainer: {
+		marginTop: '50%'
 	},
 	button: {
 		width: '100%',
@@ -59,25 +78,44 @@ const SidebarNav = props => {
 	const classes = useStyles()
 
 	return (
-		<List
-			{...rest}
-			className={clsx(classes.root, className)}>
-			{pages.map(page => (
-				<ListItem
-					disableGutters
-					key={page.title}
-					className={classes.item}>
-					<Button
-						to={page.href}
-						className={classes.button}
-						component={CustomRouterLink}
-						activeClassName={classes.active}>
-						<div className={classes.icon}>{page.icon}</div>
-						{page.title}
-					</Button>
-				</ListItem>
-			))}
-		</List>
+		<div className={clsx(classes.root)}>
+			<div className={classes.imageContainer}>
+				<img
+					alt='logo'
+					className={classes.curvyLines}
+					src='/images/sidebar_logo.png' />
+			</div>
+
+			<Typography
+				variant='h3'
+				align='center'
+				color='inherit'
+				className={classes.company}>
+				MEGA TRADE
+      		</Typography>
+
+			<List
+				{...rest}
+				className={clsx(classes.buttonContainer, className)}>
+				{
+					pages.map(page => (
+						<ListItem
+							disableGutters
+							key={page.title}
+							className={classes.item}>
+							<Button
+								to={page.href}
+								className={classes.button}
+								component={CustomRouterLink}
+								activeClassName={classes.active}>
+								<div className={classes.icon}>{page.icon}</div>
+								{page.title}
+							</Button>
+						</ListItem>
+					))
+				}
+			</List>
+		</div>
 	)
 }
 

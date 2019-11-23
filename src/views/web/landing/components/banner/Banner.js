@@ -39,13 +39,24 @@ const Banner = () => {
 
 	return (
 		<BannerLayout backgroundClassName={classes.background}>
-			<img style={{ display: 'none' }} src='/images/banner_background.png' alt='increase priority' />
+			<img
+				alt='increase priority'
+				style={{ display: 'none' }}
+				src='/images/banner_background.png' />
 
-			<Typography color='inherit' align='center' variant='h1' marked='center'>
+			<Typography
+				variant='h1'
+				align='center'
+				color='inherit'
+				marked='center'>
 				World Class Trading Signals
       		</Typography>
 
-			<Typography color='inherit' align='center' variant='h4' className={classes.h4}>
+			<Typography
+				variant='h4'
+				align='center'
+				color='inherit'
+				className={classes.h4}>
 				99% Successful signal trades. We provide all you need to make the right trades.
       		</Typography>
 
@@ -59,7 +70,10 @@ const Banner = () => {
 				Subscribe Now!
       		</Button>
 
-			<Typography variant='caption' color='inherit' className={classes.more}>
+			<Typography
+				color='inherit'
+				variant='caption'
+				className={classes.more}>
 				Discover the experience
       		</Typography>
 		</BannerLayout>

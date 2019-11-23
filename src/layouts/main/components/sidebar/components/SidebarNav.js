@@ -62,21 +62,23 @@ const SidebarNav = props => {
 		<List
 			{...rest}
 			className={clsx(classes.root, className)}>
-			{pages.map(page => (
-				<ListItem
-					disableGutters
-					key={page.title}
-					className={classes.item}>
-					<Button
-						to={page.href}
-						className={classes.button}
-						component={CustomRouterLink}
-						activeClassName={classes.active}>
-						<div className={classes.icon}>{page.icon}</div>
-						{page.title}
-					</Button>
-				</ListItem>
-			))}
+			{
+				pages.map(page => (
+					<ListItem
+						disableGutters
+						key={page.title}
+						className={classes.item}>
+						<Button
+							to={page.href}
+							className={classes.button}
+							component={CustomRouterLink}
+							activeClassName={classes.active}>
+							<div className={classes.icon}>{page.icon}</div>
+							{page.title}
+						</Button>
+					</ListItem>
+				))
+			}
 		</List>
 	)
 }
