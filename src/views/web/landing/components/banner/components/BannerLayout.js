@@ -72,7 +72,6 @@ const BannerLayout = props => {
 
 BannerLayout.propTypes = {
 	children: PropTypes.node.isRequired,
-	classes: PropTypes.object.isRequired,
 	backgroundClassName: PropTypes.string.isRequired
 }
 

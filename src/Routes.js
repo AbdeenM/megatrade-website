@@ -12,7 +12,9 @@ import WebLayout from './layouts/web/Web'
 import MainLayout from './layouts/main/Main'
 import MinimalLayout from './layouts/minimal/Minimal'
 import RouteWithLayout from './components/RouteWithLayout'
+import AuthRouteWithLayout from './components/AuthRouteWithLayout'
 
+import Terms from './views/web/terms/Terms'
 import SignUp from './views/web/signUp/SignUp'
 import SignIn from './views/web/signIn/SignIn'
 import Landing from './views/web/landing/Landing'
@@ -34,45 +36,51 @@ const Routes = () => {
 
 			<RouteWithLayout
 				exact
+				path='/sign-up'
+				layout={WebLayout}
+				component={SignUp} />
+
+			<RouteWithLayout
+				exact
+				path='/sign-in'
+				layout={WebLayout}
+				component={SignIn} />
+
+			<RouteWithLayout
+				exact
+				path='/terms'
+				component={Terms}
+				layout={WebLayout} />
+
+			<RouteWithLayout
+				exact
+				path='/not-found'
+				layout={WebLayout}
+				component={NotFound} />
+
+			<AuthRouteWithLayout
+				exact
 				path='/dashboard'
 				layout={MainLayout}
 				component={DashboardUser} />
 
-			<RouteWithLayout
+			<AuthRouteWithLayout
 				exact
 				path='/account'
 				layout={MainLayout}
 				component={AccountUser} />
 
-			<RouteWithLayout
-				exact
-				layout={MainLayout}
-				path='/subscription'
-				component={SubscriptionUser} />
-
-			<RouteWithLayout
+			<AuthRouteWithLayout
 				exact
 				path='/settings'
 				layout={MainLayout}
 				component={SettingsUser} />
 
-			<RouteWithLayout
+			<AuthRouteWithLayout
 				exact
-				path='/sign-up'
-				component={SignUp}
-				layout={MinimalLayout} />
-
-			<RouteWithLayout
-				exact
-				path='/sign-in'
-				component={SignIn}
-				layout={MinimalLayout} />
-
-			<RouteWithLayout
-				exact
-				path='/not-found'
-				component={NotFound}
-				layout={MinimalLayout} />
+				layout={MainLayout}
+				path='/subscription'
+				component={SubscriptionUser} />
 
 			<Redirect to='/not-found' />
 		</Switch>

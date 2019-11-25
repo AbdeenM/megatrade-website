@@ -6,7 +6,6 @@
  ************************************************************************** */
 
 import React from 'react'
-import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import { Typography, Button } from '@material-ui/core'
@@ -78,10 +77,6 @@ const Banner = () => {
       		</Typography>
 		</BannerLayout>
 	)
-}
-
-Banner.propTypes = {
-	classes: PropTypes.object.isRequired,
 }
 
 export default Banner

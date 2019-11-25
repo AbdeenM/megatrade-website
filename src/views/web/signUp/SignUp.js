@@ -191,7 +191,6 @@ const SignUp = props => {
 
 	const handleSignUp = async event => {
 		event.preventDefault()
-		//history.push('/')
 
 		const signUpResult = await userApi.register({
 			email: formState.values.email,
@@ -200,12 +199,11 @@ const SignUp = props => {
 			firstName: formState.values.firstName
 		})
 
-		if (signUpResult.error) {
-			props.enqueueSnackbar(signUpResult.message, {
-				variant: 'error'
-			})
-		}
+		if (signUpResult.error)
+			return props.enqueueSnackbar(signUpResult.message, { variant: 'error' })
 
+		localStorage.setItem('userId', signUpResult._id)
+		history.push('/dashboard')
 	}
 
 	const hasError = field =>
@@ -321,7 +319,7 @@ const SignUp = props => {
 										className={classes.policyText}>
 										I have read the{' '}
 										<Link
-											to='#'
+											to='/terms'
 											variant='h6'
 											color='primary'
 											underline='always'
