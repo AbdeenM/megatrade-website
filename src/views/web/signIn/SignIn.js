@@ -6,7 +6,7 @@
  ************************************************************************** */
 
 import PropTypes from 'prop-types'
-import validate from 'validate.js'
+import Validate from 'validate.js'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -138,7 +138,7 @@ const SignIn = props => {
 	})
 
 	useEffect(() => {
-		const errors = validate(formState.values, schema)
+		const errors = Validate(formState.values, schema)
 
 		setFormState(formState => ({
 			...formState,

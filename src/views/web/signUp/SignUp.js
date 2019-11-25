@@ -6,7 +6,8 @@
  ************************************************************************** */
 
 import PropTypes from 'prop-types'
-import validate from 'validate.js'
+import Validate from 'validate.js'
+import { withSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -21,6 +22,10 @@ import {
 	Typography,
 	FormHelperText
 } from '@material-ui/core'
+
+import { UserApi } from '../../../config/Api'
+
+const userApi = new UserApi()
 
 const schema = {
 	firstName: {
@@ -152,7 +157,7 @@ const SignUp = props => {
 	})
 
 	useEffect(() => {
-		const errors = validate(formState.values, schema)
+		const errors = Validate(formState.values, schema)
 
 		setFormState(formState => ({
 			...formState,
@@ -184,9 +189,23 @@ const SignUp = props => {
 		history.goBack()
 	}
 
-	const handleSignUp = event => {
+	const handleSignUp = async event => {
 		event.preventDefault()
-		history.push('/')
+		//history.push('/')
+
+		const signUpResult = await userApi.register({
+			email: formState.values.email,
+			lastName: formState.values.lastName,
+			password: formState.values.password,
+			firstName: formState.values.firstName
+		})
+
+		if (signUpResult.error) {
+			props.enqueueSnackbar(signUpResult.message, {
+				variant: 'error'
+			})
+		}
+
 	}
 
 	const hasError = field =>
@@ -355,4 +374,4 @@ SignUp.propTypes = {
 	history: PropTypes.object
 }
 
-export default withRouter(SignUp)
+export default withSnackbar(withRouter(SignUp))
