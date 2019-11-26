@@ -31,6 +31,15 @@ class UserApi {
             throw error
         }
     }
+
+    fetchAccount = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/fetchAccount`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 class MiscellaneousApi {

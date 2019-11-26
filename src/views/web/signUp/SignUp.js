@@ -7,7 +7,7 @@
 
 import PropTypes from 'prop-types'
 import Validate from 'validate.js'
-import { withSnackbar } from 'notistack'
+import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
@@ -148,6 +148,7 @@ const SignUp = props => {
 	const { history } = props
 
 	const classes = useStyles()
+	const { enqueueSnackbar } = useSnackbar()
 
 	const [isRegisted, setRegister] = useState(false)
 	const [formState, setFormState] = useState({
@@ -201,9 +202,9 @@ const SignUp = props => {
 		})
 
 		if (signUpResult.error)
-			return props.enqueueSnackbar(signUpResult.message, { variant: 'error' })
+			return enqueueSnackbar(signUpResult.message, { variant: 'error' })
 
-		localStorage.setItem('userId', signUpResult._id)
+		localStorage.setItem('userId', signUpResult.data._id)
 		setRegister(true)
 	}
 
@@ -376,4 +377,4 @@ SignUp.propTypes = {
 	history: PropTypes.object
 }
 
-export default withSnackbar(withRouter(SignUp))
+export default withRouter(SignUp)

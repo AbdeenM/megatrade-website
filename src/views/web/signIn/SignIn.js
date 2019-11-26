@@ -7,10 +7,11 @@
 
 import PropTypes from 'prop-types'
 import Validate from 'validate.js'
+import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import { Link as RouterLink, withRouter } from 'react-router-dom'
+import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
 import {
 	Grid,
 	Link,
@@ -20,8 +21,11 @@ import {
 	Typography
 } from '@material-ui/core'
 
+import { UserApi } from '../../../config/Api'
 import GoogleIcon from './components/GoogleIcon'
 import FacebookIcon from './components/FacebookIcon'
+
+const userApi = new UserApi()
 
 const schema = {
 	email: {
@@ -129,7 +133,9 @@ const SignIn = props => {
 	const { history } = props
 
 	const classes = useStyles()
+	const { enqueueSnackbar } = useSnackbar()
 
+	const [isLogged, setLogged] = useState(false)
 	const [formState, setFormState] = useState({
 		errors: {},
 		values: {},
@@ -170,13 +176,27 @@ const SignIn = props => {
 		}))
 	}
 
-	const handleSignIn = event => {
+	const handleSignIn = async event => {
 		event.preventDefault()
-		history.push('/')
+
+		const signInResult = await userApi.login({
+			email: formState.values.email,
+			password: formState.values.password
+		})
+
+		if (signInResult.error)
+			return enqueueSnackbar(signInResult.message, { variant: 'error' })
+
+		localStorage.setItem('userId', signInResult.data._id)
+		setLogged(true)
 	}
 
 	const hasError = field =>
 		formState.touched[field] && formState.errors[field] ? true : false
+
+
+	if (isLogged)
+		return <Redirect to='/dashboard' />
 
 	return (
 		<div className={classes.root}>
