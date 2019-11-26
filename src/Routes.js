@@ -10,7 +10,6 @@ import { Switch, Redirect } from 'react-router-dom'
 
 import WebLayout from './layouts/web/Web'
 import MainLayout from './layouts/main/Main'
-import MinimalLayout from './layouts/minimal/Minimal'
 import RouteWithLayout from './components/RouteWithLayout'
 import AuthRouteWithLayout from './components/AuthRouteWithLayout'
 

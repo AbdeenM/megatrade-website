@@ -11,7 +11,7 @@ import { withSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
-import { Link as RouterLink, withRouter } from 'react-router-dom'
+import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
 import {
 	Grid,
 	Link,
@@ -149,6 +149,7 @@ const SignUp = props => {
 
 	const classes = useStyles()
 
+	const [isRegisted, setRegister] = useState(false)
 	const [formState, setFormState] = useState({
 		errors: {},
 		values: {},
@@ -203,11 +204,14 @@ const SignUp = props => {
 			return props.enqueueSnackbar(signUpResult.message, { variant: 'error' })
 
 		localStorage.setItem('userId', signUpResult._id)
-		history.push('/dashboard')
+		setRegister(true)
 	}
 
 	const hasError = field =>
 		formState.touched[field] && formState.errors[field] ? true : false
+
+	if (isRegisted)
+		return <Redirect to='/dashboard' />
 
 	return (
 		<div className={classes.root}>

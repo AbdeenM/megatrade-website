@@ -14,76 +14,114 @@ import { Link as RouterLink } from 'react-router-dom'
 import { AppBar, Toolbar, Hidden, IconButton, Link } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        boxShadow: 'none'
-    },
-    flexGrow: {
-        flexGrow: 1
-    },
-    rightLink: {
-        fontSize: 16,
-        marginLeft: theme.spacing(3),
-        color: theme.palette.common.white
-    },
-    linkSecondary: {
-        color: theme.palette.secondary.white,
-    }
+	root: {
+		boxShadow: 'none'
+	},
+	flexGrow: {
+		flexGrow: 1
+	},
+	rightLink: {
+		fontSize: 16,
+		marginLeft: theme.spacing(3),
+		color: theme.palette.common.white
+	},
+	linkSecondary: {
+		color: theme.palette.secondary.white,
+	}
 }))
 
 const Topbar = props => {
-    const { className, onSidebarOpen, ...rest } = props
+	const { className, onSidebarOpen, ...rest } = props
 
-    const classes = useStyles()
+	const classes = useStyles()
 
-    return (
-        <AppBar
-            {...rest}
-            className={clsx(classes.root, className)}>
-            <Toolbar>
-                <RouterLink to='/'>
-                    <img
-                        alt='logo'
-                        src='/images/logo_white.png' />
-                </RouterLink>
+	const userId = localStorage.getItem('userId')
 
-                <div className={classes.flexGrow} />
+	return (
+		<AppBar
+			{...rest}
+			className={clsx(classes.root, className)}>
+			<Toolbar>
+				<RouterLink to='/'>
+					<img
+						alt='logo'
+						src='/images/logo_white.png' />
+				</RouterLink>
 
-                <Hidden mdDown>
-                    <Link
-                        variant='h6'
-                        to='/sign-in'
-                        color='inherit'
-                        underline='none'
-                        component={RouterLink}
-                        className={classes.rightLink}>
-                        {'Sign In'}
-                    </Link>
+				<div className={classes.flexGrow} />
 
-                    <Link
-                        to='sign-up'
-                        variant='h6'
-                        underline='none'
-                        component={RouterLink}
-                        className={clsx(classes.rightLink, classes.linkSecondary)}>
-                        {'Sign Up'}
-                    </Link>
-                </Hidden>
+				<Hidden mdDown>
+					{
+						userId
+							? <div>
+								<Link
+									to='/'
+									variant='h6'
+									color='inherit'
+									underline='none'
+									component={RouterLink}
+									className={classes.rightLink}>
+									{'Home'}
+								</Link>
 
-                <Hidden lgUp>
-                    <IconButton
-                        color='inherit'
-                        onClick={onSidebarOpen}>
-                        <MenuIcon />
-                    </IconButton>
-                </Hidden>
-            </Toolbar>
-        </AppBar>
-    )
+								<Link
+									variant='h6'
+									to='/dashboard'
+									color='inherit'
+									underline='none'
+									component={RouterLink}
+									className={classes.rightLink}>
+									{'My Account'}
+								</Link>
+							</div>
+							: <div>
+								<Link
+									to='/'
+									variant='h6'
+									color='inherit'
+									underline='none'
+									component={RouterLink}
+									className={classes.rightLink}>
+									{'Home'}
+								</Link>
+
+								<Link
+									variant='h6'
+									to='/sign-in'
+									color='inherit'
+									underline='none'
+									component={RouterLink}
+									className={classes.rightLink}>
+									{'Sign In'}
+								</Link>
+
+								<Link
+									to='sign-up'
+									variant='h6'
+									underline='none'
+									component={RouterLink}
+									className={clsx(classes.rightLink, classes.linkSecondary)}>
+									{'Sign Up'}
+								</Link>
+							</div>
+					}
+				</Hidden>
+
+				<Hidden lgUp>
+					<IconButton
+						color='inherit'
+						onClick={onSidebarOpen}>
+						<MenuIcon />
+					</IconButton>
+				</Hidden>
+			</Toolbar>
+		</AppBar>
+	)
 }
 
 Topbar.propTypes = {
-    className: PropTypes.string,
-    onSidebarOpen: PropTypes.func
+	className: PropTypes.string,
+	onSidebarOpen: PropTypes.func
 }
 
 export default Topbar

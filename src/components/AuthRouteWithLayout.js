@@ -9,10 +9,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Route, Redirect } from 'react-router-dom'
 
-const userId = localStorage.getItem('userId')
-
 const AuthRouteWithLayout = props => {
 	const { layout: Layout, component: Component, ...rest } = props
+
+	const userId = localStorage.getItem('userId')
 
 	return (
 		<Route

@@ -11,7 +11,7 @@ import React, { useState } from 'react'
 import MenuIcon from '@material-ui/icons/Menu'
 import InputIcon from '@material-ui/icons/Input'
 import { makeStyles } from '@material-ui/styles'
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, Redirect } from 'react-router-dom'
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined'
 import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core'
 
@@ -28,11 +28,20 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Topbar = props => {
-	const { className, onSidebarOpen, ...rest } = props
+	const { className, onSidebarOpen, history, ...rest } = props
 
 	const classes = useStyles()
 
 	const [notifications] = useState([])
+	const [isLogged, setLogged] = useState(true)
+
+	const onSignOut = () => {
+		localStorage.clear()
+		setLogged(false)
+	}
+
+	if (!isLogged)
+		return <Redirect to='/' />
 
 	return (
 		<AppBar
@@ -59,6 +68,7 @@ const Topbar = props => {
 
 					<IconButton
 						color='inherit'
+						onClick={onSignOut}
 						className={classes.signOutButton}>
 						<InputIcon />
 					</IconButton>
@@ -77,6 +87,7 @@ const Topbar = props => {
 }
 
 Topbar.propTypes = {
+	history: PropTypes.object,
 	className: PropTypes.string,
 	onSidebarOpen: PropTypes.func
 }
