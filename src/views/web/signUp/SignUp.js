@@ -10,7 +10,9 @@ import Validate from 'validate.js'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
+import Visibility from '@material-ui/icons/Visibility'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
 import {
 	Grid,
@@ -156,6 +158,7 @@ const SignUp = props => {
 		values: {},
 		touched: {},
 		isValid: false,
+		showPassword: false
 	})
 
 	useEffect(() => {
@@ -168,7 +171,7 @@ const SignUp = props => {
 		}))
 	}, [formState.values])
 
-	const handleChange = event => {
+	const onChange = event => {
 		event.persist()
 
 		setFormState(formState => ({
@@ -187,11 +190,18 @@ const SignUp = props => {
 		}))
 	}
 
-	const handleBack = () => {
+	const onBack = () => {
 		history.goBack()
 	}
 
-	const handleSignUp = async event => {
+	const onShowPassword = () => {
+		setFormState({
+			...formState,
+			showPassword: !formState.showPassword
+		});
+	}
+
+	const onSignUp = async event => {
 		event.preventDefault()
 
 		const signUpResult = await userApi.register({
@@ -204,6 +214,7 @@ const SignUp = props => {
 		if (signUpResult.error)
 			return enqueueSnackbar(signUpResult.message, { variant: 'error' })
 
+		enqueueSnackbar(signUpResult.message, { variant: 'success' })
 		localStorage.setItem('userId', signUpResult.data._id)
 		setRegister(true)
 	}
@@ -233,14 +244,14 @@ const SignUp = props => {
 					className={classes.content}>
 					<div className={classes.content}>
 						<div className={classes.contentHeader}>
-							<IconButton onClick={handleBack}>
+							<IconButton onClick={onBack}>
 								<ArrowBackIcon />
 							</IconButton>
 						</div>
 
 						<div className={classes.contentBody}>
 							<form
-								onSubmit={handleSignUp}
+								onSubmit={onSignUp}
 								className={classes.form}>
 								<Typography
 									variant='h2'
@@ -260,7 +271,7 @@ const SignUp = props => {
 									name='firstName'
 									label='First name'
 									variant='outlined'
-									onChange={handleChange}
+									onChange={onChange}
 									error={hasError('firstName')}
 									className={classes.textField}
 									value={formState.values.firstName || ''}
@@ -274,7 +285,7 @@ const SignUp = props => {
 									name='lastName'
 									label='Last name'
 									variant='outlined'
-									onChange={handleChange}
+									onChange={onChange}
 									error={hasError('lastName')}
 									className={classes.textField}
 									value={formState.values.lastName || ''}
@@ -288,7 +299,7 @@ const SignUp = props => {
 									name='email'
 									variant='outlined'
 									label='Email address'
-									onChange={handleChange}
+									onChange={onChange}
 									error={hasError('email')}
 									className={classes.textField}
 									value={formState.values.email || ''}
@@ -298,23 +309,30 @@ const SignUp = props => {
 
 								<TextField
 									fullWidth
-									type='password'
 									name='password'
 									label='Password'
 									variant='outlined'
-									onChange={handleChange}
+									onChange={onChange}
 									error={hasError('password')}
 									className={classes.textField}
 									value={formState.values.password || ''}
+									type={formState.showPassword ? 'text' : 'password'}
 									helperText={
 										hasError('password') ? formState.errors.password[0] : null
-									} />
+									}
+									InputProps={{
+										endAdornment: formState.showPassword
+											? <VisibilityOff
+												onClick={onShowPassword} />
+											: <Visibility
+												onClick={onShowPassword} />
+									}} />
 
 								<div className={classes.policy}>
 									<Checkbox
 										name='policy'
 										color='primary'
-										onChange={handleChange}
+										onChange={onChange}
 										className={classes.policyCheckbox}
 										checked={formState.values.policy || false} />
 

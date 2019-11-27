@@ -6,10 +6,10 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
-import React from 'react'
-import moment from 'moment'
 import PropTypes from 'prop-types'
+import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
+import React, { useState, useEffect } from 'react'
 import {
 	Card,
 	Avatar,
@@ -20,6 +20,10 @@ import {
 	CardContent,
 	LinearProgress
 } from '@material-ui/core'
+
+import { UserApi } from '../../../../config/Api'
+
+const userApi = new UserApi()
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -36,6 +40,8 @@ const useStyles = makeStyles(theme => ({
 	progress: {
 		marginTop: theme.spacing(2)
 	},
+	locationText: {},
+	dateText: {},
 	uploadButton: {
 		marginRight: theme.spacing(2)
 	}
@@ -45,13 +51,65 @@ const AccountProfile = props => {
 	const { className, ...rest } = props
 
 	const classes = useStyles()
+	const { enqueueSnackbar } = useSnackbar()
 
-	const user = {
-		city: 'Khartoum',
-		country: 'Sudan',
-		timezone: 'GTM-7',
-		name: 'Abdeen Mohamed',
-		avatar: '/images/avatar.png'
+	const userId = localStorage.getItem('userId')
+
+	const [profileState, setProfileState] = useState({
+		city: '',
+		status: '',
+		avatar: '',
+		country: '',
+		lastName: '',
+		firstName: ''
+	})
+
+	useEffect(() => { fetchProfileDetails() }, [])
+
+	const toBase64 = file => {
+		return new Promise(resolve => {
+			const reader = new FileReader()
+			reader.readAsDataURL(file)
+			reader.onload = () => { resolve(reader.result) }
+			reader.onerror = () => { return enqueueSnackbar('Error while uploading your picture, please try again', { variant: 'error' }) }
+		})
+	}
+
+	const fetchProfileDetails = async () => {
+		const fetchAccountResult = await userApi.fetchAccount({ userId })
+		if (fetchAccountResult.error)
+			return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })
+
+		setProfileState(profileState => ({
+			...profileState,
+			city: fetchAccountResult.data.city || '',
+			avatar: fetchAccountResult.data.avatar || '',
+			status: fetchAccountResult.data.status || '',
+			country: fetchAccountResult.data.country || '',
+			lastName: fetchAccountResult.data.lastName || '',
+			firstName: fetchAccountResult.data.firstName || ''
+		}))
+	}
+
+	const onUploadPicture = async event => {
+		event.persist()
+
+		const imageBase64 = await toBase64(event.target.files[0])
+
+		const userId = localStorage.getItem('userId')
+		const uploadPictureResult = await userApi.updateAccount({
+			userId,
+			avatar: {
+				base64: true,
+				image: imageBase64
+			}
+		})
+
+		if (uploadPictureResult.error)
+			return enqueueSnackbar(uploadPictureResult.message, { variant: 'error' })
+
+		enqueueSnackbar(uploadPictureResult.message, { variant: 'success' })
+		window.location.reload()
 	}
 
 	return (
@@ -64,49 +122,61 @@ const AccountProfile = props => {
 						<Typography
 							variant='h2'
 							gutterBottom>
-							John Doe
-            			</Typography>
-
-						<Typography
-							variant='body1'
-							color='textSecondary'
-							className={classes.locationText}>
-							{user.city}, {user.country}
+							{profileState.firstName + ' ' + profileState.lastName}
 						</Typography>
+
+						{
+							profileState.city || profileState.country
+								? <Typography
+									variant='body1'
+									color='textSecondary'
+									className={classes.locationText}>
+									{profileState.city ? profileState.city : ''}, {profileState.country ? profileState.country : ''}
+								</Typography>
+								: <div />
+						}
 
 						<Typography
 							variant='body1'
 							color='textSecondary'
 							className={classes.dateText}>
-							{moment().format('hh:mm A')} ({user.timezone})
-            			</Typography>
+							{new Date().toTimeString()}
+						</Typography>
 					</div>
 
 					<Avatar
-						src={user.avatar}
-						className={classes.avatar} />
+						className={classes.avatar}
+						src={profileState.avatar || '/images/profile-avatar.png'} />
 				</div>
 
 				<div className={classes.progress}>
-					<Typography variant='body1'>Profile Completeness: 70%</Typography>
+					<Typography variant='body1'>Account Status: {profileState.status}%</Typography>
 
 					<LinearProgress
-						value={70}
-						variant='determinate' />
+						variant='determinate'
+						value={profileState.status} />
 				</div>
 			</CardContent>
 
 			<Divider />
 
 			<CardActions>
-				<Button
-					variant='text'
-					color='primary'
-					className={classes.uploadButton}>
-					Upload picture
-        		</Button>
+				<input
+					type='file'
+					accept='image/*'
+					id='upload-image'
+					onChange={onUploadPicture}
+					style={{ display: 'none' }} />
 
-				<Button variant='text'>Remove picture</Button>
+				<label htmlFor='upload-image'>
+					<Button
+						variant='text'
+						color='primary'
+						component='span'
+						className={classes.uploadButton}>
+						Upload picture
+					</Button>
+				</label>
 			</CardActions>
 		</Card>
 	)

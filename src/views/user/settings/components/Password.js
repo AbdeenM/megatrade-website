@@ -33,7 +33,7 @@ const Password = props => {
 		password: ''
 	})
 
-	const handleChange = event => {
+	const onChange = event => {
 		setValues({
 			...values,
 			[event.target.name]: event.target.value
@@ -59,7 +59,7 @@ const Password = props => {
 						label='Password'
 						variant='outlined'
 						value={values.password}
-						onChange={handleChange} />
+						onChange={onChange} />
 
 					<TextField
 						fullWidth
@@ -67,7 +67,7 @@ const Password = props => {
 						type='password'
 						variant='outlined'
 						value={values.confirm}
-						onChange={handleChange}
+						onChange={onChange}
 						label='Confirm password'
 						style={{ marginTop: '1rem' }} />
 				</CardContent>

@@ -10,7 +10,10 @@ import Validate from 'validate.js'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
+import Visibility from '@material-ui/icons/Visibility'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+
 import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
 import {
 	Grid,
@@ -140,7 +143,8 @@ const SignIn = props => {
 		errors: {},
 		values: {},
 		touched: {},
-		isValid: false
+		isValid: false,
+		showPassword: false
 	})
 
 	useEffect(() => {
@@ -153,11 +157,18 @@ const SignIn = props => {
 		}))
 	}, [formState.values])
 
-	const handleBack = () => {
+	const onBack = () => {
 		history.goBack()
 	}
 
-	const handleChange = event => {
+	const onShowPassword = () => {
+		setFormState({
+			...formState,
+			showPassword: !formState.showPassword
+		})
+	}
+
+	const onChange = event => {
 		event.persist()
 
 		setFormState(formState => ({
@@ -176,7 +187,7 @@ const SignIn = props => {
 		}))
 	}
 
-	const handleSignIn = async event => {
+	const onSignIn = async event => {
 		event.preventDefault()
 
 		const signInResult = await userApi.login({
@@ -187,8 +198,17 @@ const SignIn = props => {
 		if (signInResult.error)
 			return enqueueSnackbar(signInResult.message, { variant: 'error' })
 
+		enqueueSnackbar(signInResult.message, { variant: 'success' })
 		localStorage.setItem('userId', signInResult.data._id)
 		setLogged(true)
+	}
+
+	const onFacebookLogin = async () => {
+
+	}
+
+	const onGoogleLogin = async () => {
+
 	}
 
 	const hasError = field =>
@@ -217,14 +237,14 @@ const SignIn = props => {
 					className={classes.content}>
 					<div className={classes.content}>
 						<div className={classes.contentHeader}>
-							<IconButton onClick={handleBack}>
+							<IconButton onClick={onBack}>
 								<ArrowBackIcon />
 							</IconButton>
 						</div>
 
 						<div className={classes.contentBody}>
 							<form
-								onSubmit={handleSignIn}
+								onSubmit={onSignIn}
 								className={classes.form}>
 								<Typography
 									variant='h2'
@@ -247,7 +267,7 @@ const SignIn = props => {
 											size='large'
 											color='primary'
 											variant='contained'
-											onClick={handleSignIn}>
+											onClick={onFacebookLogin}>
 											<FacebookIcon className={classes.socialIcon} />
 											Login with Facebook
                     					</Button>
@@ -257,7 +277,7 @@ const SignIn = props => {
 										<Button
 											size='large'
 											variant='contained'
-											onClick={handleSignIn}>
+											onClick={onGoogleLogin}>
 											<GoogleIcon className={classes.socialIcon} />
 											Login with Google
                     					</Button>
@@ -278,7 +298,7 @@ const SignIn = props => {
 									name='email'
 									variant='outlined'
 									label='Email address'
-									onChange={handleChange}
+									onChange={onChange}
 									error={hasError('email')}
 									className={classes.textField}
 									value={formState.values.email || ''}
@@ -289,16 +309,23 @@ const SignIn = props => {
 								<TextField
 									fullWidth
 									name='password'
-									type='password'
 									label='Password'
 									variant='outlined'
-									onChange={handleChange}
+									onChange={onChange}
 									error={hasError('password')}
 									className={classes.textField}
 									value={formState.values.password || ''}
+									type={formState.showPassword ? 'text' : 'password'}
 									helperText={
 										hasError('password') ? formState.errors.password[0] : null
-									} />
+									}
+									InputProps={{
+										endAdornment: formState.showPassword
+											? <VisibilityOff
+												onClick={onShowPassword} />
+											: <Visibility
+												onClick={onShowPassword} />
+									}} />
 
 								<Button
 									fullWidth

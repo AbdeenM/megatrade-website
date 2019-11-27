@@ -42,11 +42,11 @@ const Main = props => {
 
 	const [openSidebar, setOpenSidebar] = useState(false)
 
-	const handleSidebarOpen = () => {
+	const onSidebarOpen = () => {
 		setOpenSidebar(true)
 	}
 
-	const handleSidebarClose = () => {
+	const onSidebarClose = () => {
 		setOpenSidebar(false)
 	}
 
@@ -58,11 +58,11 @@ const Main = props => {
 				[classes.root]: true,
 				[classes.shiftContent]: isDesktop
 			})}>
-			<Topbar onSidebarOpen={handleSidebarOpen} />
+			<Topbar onSidebarOpen={onSidebarOpen} />
 
 			<Sidebar
 				open={shouldOpenSidebar}
-				onClose={handleSidebarClose}
+				onClose={onSidebarClose}
 				variant={isDesktop ? 'persistent' : 'temporary'} />
 
 			<main className={classes.content}>

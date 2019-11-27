@@ -12,7 +12,6 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { Avatar, Typography } from '@material-ui/core'
-import AccountIcon from '@material-ui//icons/AccountCircle'
 
 import { UserApi } from '../../../../../config/Api'
 
@@ -40,37 +39,29 @@ const Profile = props => {
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
-	const userId = localStorage.getItem('userId')
-	const [profile, setProfile] = useState({
-		email: '',
+	const [profileState, setProfileState] = useState({
 		avatar: '',
 		lastName: '',
-		password: '',
 		firstName: '',
 		membership: ''
 	})
 
-	useEffect(() => {
-		async function fetchProfileDetails() {
-			const fetchAccountResult = await userApi.fetchAccount({ userId })
-			if (fetchAccountResult.error)
-				return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })
+	useEffect(() => { fetchProfileDetails() }, [])
 
-			setProfile({
-				...profile,
-				email: fetchAccountResult.data.email,
-				avatar: fetchAccountResult.data.avatar,
-				lastName: fetchAccountResult.data.lastName,
-				password: fetchAccountResult.data.password,
-				firstName: fetchAccountResult.data.firstName,
-				membership: fetchAccountResult.data.membership
-			})
-		}
+	const fetchProfileDetails = async () => {
+		const userId = localStorage.getItem('userId')
+		const fetchAccountResult = await userApi.fetchAccount({ userId })
+		if (fetchAccountResult.error)
+			return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })
 
-		fetchProfileDetails()
-	}, [])
-
-
+		setProfileState({
+			...profileState,
+			avatar: fetchAccountResult.data.avatar || '',
+			lastName: fetchAccountResult.data.lastName || '',
+			firstName: fetchAccountResult.data.firstName || '',
+			membership: fetchAccountResult.data.membership || ''
+		})
+	}
 
 	return (
 		<div
@@ -81,15 +72,15 @@ const Profile = props => {
 				to='/settings'
 				component={RouterLink}
 				className={classes.avatar}
-				src={profile.avatar || '/images/profile-avatar.png'} />
+				src={profileState.avatar || '/images/profile-avatar.png'} />
 
 			<Typography
 				variant='h4'
 				className={classes.name}>
-				{profile.firstName + ' ' + profile.lastName}
+				{profileState.firstName + ' ' + profileState.lastName}
 			</Typography>
 
-			<Typography variant='body2'>{profile.membership}</Typography>
+			<Typography variant='body2'>{profileState.membership}</Typography>
 		</div>
 	)
 }

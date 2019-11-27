@@ -6,9 +6,11 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
+import Validate from 'validate.js'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
+import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
+import React, { useState, useEffect } from 'react'
 import {
 	Card,
 	Grid,
@@ -20,6 +22,51 @@ import {
 	CardContent
 } from '@material-ui/core'
 
+import { UserApi } from '../../../../config/Api'
+
+const userApi = new UserApi()
+
+const schema = {
+	firstName: {
+		presence: { allowEmpty: false, message: 'is required' },
+		length: {
+			maximum: 32
+		}
+	},
+	lastName: {
+		presence: { allowEmpty: false, message: 'is required' },
+		length: {
+			maximum: 32
+		}
+	},
+	email: {
+		email: true,
+		presence: { allowEmpty: false, message: 'is required' },
+		length: {
+			maximum: 64
+		}
+	},
+	number: {
+		numericality: { onlyInteger: true, message: 'entered is not valid' },
+		presence: { allowEmpty: true },
+		length: {
+			maximum: 128
+		}
+	},
+	city: {
+		presence: { allowEmpty: true },
+		length: {
+			maximum: 32
+		}
+	},
+	country: {
+		presence: { allowEmpty: true },
+		length: {
+			maximum: 32
+		}
+	}
+}
+
 const useStyles = makeStyles(() => ({
 	root: {}
 }))
@@ -28,37 +75,98 @@ const AccountDetails = props => {
 	const { className, ...rest } = props
 
 	const classes = useStyles()
+	const { enqueueSnackbar } = useSnackbar()
 
-	const [values, setValues] = useState({
-		country: 'Sudan',
-		state: 'Khartoum',
-		lastName: 'Mohamed',
-		firstName: 'Abdeen',
-		phone: '+249125570888',
-		email: 'abdeen.mohamed@outlook.com'
+	const userId = localStorage.getItem('userId')
+
+	const [profileState, setProfileState] = useState({
+		errors: {},
+		values: {
+			city: '',
+			email: '',
+			number: '',
+			country: '',
+			lastName: '',
+			firstName: '',
+			membership: '',
+			membershipAmount: ''
+		},
+		touched: {},
+		isValid: false,
+		isChanged: false
 	})
 
-	const handleChange = event => {
-		setValues({
-			...values,
-			[event.target.name]: event.target.value
-		})
+	useEffect(() => { fetchProfileDetails() }, [])
+
+	useEffect(() => {
+		const errors = Validate(profileState.values, schema)
+
+		setProfileState(profileState => ({
+			...profileState,
+			isValid: errors ? false : true,
+			errors: errors || {}
+		}))
+	}, [profileState.values])
+
+	const fetchProfileDetails = async () => {
+		const fetchAccountResult = await userApi.fetchAccount({ userId })
+		if (fetchAccountResult.error)
+			return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })
+
+		setProfileState(profileState => ({
+			...profileState,
+			values: {
+				city: fetchAccountResult.data.city || '',
+				email: fetchAccountResult.data.email || '',
+				number: fetchAccountResult.data.number || '',
+				country: fetchAccountResult.data.country || '',
+				lastName: fetchAccountResult.data.lastName || '',
+				firstName: fetchAccountResult.data.firstName || '',
+				membership: fetchAccountResult.data.membership || '',
+				membershipAmount: fetchAccountResult.data.membershipAmount || ''
+			}
+		}))
 	}
 
-	const states = [
-		{
-			value: 'alabama',
-			label: 'Alabama'
-		},
-		{
-			value: 'new-york',
-			label: 'New York'
-		},
-		{
-			value: 'san-francisco',
-			label: 'San Francisco'
-		}
-	]
+	const onChange = event => {
+		event.persist()
+
+		setProfileState(profileState => ({
+			...profileState,
+			values: {
+				...profileState.values,
+				[event.target.name]: event.target.value
+			},
+			touched: {
+				...profileState.touched,
+				[event.target.name]: true
+			},
+			isChanged: true
+		}))
+	}
+
+	const onSaveDetails = async () => {
+		const saveResult = await userApi.updateAccount({
+			userId,
+			city: profileState.values.city,
+			email: profileState.values.email,
+			number: profileState.values.number,
+			country: profileState.values.country,
+			lastName: profileState.values.lastName,
+			firstName: profileState.values.firstName,
+			membership: profileState.values.membership,
+			membershipAmount: profileState.values.membershipAmount
+		})
+
+		if (saveResult.error)
+			return enqueueSnackbar(saveResult.message, { variant: 'error' })
+
+		enqueueSnackbar(saveResult.message, { variant: 'success' })
+		window.location.reload()
+	}
+
+	const hasError = field =>
+		profileState.touched[field] && profileState.errors[field] ? true : false
 
 	return (
 		<Card
@@ -69,7 +177,7 @@ const AccountDetails = props => {
 				autoComplete='off'>
 				<CardHeader
 					title='Profile'
-					subheader='The information can be edited' />
+					subheader='You can edit your profile details here' />
 
 				<Divider />
 
@@ -82,15 +190,47 @@ const AccountDetails = props => {
 							md={6}
 							xs={12}>
 							<TextField
+								disabled
+								fullWidth
+								margin='dense'
+								name='pac'
+								label='Membership'
+								variant='outlined'
+								value={profileState.values.membership} />
+						</Grid>
+
+						<Grid
+							item
+							md={6}
+							xs={12}>
+							<TextField
+								disabled
+								fullWidth
+								margin='dense'
+								variant='outlined'
+								name='membership amount'
+								label='Membership Amount'
+								InputProps={{ startAdornment: '$' }}
+								value={profileState.values.membershipAmount} />
+						</Grid>
+
+						<Grid
+							item
+							md={6}
+							xs={12}>
+							<TextField
 								required
 								fullWidth
 								margin='dense'
 								name='firstName'
 								label='First name'
 								variant='outlined'
-								onChange={handleChange}
-								value={values.firstName}
-								helperText='Please specify the first name' />
+								onChange={onChange}
+								error={hasError('firstName')}
+								value={profileState.values.firstName}
+								helperText={
+									hasError('firstName') ? profileState.errors.firstName[0] : null
+								} />
 						</Grid>
 
 						<Grid
@@ -104,8 +244,12 @@ const AccountDetails = props => {
 								name='lastName'
 								label='Last name'
 								variant='outlined'
-								value={values.lastName}
-								onChange={handleChange} />
+								onChange={onChange}
+								error={hasError('lastName')}
+								value={profileState.values.lastName}
+								helperText={
+									hasError('lastName') ? profileState.errors.lastName[0] : null
+								} />
 						</Grid>
 
 						<Grid
@@ -118,9 +262,13 @@ const AccountDetails = props => {
 								name='email'
 								margin='dense'
 								variant='outlined'
-								value={values.email}
 								label='Email Address'
-								onChange={handleChange} />
+								onChange={onChange}
+								error={hasError('email')}
+								value={profileState.values.email}
+								helperText={
+									hasError('email') ? profileState.errors.email[0] : null
+								} />
 						</Grid>
 
 						<Grid
@@ -129,13 +277,16 @@ const AccountDetails = props => {
 							xs={12}>
 							<TextField
 								fullWidth
-								name='phone'
-								type='number'
+								name='number'
 								margin='dense'
 								variant='outlined'
-								value={values.phone}
 								label='Phone Number'
-								onChange={handleChange} />
+								onChange={onChange}
+								error={hasError('number')}
+								value={profileState.values.number}
+								helperText={
+									hasError('number') ? profileState.errors.number[0] : null
+								} />
 						</Grid>
 
 						<Grid
@@ -143,25 +294,17 @@ const AccountDetails = props => {
 							md={6}
 							xs={12}>
 							<TextField
-								select
-								required
 								fullWidth
-								name='state'
+								name='city'
+								label='City'
 								margin='dense'
 								variant='outlined'
-								label='Select State'
-								value={values.state}
-								onChange={handleChange}
-								SelectProps={{ native: true }}>
-								{
-									states.map(option => (
-										<option
-											key={option.value}
-											value={option.value}>
-											{option.label}
-										</option>
-									))}
-							</TextField>
+								onChange={onChange}
+								error={hasError('city')}
+								value={profileState.values.city}
+								helperText={
+									hasError('city') ? profileState.errors.city[0] : null
+								} />
 						</Grid>
 
 						<Grid
@@ -169,17 +312,19 @@ const AccountDetails = props => {
 							md={6}
 							xs={12}>
 							<TextField
-								required
 								fullWidth
 								name='country'
 								margin='dense'
 								label='Country'
 								variant='outlined'
-								value={values.country}
-								onChange={handleChange} />
+								onChange={onChange}
+								error={hasError('country')}
+								value={profileState.values.country}
+								helperText={
+									hasError('country') ? profileState.errors.country[0] : null
+								} />
 						</Grid>
 					</Grid>
-
 				</CardContent>
 
 				<Divider />
@@ -187,7 +332,9 @@ const AccountDetails = props => {
 				<CardActions>
 					<Button
 						color='primary'
-						variant='contained'>
+						variant='contained'
+						onClick={onSaveDetails}
+						disabled={!profileState.isChanged || hasError('firstName') || hasError('lastName') || hasError('email') || hasError('number') || hasError('city') || hasError('country')}>
 						Save details
           			</Button>
 				</CardActions>

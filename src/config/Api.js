@@ -40,6 +40,15 @@ class UserApi {
             throw error
         }
     }
+
+    updateAccount = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/updateAccount`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 class MiscellaneousApi {
