@@ -293,7 +293,7 @@ const SignIn = props => {
 										<FacebookLogin
 											callback={onFacebookLogin}
 											fields='name,email,picture'
-											appId={Constants.facebookID}
+											appId={Constants.FACEBOOK_APP_ID}
 											render={renderProps => <Button
 												size='large'
 												color='primary'
@@ -308,7 +308,7 @@ const SignIn = props => {
 										<GoogleLogin
 											onSuccess={onGoogleLogin}
 											onFailure={onGoogleLogin}
-											clientId={Constants.googleClientID}
+											clientId={Constants.GOOGLE_CLIENT_ID}
 											cookiePolicy={'single_host_origin'}
 											render={renderProps => <Button
 												size='large'

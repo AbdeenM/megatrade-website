@@ -9,7 +9,7 @@ import axios from 'axios'
 
 import Constants from './Constants'
 
-axios.defaults.baseURL = `${Constants.serverURL}/api`
+axios.defaults.baseURL = `${Constants.SERVER_URL}/api`
 
 class UserApi {
     constructor() {
