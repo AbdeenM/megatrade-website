@@ -213,10 +213,6 @@ const SignIn = props => {
 			firstName: response.name.split(' ')[0]
 		})
 
-		console.log('================================================================');
-		console.log(socialSignInResult);
-
-
 		if (socialSignInResult.error)
 			return enqueueSnackbar(socialSignInResult.message, { variant: 'error' })
 
