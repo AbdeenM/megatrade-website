@@ -193,7 +193,7 @@ const AccountDetails = props => {
 								disabled
 								fullWidth
 								margin='dense'
-								name='pac'
+								name='membership'
 								label='Membership'
 								variant='outlined'
 								value={profileState.values.membership} />

@@ -8,11 +8,13 @@
 import PropTypes from 'prop-types'
 import Validate from 'validate.js'
 import { useSnackbar } from 'notistack'
+import GoogleLogin from 'react-google-login'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import Visibility from '@material-ui/icons/Visibility'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
 import {
@@ -26,6 +28,7 @@ import {
 
 import { UserApi } from '../../../config/Api'
 import GoogleIcon from './components/GoogleIcon'
+import Constants from '../../../config/Constants'
 import FacebookIcon from './components/FacebookIcon'
 
 const userApi = new UserApi()
@@ -203,11 +206,39 @@ const SignIn = props => {
 		setLogged(true)
 	}
 
-	const onFacebookLogin = async () => {
+	const onFacebookLogin = async response => {
+		const socialSignInResult = await userApi.socialLogin({
+			email: response.email,
+			lastName: response.name.split(' ')[1],
+			firstName: response.name.split(' ')[0]
+		})
 
+		console.log('================================================================');
+		console.log(socialSignInResult);
+
+
+		if (socialSignInResult.error)
+			return enqueueSnackbar(socialSignInResult.message, { variant: 'error' })
+
+		enqueueSnackbar(socialSignInResult.message, { variant: 'success' })
+		localStorage.setItem('userId', socialSignInResult.data._id)
+		setLogged(true)
 	}
 
-	const onGoogleLogin = async () => {
+	const onGoogleLogin = async response => {
+		const socialSignInResult = await userApi.socialLogin({
+			email: response.profileObj.email,
+			avatar: response.profileObj.imageUrl,
+			lastName: response.profileObj.familyName,
+			firstName: response.profileObj.givenName
+		})
+
+		if (socialSignInResult.error)
+			return enqueueSnackbar(socialSignInResult.message, { variant: 'error' })
+
+		enqueueSnackbar(socialSignInResult.message, { variant: 'success' })
+		localStorage.setItem('userId', socialSignInResult.data._id)
+		setLogged(true)
 
 	}
 
@@ -263,24 +294,33 @@ const SignIn = props => {
 									spacing={2}
 									className={classes.socialButtons}>
 									<Grid item>
-										<Button
-											size='large'
-											color='primary'
-											variant='contained'
-											onClick={onFacebookLogin}>
-											<FacebookIcon className={classes.socialIcon} />
-											Login with Facebook
-                    					</Button>
+										<FacebookLogin
+											callback={onFacebookLogin}
+											fields='name,email,picture'
+											appId={Constants.facebookID}
+											render={renderProps => <Button
+												size='large'
+												color='primary'
+												variant='contained'
+												onClick={renderProps.onClick}>
+												<FacebookIcon className={classes.socialIcon} />
+												Login with Facebook
+                    					</Button>} />
 									</Grid>
 
 									<Grid item>
-										<Button
-											size='large'
-											variant='contained'
-											onClick={onGoogleLogin}>
-											<GoogleIcon className={classes.socialIcon} />
-											Login with Google
-                    					</Button>
+										<GoogleLogin
+											onSuccess={onGoogleLogin}
+											onFailure={onGoogleLogin}
+											clientId={Constants.googleClientID}
+											cookiePolicy={'single_host_origin'}
+											render={renderProps => <Button
+												size='large'
+												variant='contained'
+												onClick={renderProps.onClick}>
+												<GoogleIcon className={classes.socialIcon} />
+												Login with Google
+                    					</Button>} />
 									</Grid>
 								</Grid>
 

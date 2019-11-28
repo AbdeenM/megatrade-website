@@ -7,7 +7,9 @@
 
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8080/api'
+import Constants from './Constants'
+
+axios.defaults.baseURL = `${Constants.serverURL}/api`
 
 class UserApi {
     constructor() {
@@ -26,6 +28,15 @@ class UserApi {
     login = async (args) => {
         try {
             const { data } = await axios.post(`${this.path}/login`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    socialLogin = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/socialLogin`, args)
             return data
         } catch (error) {
             throw error
