@@ -39,6 +39,8 @@ const Profile = props => {
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
+	const userId = localStorage.getItem('userId')
+
 	const [profileState, setProfileState] = useState({
 		avatar: '',
 		lastName: '',
@@ -49,7 +51,6 @@ const Profile = props => {
 	useEffect(() => { fetchProfileDetails() }, [])
 
 	const fetchProfileDetails = async () => {
-		const userId = localStorage.getItem('userId')
 		const fetchAccountResult = await userApi.fetchAccount({ userId })
 		if (fetchAccountResult.error)
 			return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })

@@ -9,7 +9,10 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
-
+import Budget from './components/Budget'
+import TotalPips from './components/TotalPips'
+import TotalUsers from './components/TotalUsers'
+import TotalProfits from './components/TotalProfits'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -25,7 +28,41 @@ const Dashboard = () => {
 			<Grid
 				container
 				spacing={4}>
+				<Grid
+					item
+					lg={3}
+					sm={6}
+					xl={3}
+					xs={12}>
+					<Budget />
+				</Grid>
 
+				<Grid
+					item
+					lg={3}
+					sm={6}
+					xl={3}
+					xs={12}>
+					<TotalUsers />
+				</Grid>
+
+				<Grid
+					item
+					lg={3}
+					sm={6}
+					xl={3}
+					xs={12}>
+					<TotalPips />
+				</Grid>
+
+				<Grid
+					item
+					lg={3}
+					sm={6}
+					xl={3}
+					xs={12}>
+					<TotalProfits />
+				</Grid>
 			</Grid>
 		</div>
 	)

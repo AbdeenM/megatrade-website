@@ -8,8 +8,8 @@
 import clsx from 'clsx'
 import React from 'react'
 import PropTypes from 'prop-types'
-import MoneyIcon from '@material-ui/icons/Money'
 import { makeStyles } from '@material-ui/styles'
+import BarChartIcon from '@material-ui/icons/BarChart'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core'
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 	avatar: {
 		width: 56,
 		height: 56,
-		backgroundColor: theme.palette.error.main
+		backgroundColor: theme.palette.primary.main
 	},
 	icon: {
 		width: 32,
@@ -40,15 +40,15 @@ const useStyles = makeStyles(theme => ({
 		marginTop: theme.spacing(2)
 	},
 	differenceIcon: {
-		color: theme.palette.error.dark
+		color: theme.palette.success.dark
 	},
 	differenceValue: {
 		marginRight: theme.spacing(1),
-		color: theme.palette.error.dark
+		color: theme.palette.success.dark
 	}
 }))
 
-const Budget = props => {
+const TotalPips = props => {
 	const { className, ...rest } = props
 
 	const classes = useStyles()
@@ -67,26 +67,26 @@ const Budget = props => {
 							variant='body2'
 							color='textSecondary'
 							className={classes.title}>
-							TRADING BUDGET
+							TOTAL PIPS
             			</Typography>
 
-						<Typography variant='h3'>$24,000</Typography>
+						<Typography variant='h3'>3,961</Typography>
 					</Grid>
 
 					<Grid item>
 						<Avatar className={classes.avatar}>
-							<MoneyIcon className={classes.icon} />
+							<BarChartIcon className={classes.icon} />
 						</Avatar>
 					</Grid>
 				</Grid>
 
 				<div className={classes.difference}>
-					<ArrowDownwardIcon className={classes.differenceIcon} />
+					<ArrowUpwardIcon className={classes.differenceIcon} />
 
 					<Typography
 						variant='body2'
 						className={classes.differenceValue}>
-						12%
+						23%
           			</Typography>
 
 					<Typography
@@ -100,8 +100,8 @@ const Budget = props => {
 	)
 }
 
-Budget.propTypes = {
+TotalPips.propTypes = {
 	className: PropTypes.string
 }
 
-export default Budget
+export default TotalPips

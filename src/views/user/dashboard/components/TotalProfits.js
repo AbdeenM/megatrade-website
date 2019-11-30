@@ -8,15 +8,15 @@
 import clsx from 'clsx'
 import React from 'react'
 import PropTypes from 'prop-types'
-import MoneyIcon from '@material-ui/icons/Money'
 import { makeStyles } from '@material-ui/styles'
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		height: '100%'
+		height: '100%',
+		color: theme.palette.primary.contrastText,
+		backgroundColor: theme.palette.primary.main
 	},
 	content: {
 		display: 'flex',
@@ -28,27 +28,16 @@ const useStyles = makeStyles(theme => ({
 	avatar: {
 		width: 56,
 		height: 56,
-		backgroundColor: theme.palette.error.main
+		color: theme.palette.primary.main,
+		backgroundColor: theme.palette.white
 	},
 	icon: {
 		width: 32,
 		height: 32
-	},
-	difference: {
-		display: 'flex',
-		alignItems: 'center',
-		marginTop: theme.spacing(2)
-	},
-	differenceIcon: {
-		color: theme.palette.error.dark
-	},
-	differenceValue: {
-		marginRight: theme.spacing(1),
-		color: theme.palette.error.dark
 	}
 }))
 
-const Budget = props => {
+const TotalProfit = props => {
 	const { className, ...rest } = props
 
 	const classes = useStyles()
@@ -64,44 +53,32 @@ const Budget = props => {
 					<Grid item>
 						<Typography
 							gutterBottom
+							color='inherit'
 							variant='body2'
-							color='textSecondary'
 							className={classes.title}>
-							TRADING BUDGET
+							TOTAL PROFIT
             			</Typography>
 
-						<Typography variant='h3'>$24,000</Typography>
+						<Typography
+							variant='h3'
+							color='inherit'>
+							$23,200
+            			</Typography>
 					</Grid>
 
 					<Grid item>
 						<Avatar className={classes.avatar}>
-							<MoneyIcon className={classes.icon} />
+							<AttachMoneyIcon className={classes.icon} />
 						</Avatar>
 					</Grid>
 				</Grid>
-
-				<div className={classes.difference}>
-					<ArrowDownwardIcon className={classes.differenceIcon} />
-
-					<Typography
-						variant='body2'
-						className={classes.differenceValue}>
-						12%
-          			</Typography>
-
-					<Typography
-						variant='caption'
-						className={classes.caption}>
-						Since last month
-          			</Typography>
-				</div>
 			</CardContent>
 		</Card>
 	)
 }
 
-Budget.propTypes = {
+TotalProfit.propTypes = {
 	className: PropTypes.string
 }
 
-export default Budget
+export default TotalProfit

@@ -154,7 +154,7 @@ const AccountProfile = props => {
 
 					<LinearProgress
 						variant='determinate'
-						value={profileState.status} />
+						value={parseInt(profileState.status)} />
 				</div>
 			</CardContent>
 
