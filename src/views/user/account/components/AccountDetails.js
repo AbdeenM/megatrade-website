@@ -335,7 +335,7 @@ const AccountDetails = props => {
 						variant='contained'
 						onClick={onSaveDetails}
 						disabled={!profileState.isChanged || hasError('firstName') || hasError('lastName') || hasError('email') || hasError('number') || hasError('city') || hasError('country')}>
-						Save details
+						Save Details
           			</Button>
 				</CardActions>
 			</form>

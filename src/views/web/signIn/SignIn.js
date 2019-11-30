@@ -207,6 +207,10 @@ const SignIn = props => {
 	}
 
 	const onFacebookLogin = async response => {
+		if (response.status === 'unknown')
+			return enqueueSnackbar('Your login attempt with facebook failed', { variant: 'info' })
+
+
 		const socialSignInResult = await userApi.socialLogin({
 			email: response.email,
 			lastName: response.name.split(' ')[1],
@@ -222,6 +226,9 @@ const SignIn = props => {
 	}
 
 	const onGoogleLogin = async response => {
+		if (response.error)
+			return enqueueSnackbar('Your login attempt with google failed', { variant: 'info' })
+
 		const socialSignInResult = await userApi.socialLogin({
 			email: response.profileObj.email,
 			avatar: response.profileObj.imageUrl,
@@ -292,6 +299,7 @@ const SignIn = props => {
 									<Grid item>
 										<FacebookLogin
 											callback={onFacebookLogin}
+											onFailure={onFacebookLogin}
 											fields='name,email,picture'
 											appId={Constants.FACEBOOK_APP_ID}
 											render={renderProps => <Button

@@ -7,8 +7,11 @@
 
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
+import { useSnackbar } from 'notistack'
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import {
 	Card,
 	Button,
@@ -19,6 +22,10 @@ import {
 	CardActions
 } from '@material-ui/core'
 
+import { UserApi } from '../../../../config/Api'
+
+const userApi = new UserApi()
+
 const useStyles = makeStyles(() => ({
 	root: {}
 }))
@@ -27,17 +34,44 @@ const Password = props => {
 	const { className, ...rest } = props
 
 	const classes = useStyles()
+	const { enqueueSnackbar } = useSnackbar()
 
-	const [values, setValues] = useState({
+	const userId = localStorage.getItem('userId')
+
+	const [profileState, setProfileState] = useState({
 		confirm: '',
-		password: ''
+		password: '',
+		showPassword: false
 	})
 
+	const onShowPassword = () => {
+		setProfileState({
+			...profileState,
+			showPassword: !profileState.showPassword
+		});
+	}
+
 	const onChange = event => {
-		setValues({
-			...values,
+		setProfileState({
+			...profileState,
 			[event.target.name]: event.target.value
 		})
+	}
+
+	const onUpdatePassword = async () => {
+		if (profileState.password !== profileState.confirm)
+			return enqueueSnackbar('Your password and confirmed password does not match, please try again', { variant: 'info' })
+
+		const saveResult = await userApi.updateAccount({
+			userId,
+			password: profileState.password
+		})
+
+		if (saveResult.error)
+			return enqueueSnackbar(saveResult.message, { variant: 'error' })
+
+		enqueueSnackbar(saveResult.message, { variant: 'success' })
+		window.location.reload()
 	}
 
 	return (
@@ -47,28 +81,35 @@ const Password = props => {
 			<form>
 				<CardHeader
 					title='Password'
-					subheader='Update password' />
+					subheader='Update your account password' />
 
 				<Divider />
 
 				<CardContent>
 					<TextField
 						fullWidth
-						type='password'
 						name='password'
 						label='Password'
 						variant='outlined'
-						value={values.password}
-						onChange={onChange} />
+						onChange={onChange}
+						value={profileState.password}
+						type={profileState.showPassword ? 'text' : 'password'}
+						InputProps={{
+							endAdornment: profileState.showPassword
+								? <VisibilityOff
+									onClick={onShowPassword} />
+								: <Visibility
+									onClick={onShowPassword} />
+						}} />
 
 					<TextField
 						fullWidth
 						name='confirm'
 						type='password'
 						variant='outlined'
-						value={values.confirm}
 						onChange={onChange}
-						label='Confirm password'
+						label='Confirm Password'
+						value={profileState.confirm}
 						style={{ marginTop: '1rem' }} />
 				</CardContent>
 
@@ -77,8 +118,10 @@ const Password = props => {
 				<CardActions>
 					<Button
 						color='primary'
-						variant='outlined'>
-						Update
+						variant='contained'
+						onClick={onUpdatePassword}
+						disabled={(profileState.password.length <= 3 || profileState.confirm.length <= 3) || (profileState.password.length !== profileState.confirm.length)}>
+						Update Password
           			</Button>
 				</CardActions>
 			</form>
