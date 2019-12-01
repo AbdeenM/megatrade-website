@@ -5,7 +5,8 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React from 'react'
+import { useSnackbar } from 'notistack'
+import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
@@ -13,6 +14,10 @@ import Budget from './components/Budget'
 import TotalPips from './components/TotalPips'
 import TotalUsers from './components/TotalUsers'
 import TotalProfits from './components/TotalProfits'
+
+import { UserApi } from '../../../config/Api'
+
+const userApi = new UserApi()
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -22,6 +27,20 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = () => {
 	const classes = useStyles()
+	const { enqueueSnackbar } = useSnackbar()
+
+	const userId = localStorage.getItem('userId')
+
+	useEffect(() => { fetchStatistics() }, [])
+
+	const fetchStatistics = async () => {
+		const fetchStatisticsResult = await userApi.fetchStatistics({ userId })
+		if (fetchStatisticsResult.error)
+			return enqueueSnackbar(fetchStatisticsResult.message, { variant: 'error' })
+
+		console.log(fetchStatisticsResult);
+
+	}
 
 	return (
 		<div className={classes.root}>
