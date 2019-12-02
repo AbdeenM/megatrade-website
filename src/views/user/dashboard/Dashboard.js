@@ -14,6 +14,7 @@ import Budget from './components/Budget'
 import TotalPips from './components/TotalPips'
 import TotalUsers from './components/TotalUsers'
 import TotalProfits from './components/TotalProfits'
+import LatestAlerts from './components/LatestAlerts'
 
 import { UserApi } from '../../../config/Api'
 
@@ -81,6 +82,15 @@ const Dashboard = () => {
 					xl={3}
 					xs={12}>
 					<TotalProfits />
+				</Grid>
+
+				<Grid
+					item
+					lg={8}
+					xl={9}
+					md={12}
+					xs={12}>
+					<LatestAlerts />
 				</Grid>
 			</Grid>
 		</div>
