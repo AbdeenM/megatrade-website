@@ -11,10 +11,12 @@ import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 import Budget from './components/Budget'
+import TradePie from './components/TradePie'
 import TotalPips from './components/TotalPips'
 import TotalUsers from './components/TotalUsers'
-import TotalProfits from './components/TotalProfits'
 import LatestAlerts from './components/LatestAlerts'
+import SignalAlerts from './components/SignalAlerts'
+import TotalProfits from './components/TotalProfits'
 
 import { UserApi } from '../../../config/Api'
 
@@ -91,6 +93,24 @@ const Dashboard = () => {
 					md={12}
 					xs={12}>
 					<LatestAlerts />
+				</Grid>
+
+				<Grid
+					item
+					lg={4}
+					md={6}
+					xl={3}
+					xs={12}>
+					<TradePie />
+				</Grid>
+
+				<Grid
+					item
+					lg={8}
+					xl={12}
+					md={12}
+					xs={12}>
+					<SignalAlerts />
 				</Grid>
 			</Grid>
 		</div>
