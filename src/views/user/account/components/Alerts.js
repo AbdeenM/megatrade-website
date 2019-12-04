@@ -10,18 +10,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import {
-	Card,
-	Grid,
-	Button,
-	Divider,
-	Checkbox,
-	CardHeader,
-	Typography,
-	CardContent,
-	CardActions,
-	FormControlLabel
-} from '@material-ui/core'
+import { Card, Grid, Button, Divider, Checkbox, CardHeader, Typography, CardContent, CardActions, FormControlLabel } from '@material-ui/core'
 
 import { UserApi } from '../../../../config/Api'
 
@@ -36,7 +25,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const Alerts = props => {
-	const { className, ...rest } = props
+	const { className, notifications, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -61,32 +50,12 @@ const Alerts = props => {
 		isChanged: false
 	})
 
-	useEffect(() => { fetchProfileDetails() }, [])
-
-	const fetchProfileDetails = async () => {
-		const fetchAccountResult = await userApi.fetchAccount({ userId })
-
-		if (fetchAccountResult.error)
-			return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })
-
+	useEffect(() => {
 		setProfileState(profileState => ({
 			...profileState,
-			notifications: {
-				alerts: {
-					email: fetchAccountResult.data.notifications.alerts.email || false,
-					dashboard: fetchAccountResult.data.notifications.alerts.dashboard || false,
-					phoneCalls: fetchAccountResult.data.notifications.alerts.phoneCalls || false,
-					textMessages: fetchAccountResult.data.notifications.alerts.textMessages || false
-				},
-				promotions: {
-					email: fetchAccountResult.data.notifications.promotions.email || false,
-					dashboard: fetchAccountResult.data.notifications.promotions.dashboard || false,
-					phoneCalls: fetchAccountResult.data.notifications.promotions.phoneCalls || false,
-					textMessages: fetchAccountResult.data.notifications.promotions.textMessages || false
-				}
-			}
+			notifications
 		}))
-	}
+	}, [notifications])
 
 	const onChangeAlerts = event => {
 		event.persist()
@@ -158,7 +127,7 @@ const Alerts = props => {
 							<Typography
 								variant='h6'
 								gutterBottom>
-								Alerts
+								Signal Alerts
               				</Typography>
 
 							<FormControlLabel

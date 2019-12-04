@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(3)
     },
     content: {
-        marginTop: 150,
+        marginTop: 20,
         textAlign: 'center'
     },
     contentInner: {
@@ -48,8 +48,12 @@ const Education = () => {
 
                         <div className={classes.contentInner}>
                             <Typography variant='subtitle2'>
-                                We are working on making the educational content avilable as soon as possible, stay tuned and we will notify you once we launch it. In the mean time feel free to email us your thoughts.
-            			</Typography>
+                                We are working on making the educational content available as soon as possible, stay tuned and we will notify you once we launch.
+            			    </Typography>
+
+                            <Typography variant='subtitle2'>
+                                In the mean time feel free to email us your thoughts.
+            			    </Typography>
                         </div>
 
                         <img

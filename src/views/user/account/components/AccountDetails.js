@@ -72,7 +72,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const AccountDetails = props => {
-	const { className, ...rest } = props
+	const { className, profile, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -96,7 +96,21 @@ const AccountDetails = props => {
 		isChanged: false
 	})
 
-	useEffect(() => { fetchProfileDetails() }, [])
+	useEffect(() => {
+		setProfileState(profileState => ({
+			...profileState,
+			values: {
+				city: profile.city,
+				email: profile.email,
+				number: profile.number,
+				country: profile.country,
+				lastName: profile.lastName,
+				firstName: profile.firstName,
+				membership: profile.membership,
+				membershipAmount: profile.membershipAmount
+			}
+		}))
+	}, [profile])
 
 	useEffect(() => {
 		const errors = Validate(profileState.values, schema)
@@ -107,26 +121,6 @@ const AccountDetails = props => {
 			errors: errors || {}
 		}))
 	}, [profileState.values])
-
-	const fetchProfileDetails = async () => {
-		const fetchAccountResult = await userApi.fetchAccount({ userId })
-		if (fetchAccountResult.error)
-			return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })
-
-		setProfileState(profileState => ({
-			...profileState,
-			values: {
-				city: fetchAccountResult.data.city || '',
-				email: fetchAccountResult.data.email || '',
-				number: fetchAccountResult.data.number || '',
-				country: fetchAccountResult.data.country || '',
-				lastName: fetchAccountResult.data.lastName || '',
-				firstName: fetchAccountResult.data.firstName || '',
-				membership: fetchAccountResult.data.membership || '',
-				membershipAmount: fetchAccountResult.data.membershipAmount || ''
-			}
-		}))
-	}
 
 	const onChange = event => {
 		event.persist()

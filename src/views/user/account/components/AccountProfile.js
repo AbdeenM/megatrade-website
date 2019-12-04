@@ -48,7 +48,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AccountProfile = props => {
-	const { className, ...rest } = props
+	const { className, profile, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -57,14 +57,24 @@ const AccountProfile = props => {
 
 	const [profileState, setProfileState] = useState({
 		city: '',
-		status: '',
 		avatar: '',
+		status: '',
 		country: '',
 		lastName: '',
 		firstName: ''
 	})
 
-	useEffect(() => { fetchProfileDetails() }, [])
+	useEffect(() => {
+		setProfileState(profileState => ({
+			...profileState,
+			city: profile.city,
+			status: profile.status,
+			avatar: profile.avatar,
+			country: profile.country,
+			lastName: profile.lastName,
+			firstName: profile.firstName
+		}))
+	}, [profile])
 
 	const toBase64 = file => {
 		return new Promise(resolve => {
@@ -75,28 +85,11 @@ const AccountProfile = props => {
 		})
 	}
 
-	const fetchProfileDetails = async () => {
-		const fetchAccountResult = await userApi.fetchAccount({ userId })
-		if (fetchAccountResult.error)
-			return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })
-
-		setProfileState(profileState => ({
-			...profileState,
-			city: fetchAccountResult.data.city || '',
-			avatar: fetchAccountResult.data.avatar || '',
-			status: fetchAccountResult.data.status || '',
-			country: fetchAccountResult.data.country || '',
-			lastName: fetchAccountResult.data.lastName || '',
-			firstName: fetchAccountResult.data.firstName || ''
-		}))
-	}
-
 	const onUploadPicture = async event => {
 		event.persist()
 
 		const imageBase64 = await toBase64(event.target.files[0])
 
-		const userId = localStorage.getItem('userId')
 		const uploadPictureResult = await userApi.updateAccount({
 			userId,
 			avatar: {

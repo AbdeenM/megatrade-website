@@ -7,15 +7,10 @@
 
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
-import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
 import { Avatar, Typography } from '@material-ui/core'
-
-import { UserApi } from '../../../../../config/Api'
-
-const userApi = new UserApi()
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -34,12 +29,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Profile = props => {
-	const { className, ...rest } = props
+	const { className, profile, ...rest } = props
 
 	const classes = useStyles()
-	const { enqueueSnackbar } = useSnackbar()
-
-	const userId = localStorage.getItem('userId')
 
 	const [profileState, setProfileState] = useState({
 		avatar: '',
@@ -48,21 +40,15 @@ const Profile = props => {
 		membership: ''
 	})
 
-	useEffect(() => { fetchProfileDetails() }, [])
-
-	const fetchProfileDetails = async () => {
-		const fetchAccountResult = await userApi.fetchAccount({ userId })
-		if (fetchAccountResult.error)
-			return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })
-
-		setProfileState({
+	useEffect(() => {
+		setProfileState(profileState => ({
 			...profileState,
-			avatar: fetchAccountResult.data.avatar || '',
-			lastName: fetchAccountResult.data.lastName || '',
-			firstName: fetchAccountResult.data.firstName || '',
-			membership: fetchAccountResult.data.membership || ''
-		})
-	}
+			avatar: profile.avatar,
+			lastName: profile.lastName,
+			firstName: profile.firstName,
+			membership: profile.membership
+		}))
+	}, [profile])
 
 	return (
 		<div
