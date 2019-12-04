@@ -45,6 +45,12 @@ const Alerts = props => {
 				dashboard: false,
 				phoneCalls: false,
 				textMessages: false
+			},
+			partnerPromotions: {
+				email: false,
+				dashboard: false,
+				phoneCalls: false,
+				textMessages: false
 			}
 		},
 		isChanged: false
@@ -82,6 +88,22 @@ const Alerts = props => {
 				...profileState.notifications,
 				promotions: {
 					...profileState.notifications.promotions,
+					[event.target.name]: event.target.checked
+				}
+			},
+			isChanged: true
+		}))
+	}
+
+	const onChangePartnerPromotions = event => {
+		event.persist()
+
+		setProfileState(profileState => ({
+			...profileState,
+			notifications: {
+				...profileState.notifications,
+				partnerPromotions: {
+					...profileState.notifications.partnerPromotions,
 					[event.target.name]: event.target.checked
 				}
 			},
@@ -180,7 +202,7 @@ const Alerts = props => {
 							<Typography
 								variant='h6'
 								gutterBottom>
-								Promotions
+								MegaTrade Promotions
               				</Typography>
 
 							<FormControlLabel
@@ -221,6 +243,59 @@ const Alerts = props => {
 										color='primary'
 										onChange={onChangePromotions}
 										checked={profileState.notifications.promotions.phoneCalls} />
+								} />
+						</Grid>
+
+						<Grid
+							item
+							md={4}
+							sm={6}
+							xs={12}
+							className={classes.item}>
+							<Typography
+								variant='h6'
+								gutterBottom>
+								Our Partner Promotions
+              				</Typography>
+
+							<FormControlLabel
+								name='dashboard'
+								label='Dashboard'
+								control={
+									<Checkbox
+										color='primary'
+										onChange={onChangePartnerPromotions}
+										checked={profileState.notifications.partnerPromotions.dashboard} />
+								} />
+
+							<FormControlLabel
+								name='email'
+								label='Email'
+								control={
+									<Checkbox
+										color='primary'
+										onChange={onChangePartnerPromotions}
+										checked={profileState.notifications.partnerPromotions.email} />
+								} />
+
+							<FormControlLabel
+								name='textMessages'
+								label='Text Messages'
+								control={
+									<Checkbox
+										color='primary'
+										onChange={onChangePartnerPromotions}
+										checked={profileState.notifications.partnerPromotions.textMessages} />
+								} />
+
+							<FormControlLabel
+								name='phoneCalls'
+								label='Phone Calls'
+								control={
+									<Checkbox
+										color='primary'
+										onChange={onChangePartnerPromotions}
+										checked={profileState.notifications.partnerPromotions.phoneCalls} />
 								} />
 						</Grid>
 					</Grid>

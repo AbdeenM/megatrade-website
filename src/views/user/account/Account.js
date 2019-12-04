@@ -54,6 +54,12 @@ const Account = () => {
 				dashboard: false,
 				phoneCalls: false,
 				textMessages: false
+			},
+			partnerPromotions: {
+				email: false,
+				dashboard: false,
+				phoneCalls: false,
+				textMessages: false
 			}
 		}
 	})
@@ -90,6 +96,12 @@ const Account = () => {
 					dashboard: fetchAccountResult.data.notifications.promotions.dashboard || false,
 					phoneCalls: fetchAccountResult.data.notifications.promotions.phoneCalls || false,
 					textMessages: fetchAccountResult.data.notifications.promotions.textMessages || false
+				},
+				partnerPromotions: {
+					email: fetchAccountResult.data.notifications.partnerPromotions.email || false,
+					dashboard: fetchAccountResult.data.notifications.partnerPromotions.dashboard || false,
+					phoneCalls: fetchAccountResult.data.notifications.partnerPromotions.phoneCalls || false,
+					textMessages: fetchAccountResult.data.notifications.partnerPromotions.textMessages || false
 				}
 			}
 		}))

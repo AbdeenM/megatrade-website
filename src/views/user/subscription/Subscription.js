@@ -13,11 +13,18 @@ import { IconButton, Grid, Typography } from '@material-ui/core'
 
 import mockData from './data'
 import SubscriptionCard from './components/SubscriptionCard'
-import SubscriptionToolbar from './components/SubscriptionToolbar'
+
+import SearchInput from '../../../components/SearchInput'
 
 const useStyles = makeStyles(theme => ({
 	root: {
 		padding: theme.spacing(3)
+	},
+	row: {
+		height: '42px',
+		display: 'flex',
+		alignItems: 'center',
+		marginTop: theme.spacing(1)
 	},
 	content: {
 		marginTop: theme.spacing(2)
@@ -35,9 +42,19 @@ const SubscriptionList = () => {
 
 	const [subscription] = useState(mockData)
 
+	const onChange = () => {
+		console.log('======');
+
+	}
+
 	return (
 		<div className={classes.root}>
-			<SubscriptionToolbar />
+			<div className={classes.row}>
+				<SearchInput
+					onChange={onChange}
+					placeholder='Search Packages'
+					className={classes.searchInput} />
+			</div>
 
 			<div className={classes.content}>
 				<Grid
