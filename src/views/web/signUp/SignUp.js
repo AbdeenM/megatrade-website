@@ -14,16 +14,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
-import {
-	Grid,
-	Link,
-	Button,
-	Checkbox,
-	TextField,
-	IconButton,
-	Typography,
-	FormHelperText
-} from '@material-ui/core'
+import { Grid, Link, Button, Checkbox, TextField, IconButton, Typography, FormHelperText } from '@material-ui/core'
 
 import { UserApi } from '../../../config/Api'
 
@@ -345,6 +336,7 @@ const SignUp = props => {
 											to='/terms'
 											variant='h6'
 											color='primary'
+											target='_blank'
 											underline='always'
 											component={RouterLink}>
 											Terms and Conditions

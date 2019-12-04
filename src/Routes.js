@@ -14,8 +14,9 @@ import RouteWithLayout from './components/RouteWithLayout'
 import AuthRouteWithLayout from './components/AuthRouteWithLayout'
 
 import Terms from './views/web/terms/Terms'
-import SignUp from './views/web/signUp/SignUp'
+import Policy from './views/web/policy/Policy'
 import SignIn from './views/web/signIn/SignIn'
+import SignUp from './views/web/signUp/SignUp'
 import Landing from './views/web/landing/Landing'
 import NotFound from './views/web/notFound/NotFound'
 
@@ -50,6 +51,12 @@ const Routes = () => {
 				path='/terms'
 				component={Terms}
 				layout={WebLayout} />
+
+			<RouteWithLayout
+				exact
+				path='/policy'
+				layout={WebLayout}
+				component={Policy} />
 
 			<RouteWithLayout
 				exact

@@ -7,7 +7,8 @@
 
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { Grid, Typography } from '@material-ui/core'
+import { Link as RouterLink } from 'react-router-dom'
+import { Grid, Typography, Link } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -72,7 +73,16 @@ const Terms = () => {
 					<div className={classes.content}>
 						<Typography variant='title'>
 							<div className={classes.innerContent}>
-								We employ the use of cookies. By using megatrade.world’s website you consent to the use of cookies in accordance with megatrade.world’s privacy policy.
+								We employ the use of cookies. By using megatrade.world’s website you consent to the use of cookies in accordance with megatrade.world’s{' '}
+								<Link
+									to='/policy'
+									color='primary'
+									target='_blank'
+									variant='title'
+									underline='always'
+									component={RouterLink}>
+									Privacy Policy
+								</Link>.
 							</div>
 
 							<div className={classes.innerContent}>
