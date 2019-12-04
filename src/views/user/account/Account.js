@@ -9,6 +9,8 @@ import React from 'react'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
+import Alerts from '../account/components/Alerts'
+import Password from '../account/components/Password'
 import AccountDetails from './components/AccountDetails'
 import AccountProfile from './components/AccountProfile'
 
@@ -30,18 +32,36 @@ const Account = () => {
 					item
 					lg={4}
 					md={6}
-					xl={4}
+					xl={7}
+					xs={12}>
+					<Alerts />
+				</Grid>
+
+				<Grid
+					item
+					lg={8}
+					xl={5}
+					md={12}
 					xs={12}>
 					<AccountProfile />
 				</Grid>
 
 				<Grid
 					item
-					lg={8}
+					lg={4}
 					md={6}
-					xl={8}
+					xl={7}
 					xs={12}>
 					<AccountDetails />
+				</Grid>
+
+				<Grid
+					item
+					lg={8}
+					xl={5}
+					md={12}
+					xs={12}>
+					<Password />
 				</Grid>
 			</Grid>
 		</div>

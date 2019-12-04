@@ -49,9 +49,9 @@ const NotFound = () => {
             			</Typography>
 
 						<img
-							alt='Under development'
+							alt='not found'
 							className={classes.image}
-							src='/images/not_found.png' />
+							src='/images/not-found.png' />
 					</div>
 				</Grid>
 			</Grid>

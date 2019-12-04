@@ -83,7 +83,7 @@ const SidebarNav = props => {
 				<img
 					alt='logo'
 					className={classes.curvyLines}
-					src='/images/sidebar_logo.png' />
+					src='/images/sidebar-logo.png' />
 			</div>
 
 			<Typography

@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
 	background: {
 		backgroundColor: '#7fc7d9', // Average color of the background image.
 		backgroundPosition: 'center',
-		backgroundImage: `url(/images/banner_background.png)`
+		backgroundImage: `url(/images/banner-background.png)`
 	},
 	button: {
 		minWidth: 200
@@ -41,7 +41,7 @@ const Banner = () => {
 			<img
 				alt='increase priority'
 				style={{ display: 'none' }}
-				src='/images/banner_background.png' />
+				src='/images/banner-background.png' />
 
 			<Typography
 				variant='h1'

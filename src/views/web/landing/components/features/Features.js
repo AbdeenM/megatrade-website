@@ -52,7 +52,7 @@ const Features = () => {
 				<img
 					alt='curvy lines'
 					className={classes.curvyLines}
-					src='/images/features_curvylines.png' />
+					src='/images/features-curvylines.png' />
 
 				<Grid container spacing={5}>
 					<Grid item xs={12} md={4}>
@@ -60,7 +60,7 @@ const Features = () => {
 							<img
 								alt='signals'
 								className={classes.image}
-								src='/images/features_signal.svg' />
+								src='/images/features-signal.svg' />
 
 							<Typography variant='h4' className={classes.title}>
 								Trading Signals
@@ -77,7 +77,7 @@ const Features = () => {
 							<img
 								alt='news'
 								className={classes.image}
-								src='/images/features_news.svg' />
+								src='/images/features-news.svg' />
 
 							<Typography variant='h4' className={classes.title}>
 								TRADING NEWS
@@ -94,7 +94,7 @@ const Features = () => {
 							<img
 								alt='academy'
 								className={classes.image}
-								src='/images/features_academy.svg' />
+								src='/images/features-academy.svg' />
 
 							<Typography variant='h4' className={classes.title}>
 								TRADING ACADEMY
@@ -111,7 +111,7 @@ const Features = () => {
 							<img
 								alt='brokers'
 								className={classes.image}
-								src='/images/features_broker.svg' />
+								src='/images/features-broker.svg' />
 
 							<Typography variant='h4' className={classes.title}>
 								BROKERS
@@ -128,7 +128,7 @@ const Features = () => {
 							<img
 								alt='support'
 								className={classes.image}
-								src='/images/features_support.svg' />
+								src='/images/features-support.svg' />
 
 							<Typography variant='h4' className={classes.title}>
 								360 CUSTOMER SUPPORT

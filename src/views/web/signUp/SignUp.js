@@ -83,7 +83,7 @@ const useStyles = makeStyles(theme => ({
 		backgroundPosition: 'center',
 		backgroundRepeat: 'no-repeat',
 		backgroundColor: theme.palette.neutral,
-		backgroundImage: 'url(/images/auth-background.jpg)'
+		backgroundImage: 'url(/images/auth-background.png)'
 	},
 	name: {
 		color: theme.palette.white,

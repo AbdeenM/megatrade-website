@@ -47,7 +47,7 @@ const UpgradePlan = props => {
 			<div className={classes.media}>
 				<img
 					alt='upgrade'
-					src='/images/sidebar_upgrade.svg' />
+					src='/images/sidebar-upgrade.svg' />
 			</div>
 
 			<div className={classes.content}>

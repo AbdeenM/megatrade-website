@@ -9,8 +9,8 @@ import clsx from 'clsx'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import EducationIcon from '@material-ui/icons/Book'
 import { Divider, Drawer } from '@material-ui/core'
-import SettingsIcon from '@material-ui/icons/Settings'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
@@ -54,14 +54,14 @@ const Sidebar = props => {
 			icon: <DashboardIcon />
 		},
 		{
+			title: 'Education',
+			href: '/education',
+			icon: <EducationIcon />
+		},
+		{
 			title: 'Account',
 			href: '/account',
 			icon: <AccountIcon />
-		},
-		{
-			title: 'Settings',
-			href: '/settings',
-			icon: <SettingsIcon />
 		},
 		{
 			title: 'Subscription',

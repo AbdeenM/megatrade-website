@@ -20,8 +20,8 @@ import Landing from './views/web/landing/Landing'
 import NotFound from './views/web/notFound/NotFound'
 
 import AccountUser from './views/user/account/Account'
-import SettingsUser from './views/user/settings/Settings'
 import DashboardUser from './views/user/dashboard/Dashboard'
+import EducationUser from './views/user/education/Education'
 import SubscriptionUser from './views/user/subscription/Subscription'
 
 const Routes = () => {
@@ -65,15 +65,15 @@ const Routes = () => {
 
 			<AuthRouteWithLayout
 				exact
-				path='/account'
+				path='/education'
 				layout={MainLayout}
-				component={AccountUser} />
+				component={EducationUser} />
 
 			<AuthRouteWithLayout
 				exact
-				path='/settings'
+				path='/account'
 				layout={MainLayout}
-				component={SettingsUser} />
+				component={AccountUser} />
 
 			<AuthRouteWithLayout
 				exact
