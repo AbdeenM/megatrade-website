@@ -119,7 +119,7 @@ const Sidebar = props => {
 					className={classes.nav} />
 
 				{
-					profileState.membership === 'Free Member'
+					profileState.membership === 'Free Package'
 						? <UpgradePlan />
 						: <div />
 				}

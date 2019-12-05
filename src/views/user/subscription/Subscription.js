@@ -5,16 +5,16 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React, { useState } from 'react'
+import { useSnackbar } from 'notistack'
+import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import { IconButton, Grid, Typography } from '@material-ui/core'
+import React, { useState, useEffect } from 'react'
 
-import mockData from './data'
+import { UserApi } from '../../../config/Api'
+import SearchInput from '../../../components/SearchInput'
 import SubscriptionCard from './components/SubscriptionCard'
 
-import SearchInput from '../../../components/SearchInput'
+const userApi = new UserApi()
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -39,11 +39,23 @@ const useStyles = makeStyles(theme => ({
 
 const SubscriptionList = () => {
 	const classes = useStyles()
+	const { enqueueSnackbar } = useSnackbar()
 
-	const [subscription] = useState(mockData)
+	const userId = localStorage.getItem('userId')
+
+	const [subscriptions, setSubscriptions] = useState([])
+
+	useEffect(() => { fetchSubscriptions() }, [])
+
+	const fetchSubscriptions = async () => {
+		const fetchSubscriptionsResult = await userApi.fetchSubscriptions({ userId })
+		if (fetchSubscriptionsResult.error)
+			return enqueueSnackbar(fetchSubscriptionsResult.message, { variant: 'error' })
+
+		setSubscriptions(fetchSubscriptionsResult.data)
+	}
 
 	const onChange = () => {
-		console.log('======');
 
 	}
 
@@ -61,30 +73,18 @@ const SubscriptionList = () => {
 					container
 					spacing={3}>
 					{
-						subscription.map(subscription => (
+						subscriptions.map((subscription, i) => (
 							<Grid
 								item
 								lg={4}
 								md={6}
 								xs={12}
-								key={subscription.id}>
+								key={i}>
 								<SubscriptionCard subscription={subscription} />
 							</Grid>
 						))
 					}
 				</Grid>
-			</div>
-
-			<div className={classes.pagination}>
-				<Typography variant='caption'>1-6 of 20</Typography>
-
-				<IconButton>
-					<ChevronLeftIcon />
-				</IconButton>
-
-				<IconButton>
-					<ChevronRightIcon />
-				</IconButton>
 			</div>
 		</div>
 	)

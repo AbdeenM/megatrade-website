@@ -9,16 +9,9 @@ import clsx from 'clsx'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
-import GetAppIcon from '@material-ui/icons/GetApp'
+import MoneyIcon from '@material-ui/icons/AttachMoney'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
-import {
-	Card,
-	Grid,
-	Divider,
-	Typography,
-	CardContent,
-	CardActions
-} from '@material-ui/core'
+import { Card, Grid, Divider, Typography, CardContent, CardActions } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -59,12 +52,12 @@ const SubscriptionCard = props => {
 				<div className={classes.imageContainer}>
 					<img
 						alt='subscription'
-						className={classes.image}
-						src={subscription.imageUrl} />
+						src={subscription.image}
+						className={classes.image} />
 				</div>
 
 				<Typography
-					variant='h4'
+					variant='h2'
 					gutterBottom
 					align='center'>
 					{subscription.title}
@@ -86,29 +79,29 @@ const SubscriptionCard = props => {
 					<Grid
 						item
 						className={classes.statsItem}>
-						<AccessTimeIcon className={classes.statsIcon} />
+						<MoneyIcon className={classes.statsIcon} />
 
 						<Typography
-							variant='body2'
+							variant='body1'
 							display='inline'>
-							Updated 2hr ago
-            			</Typography>
-					</Grid>
-
-					<Grid
-						item
-						className={classes.statsItem}>
-						<GetAppIcon className={classes.statsIcon} />
-
-						<Typography
-							variant='body2'
-							display='inline'>
-							{subscription.totalDownloads} Downloads
-            			</Typography>
+							{subscription.price}
+						</Typography>
 					</Grid>
 				</Grid>
+
+				<Grid
+					item
+					className={classes.statsItem}>
+					<AccessTimeIcon className={classes.statsIcon} />
+
+					<Typography
+						variant='body2'
+						display='inline'>
+						{subscription.validity}
+					</Typography>
+				</Grid>
 			</CardActions>
-		</Card>
+		</Card >
 	)
 }
 
