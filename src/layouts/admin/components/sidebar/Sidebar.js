@@ -18,10 +18,9 @@ import AccountIcon from '@material-ui/icons/AccountCircle'
 
 import Profile from './components/Profile'
 import SidebarNav from './components/SidebarNav'
-import { UserApi } from '../../../../config/Api'
-import UpgradePlan from './components/UpgradePlan'
+import { AdminApi } from '../../../../config/Api'
 
-const userApi = new UserApi()
+const adminApi = new AdminApi()
 
 const useStyles = makeStyles(theme => ({
 	drawer: {
@@ -52,7 +51,7 @@ const Sidebar = props => {
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
-	const userId = localStorage.getItem('userId')
+	const adminId = localStorage.getItem('adminId')
 
 	const [profileState, setProfileState] = useState({
 		avatar: '',
@@ -64,7 +63,7 @@ const Sidebar = props => {
 	useEffect(() => { fetchProfileDetails() }, [])
 
 	const fetchProfileDetails = async () => {
-		const fetchAccountResult = await userApi.fetchAccount({ userId })
+		const fetchAccountResult = await adminApi.fetchAccount({ adminId })
 		if (fetchAccountResult.error)
 			return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })
 
@@ -72,30 +71,29 @@ const Sidebar = props => {
 			...profileState,
 			avatar: fetchAccountResult.data.avatar || '',
 			lastName: fetchAccountResult.data.lastName || '',
-			firstName: fetchAccountResult.data.firstName || '',
-			package: fetchAccountResult.data.package || ''
+			firstName: fetchAccountResult.data.firstName || ''
 		})
 	}
 
 	const pages = [
 		{
 			title: 'Dashboard',
-			href: '/dashboard',
+			href: '/admin/dashboard',
 			icon: <DashboardIcon />
 		},
 		{
 			title: 'Education',
-			href: '/education',
+			href: '/admin/education',
 			icon: <EducationIcon />
 		},
 		{
 			title: 'Account',
-			href: '/account',
+			href: '/admin/account',
 			icon: <AccountIcon />
 		},
 		{
 			title: 'Subscriptions',
-			href: '/subscriptions',
+			href: '/admin/subscriptions',
 			icon: <SubscriptionIcon />
 		}
 	]
@@ -117,12 +115,6 @@ const Sidebar = props => {
 				<SidebarNav
 					pages={pages}
 					className={classes.nav} />
-
-				{
-					profileState.package === 'Free Package'
-						? <UpgradePlan />
-						: <div />
-				}
 			</div>
 		</Drawer>
 	)

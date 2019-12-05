@@ -10,8 +10,10 @@ import { Switch, Redirect } from 'react-router-dom'
 
 import WebLayout from './layouts/web/Web'
 import MainLayout from './layouts/main/Main'
+import AdminLayout from './layouts/admin/Main'
 import RouteWithLayout from './components/RouteWithLayout'
 import AuthRouteWithLayout from './components/AuthRouteWithLayout'
+import AuthAdminRouteWithLayout from './components/AuthAdminRouteWithLayout'
 
 import Terms from './views/web/terms/Terms'
 import Policy from './views/web/policy/Policy'
@@ -33,6 +35,12 @@ const Routes = () => {
 				path='/'
 				layout={WebLayout}
 				component={Landing} />
+
+			<RouteWithLayout
+				exact
+				path='/admin'
+				component={Landing}
+				layout={AdminLayout} />
 
 			<RouteWithLayout
 				exact
@@ -85,7 +93,7 @@ const Routes = () => {
 			<AuthRouteWithLayout
 				exact
 				layout={MainLayout}
-				path='/subscription'
+				path='/subscriptions'
 				component={SubscriptionUser} />
 
 			<Redirect to='/not-found' />

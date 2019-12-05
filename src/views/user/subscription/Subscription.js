@@ -11,7 +11,6 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 
 import { UserApi } from '../../../config/Api'
-import SearchInput from '../../../components/SearchInput'
 import SubscriptionCard from './components/SubscriptionCard'
 
 const userApi = new UserApi()
@@ -43,7 +42,8 @@ const SubscriptionList = () => {
 
 	const userId = localStorage.getItem('userId')
 
-	const [subscriptions, setSubscriptions] = useState([])
+	const [userPackageState, setUserPackageState] = useState('')
+	const [subscriptionsState, setSubscriptionsState] = useState([])
 
 	useEffect(() => { fetchSubscriptions() }, [])
 
@@ -52,35 +52,27 @@ const SubscriptionList = () => {
 		if (fetchSubscriptionsResult.error)
 			return enqueueSnackbar(fetchSubscriptionsResult.message, { variant: 'error' })
 
-		setSubscriptions(fetchSubscriptionsResult.data)
-	}
-
-	const onChange = () => {
-
+		setUserPackageState(fetchSubscriptionsResult.data.userPackage)
+		setSubscriptionsState(fetchSubscriptionsResult.data.subscriptions)
 	}
 
 	return (
 		<div className={classes.root}>
-			<div className={classes.row}>
-				<SearchInput
-					onChange={onChange}
-					placeholder='Search Packages'
-					className={classes.searchInput} />
-			</div>
-
 			<div className={classes.content}>
 				<Grid
 					container
 					spacing={3}>
 					{
-						subscriptions.map((subscription, i) => (
+						subscriptionsState.map((subscription, i) => (
 							<Grid
 								item
 								lg={4}
 								md={6}
 								xs={12}
 								key={i}>
-								<SubscriptionCard subscription={subscription} />
+								<SubscriptionCard
+									package={userPackageState}
+									subscription={subscription} />
 							</Grid>
 						))
 					}

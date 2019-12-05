@@ -80,10 +80,63 @@ class UserApi {
     }
 }
 
+class AdminApi {
+    constructor() {
+        this.path = '/admin'
+    }
+
+    register = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/register`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    login = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/login`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    fetchAccount = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/fetchAccount`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    updateAccount = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/updateAccount`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    fetchSubscriptions = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/fetchSubscriptions`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+}
+
 class MiscellaneousApi {
+
 }
 
 export {
     UserApi,
+    AdminApi,
     MiscellaneousApi
 }

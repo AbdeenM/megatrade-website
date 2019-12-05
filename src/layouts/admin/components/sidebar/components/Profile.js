@@ -66,8 +66,6 @@ const Profile = props => {
 				className={classes.name}>
 				{profileState.firstName + ' ' + profileState.lastName}
 			</Typography>
-
-			<Typography variant='body2'>{profileState.package}</Typography>
 		</div>
 	)
 }

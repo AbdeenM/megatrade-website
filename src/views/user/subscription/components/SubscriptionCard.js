@@ -11,19 +11,20 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import MoneyIcon from '@material-ui/icons/AttachMoney'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
-import { Card, Grid, Divider, Typography, CardContent, CardActions } from '@material-ui/core'
+import { Card, Grid, Divider, Typography, CardContent, CardActions, Button } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {},
 	imageContainer: {
-		width: 64,
-		height: 64,
+		width: 150,
+		height: 150,
 		display: 'flex',
 		margin: '0 auto',
 		overflow: 'hidden',
 		borderRadius: '5px',
 		alignItems: 'center',
 		justifyContent: 'center',
+		marginBottom: theme.spacing(5),
 		border: `1px solid ${theme.palette.divider}`
 	},
 	image: {
@@ -43,6 +44,10 @@ const SubscriptionCard = props => {
 	const { className, subscription, ...rest } = props
 
 	const classes = useStyles()
+
+	const onGetPackage = () => {
+
+	}
 
 	return (
 		<Card
@@ -87,18 +92,30 @@ const SubscriptionCard = props => {
 							{subscription.price}
 						</Typography>
 					</Grid>
-				</Grid>
 
-				<Grid
-					item
-					className={classes.statsItem}>
-					<AccessTimeIcon className={classes.statsIcon} />
+					<Grid
+						item
+						className={classes.statsItem}>
+						<Button
+							color='primary'
+							variant='contained'
+							onClick={onGetPackage}
+							disabled={props.package === subscription.title}>
+							{props.package === subscription.title ? 'CURRENT PACKAGE' : 'GET PACKAGE'}
+						</Button>
+					</Grid>
 
-					<Typography
-						variant='body2'
-						display='inline'>
-						{subscription.validity}
-					</Typography>
+					<Grid
+						item
+						className={classes.statsItem}>
+						<AccessTimeIcon className={classes.statsIcon} />
+
+						<Typography
+							variant='body2'
+							display='inline'>
+							{subscription.validity}
+						</Typography>
+					</Grid>
 				</Grid>
 			</CardActions>
 		</Card >
