@@ -27,6 +27,10 @@ import DashboardUser from './views/user/dashboard/Dashboard'
 import EducationUser from './views/user/education/Education'
 import SubscriptionUser from './views/user/subscription/Subscription'
 
+import LoginAdmin from './views/admin/signIn/SignIn'
+import AccountAdmin from './views/admin/account/Account'
+import DashboardAdmin from './views/admin/dashboard/Dashboard'
+
 const Routes = () => {
 	return (
 		<Switch>
@@ -39,8 +43,8 @@ const Routes = () => {
 			<RouteWithLayout
 				exact
 				path='/admin'
-				component={Landing}
-				layout={AdminLayout} />
+				layout={WebLayout}
+				component={LoginAdmin} />
 
 			<RouteWithLayout
 				exact
@@ -95,6 +99,18 @@ const Routes = () => {
 				layout={MainLayout}
 				path='/subscriptions'
 				component={SubscriptionUser} />
+
+			<AuthAdminRouteWithLayout
+				exact
+				layout={AdminLayout}
+				path='/admin/dashboard'
+				component={DashboardAdmin} />
+
+			<AuthAdminRouteWithLayout
+				exact
+				layout={AdminLayout}
+				path='/admin/account'
+				component={AccountAdmin} />
 
 			<Redirect to='/not-found' />
 		</Switch>
