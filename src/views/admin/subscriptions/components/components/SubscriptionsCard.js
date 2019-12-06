@@ -8,10 +8,15 @@
 import clsx from 'clsx'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import MoneyIcon from '@material-ui/icons/AttachMoney'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
 import { Card, Grid, Divider, Typography, CardContent, CardActions, Button } from '@material-ui/core'
+
+import { AdminApi } from '../../../../../config/Api'
+
+const adminApi = new AdminApi()
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -40,13 +45,25 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const SubscriptionCard = props => {
+const SubscriptionsCard = props => {
 	const { className, subscription, ...rest } = props
 
 	const classes = useStyles()
+	const { enqueueSnackbar } = useSnackbar()
 
-	const onGetPackage = () => {
+	const adminId = localStorage.getItem('adminId')
 
+	const onRemovePackage = async () => {
+		const removeResult = await adminApi.removeSubscriptions({
+			adminId,
+			subscriptionId: subscription._id
+		})
+
+		if (removeResult.error)
+			return enqueueSnackbar(removeResult.message, { variant: 'error' })
+
+		enqueueSnackbar(removeResult.message, { variant: 'success' })
+		window.location.reload()
 	}
 
 	return (
@@ -97,11 +114,10 @@ const SubscriptionCard = props => {
 						item
 						className={classes.statsItem}>
 						<Button
-							color='primary'
+							color='secondary'
 							variant='contained'
-							onClick={onGetPackage}
-							disabled={props.package === subscription.title}>
-							{props.package === subscription.title ? 'CURRENT PACKAGE' : 'GET PACKAGE'}
+							onClick={onRemovePackage}>
+							REMOVE
 						</Button>
 					</Grid>
 
@@ -122,9 +138,9 @@ const SubscriptionCard = props => {
 	)
 }
 
-SubscriptionCard.propTypes = {
+SubscriptionsCard.propTypes = {
 	className: PropTypes.string,
 	subscription: PropTypes.object.isRequired
 }
 
-export default SubscriptionCard
+export default SubscriptionsCard

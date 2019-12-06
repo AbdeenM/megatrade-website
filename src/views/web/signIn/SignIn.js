@@ -341,8 +341,8 @@ const SignIn = props => {
 									type='text'
 									name='email'
 									variant='outlined'
-									label='Email address'
 									onChange={onChange}
+									label='Email address'
 									error={hasError('email')}
 									className={classes.textField}
 									value={formState.values.email || ''}

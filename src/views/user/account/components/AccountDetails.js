@@ -11,16 +11,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import {
-	Card,
-	Grid,
-	Button,
-	Divider,
-	TextField,
-	CardHeader,
-	CardActions,
-	CardContent
-} from '@material-ui/core'
+import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent } from '@material-ui/core'
 
 import { UserApi } from '../../../../config/Api'
 
@@ -86,9 +77,9 @@ const AccountDetails = props => {
 			email: '',
 			number: '',
 			country: '',
+			package: '',
 			lastName: '',
 			firstName: '',
-			package: '',
 			packageAmount: ''
 		},
 		touched: {},
@@ -146,9 +137,9 @@ const AccountDetails = props => {
 			email: profileState.values.email,
 			number: profileState.values.number,
 			country: profileState.values.country,
+			package: profileState.values.package,
 			lastName: profileState.values.lastName,
 			firstName: profileState.values.firstName,
-			package: profileState.values.package,
 			packageAmount: profileState.values.packageAmount
 		})
 

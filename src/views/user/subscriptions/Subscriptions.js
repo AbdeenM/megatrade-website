@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 
 import { UserApi } from '../../../config/Api'
-import SubscriptionCard from './components/SubscriptionCard'
+import SubscriptionsCard from './components/SubscriptionsCard'
 
 const userApi = new UserApi()
 
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const SubscriptionList = () => {
+const SubscriptionsList = () => {
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
@@ -70,7 +70,7 @@ const SubscriptionList = () => {
 								md={6}
 								xs={12}
 								key={i}>
-								<SubscriptionCard
+								<SubscriptionsCard
 									package={userPackageState}
 									subscription={subscription} />
 							</Grid>
@@ -82,4 +82,4 @@ const SubscriptionList = () => {
 	)
 }
 
-export default SubscriptionList
+export default SubscriptionsList

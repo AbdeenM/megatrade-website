@@ -25,11 +25,12 @@ import NotFound from './views/web/notFound/NotFound'
 import AccountUser from './views/user/account/Account'
 import DashboardUser from './views/user/dashboard/Dashboard'
 import EducationUser from './views/user/education/Education'
-import SubscriptionUser from './views/user/subscription/Subscription'
+import SubscriptionsUser from './views/user/subscriptions/Subscriptions'
 
 import LoginAdmin from './views/admin/signIn/SignIn'
 import AccountAdmin from './views/admin/account/Account'
 import DashboardAdmin from './views/admin/dashboard/Dashboard'
+import SubscriptionsAdmin from './views/admin/subscriptions/Subscriptions'
 
 const Routes = () => {
 	return (
@@ -98,13 +99,19 @@ const Routes = () => {
 				exact
 				layout={MainLayout}
 				path='/subscriptions'
-				component={SubscriptionUser} />
+				component={SubscriptionsUser} />
 
 			<AuthAdminRouteWithLayout
 				exact
 				layout={AdminLayout}
 				path='/admin/dashboard'
 				component={DashboardAdmin} />
+
+			<AuthAdminRouteWithLayout
+				exact
+				layout={AdminLayout}
+				path='/admin/subscriptions'
+				component={SubscriptionsAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact

@@ -10,11 +10,13 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import EducationIcon from '@material-ui/icons/Book'
 import { Divider, Drawer } from '@material-ui/core'
+import EducationIcon from '@material-ui/icons/Book'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
+import VerifiedIcon from '@material-ui/icons/VerifiedUser'
+import TradeSignalIcon from '@material-ui/icons/TrendingUp'
 
 import Profile from './components/Profile'
 import SidebarNav from './components/SidebarNav'
@@ -42,7 +44,10 @@ const useStyles = makeStyles(theme => ({
 	},
 	nav: {
 		marginBottom: theme.spacing(2)
-	}
+	},
+	title: {
+		marginTop: theme.spacing(3)
+	},
 }))
 
 const Sidebar = props => {
@@ -82,19 +87,34 @@ const Sidebar = props => {
 			icon: <DashboardIcon />
 		},
 		{
-			title: 'Education',
-			href: '/admin/education',
-			icon: <EducationIcon />
+			title: 'User Dashboard',
+			href: '/admin/userDashboard',
+			icon: <DashboardIcon />
 		},
 		{
-			title: 'Account',
-			href: '/admin/account',
-			icon: <AccountIcon />
+			title: 'Trade Signals',
+			href: '/admin/signals',
+			icon: <TradeSignalIcon />
 		},
 		{
 			title: 'Subscriptions',
 			href: '/admin/subscriptions',
 			icon: <SubscriptionIcon />
+		},
+		{
+			title: 'Education',
+			href: '/admin/education',
+			icon: <EducationIcon />
+		},
+		{
+			title: 'Users',
+			href: '/admin/users',
+			icon: <AccountIcon />
+		},
+		{
+			title: 'Account',
+			href: '/admin/account',
+			icon: <VerifiedIcon />
 		}
 	]
 

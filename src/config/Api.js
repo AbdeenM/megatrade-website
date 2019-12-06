@@ -129,6 +129,24 @@ class AdminApi {
             throw error
         }
     }
+
+    createSubscriptions = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/createSubscriptions`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    removeSubscriptions = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/removeSubscriptions`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 class MiscellaneousApi {

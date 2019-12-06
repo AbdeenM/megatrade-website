@@ -12,8 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import InputIcon from '@material-ui/icons/Input'
 import { makeStyles } from '@material-ui/styles'
 import { Link as RouterLink, Redirect } from 'react-router-dom'
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined'
-import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core'
+import { AppBar, Toolbar, Hidden, IconButton } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -57,15 +56,6 @@ const Topbar = props => {
 				<div className={classes.flexGrow} />
 
 				<Hidden mdDown>
-					<IconButton color='inherit'>
-						<Badge
-							variant='dot'
-							color='primary'
-							badgeContent={notifications.length}>
-							<NotificationsIcon />
-						</Badge>
-					</IconButton>
-
 					<IconButton
 						color='inherit'
 						onClick={onSignOut}
