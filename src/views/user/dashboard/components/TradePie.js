@@ -25,17 +25,17 @@ const useStyles = makeStyles(theme => ({
 		justifyContent: 'center',
 		marginTop: theme.spacing(2)
 	},
-	device: {
+	option: {
 		textAlign: 'center',
 		padding: theme.spacing(1)
 	},
-	deviceIcon: {
+	optionIcon: {
 		color: theme.palette.icon
 	}
 }))
 
 const TradePie = props => {
-	const { className, ...rest } = props
+	const { className, focus, ...rest } = props
 
 	const theme = useTheme()
 	const classes = useStyles()
@@ -43,18 +43,14 @@ const TradePie = props => {
 	const data = {
 		datasets: [
 			{
-				data: [63, 15, 22],
-				backgroundColor: [
-					theme.palette.primary.main,
-					theme.palette.error.main,
-					theme.palette.warning.main
-				],
 				borderWidth: 8,
+				data: focus.data,
 				borderColor: theme.palette.white,
-				hoverBorderColor: theme.palette.white
+				hoverBorderColor: theme.palette.white,
+				backgroundColor: focus.backgroundColor
 			}
 		],
-		labels: ['Desktop', 'Tablet', 'Mobile']
+		labels: focus.labels
 	}
 
 	const options = {
@@ -81,7 +77,7 @@ const TradePie = props => {
 		}
 	}
 
-	const devices = [
+	const tradeOption = [
 		{
 			title: 'Desktop',
 			value: '63',
@@ -104,7 +100,8 @@ const TradePie = props => {
 			{...rest}
 			className={clsx(classes.root, className)}>
 			<CardHeader
-				title='Trade Focus' />
+				title='Trade Focus'
+				subheader='Our current trade option focus' />
 
 			<Divider />
 
@@ -117,19 +114,19 @@ const TradePie = props => {
 
 				<div className={classes.stats}>
 					{
-						devices.map(device => (
+						focus.labels.map((option, i) => (
 							<div
-								key={device.title}
-								className={classes.device}>
+								key={i}
+								className={classes.option}>
 								<Typography
 									variant='title'>
-									{device.title}
+									{option}
 								</Typography>
 
 								<Typography
 									variant='h2'
-									style={{ color: device.color }}>
-									{device.value}%
+									style={{ color: focus.backgroundColor[i] }}>
+									{focus.data[i]}%
               					</Typography>
 							</div>
 						))

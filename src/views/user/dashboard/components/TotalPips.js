@@ -10,8 +10,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import BarChartIcon from '@material-ui/icons/BarChart'
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -33,23 +31,11 @@ const useStyles = makeStyles(theme => ({
 	icon: {
 		width: 32,
 		height: 32
-	},
-	difference: {
-		display: 'flex',
-		alignItems: 'center',
-		marginTop: theme.spacing(2)
-	},
-	differenceIcon: {
-		color: theme.palette.success.dark
-	},
-	differenceValue: {
-		marginRight: theme.spacing(1),
-		color: theme.palette.success.dark
 	}
 }))
 
 const TotalPips = props => {
-	const { className, ...rest } = props
+	const { className, pips, ...rest } = props
 
 	const classes = useStyles()
 
@@ -70,7 +56,7 @@ const TotalPips = props => {
 							TOTAL PIPS
             			</Typography>
 
-						<Typography variant='h3'>3,961</Typography>
+						<Typography variant='h3'>{pips}</Typography>
 					</Grid>
 
 					<Grid item>
@@ -79,22 +65,6 @@ const TotalPips = props => {
 						</Avatar>
 					</Grid>
 				</Grid>
-
-				<div className={classes.difference}>
-					<ArrowUpwardIcon className={classes.differenceIcon} />
-
-					<Typography
-						variant='body2'
-						className={classes.differenceValue}>
-						23%
-          			</Typography>
-
-					<Typography
-						variant='caption'
-						className={classes.caption}>
-						Since last month
-          			</Typography>
-				</div>
 			</CardContent>
 		</Card>
 	)

@@ -26,11 +26,9 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		margin: '0 auto',
 		overflow: 'hidden',
-		borderRadius: '5px',
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginBottom: theme.spacing(5),
-		border: `1px solid ${theme.palette.divider}`
+		marginBottom: theme.spacing(5)
 	},
 	image: {
 		width: '100%'

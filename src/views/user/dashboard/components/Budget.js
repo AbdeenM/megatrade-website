@@ -10,8 +10,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import MoneyIcon from '@material-ui/icons/Money'
 import { makeStyles } from '@material-ui/styles'
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import { Card, CardContent, Grid, Typography, Avatar } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -33,23 +31,11 @@ const useStyles = makeStyles(theme => ({
 	icon: {
 		width: 32,
 		height: 32
-	},
-	difference: {
-		display: 'flex',
-		alignItems: 'center',
-		marginTop: theme.spacing(2)
-	},
-	differenceIcon: {
-		color: theme.palette.error.dark
-	},
-	differenceValue: {
-		marginRight: theme.spacing(1),
-		color: theme.palette.error.dark
 	}
 }))
 
 const Budget = props => {
-	const { className, ...rest } = props
+	const { className, budget, ...rest } = props
 
 	const classes = useStyles()
 
@@ -70,7 +56,7 @@ const Budget = props => {
 							TRADING BUDGET
             			</Typography>
 
-						<Typography variant='h3'>$24,000</Typography>
+						<Typography variant='h3'>${budget}</Typography>
 					</Grid>
 
 					<Grid item>
@@ -79,22 +65,6 @@ const Budget = props => {
 						</Avatar>
 					</Grid>
 				</Grid>
-
-				<div className={classes.difference}>
-					<ArrowDownwardIcon className={classes.differenceIcon} />
-
-					<Typography
-						variant='body2'
-						className={classes.differenceValue}>
-						12%
-          			</Typography>
-
-					<Typography
-						variant='caption'
-						className={classes.caption}>
-						Since last month
-          			</Typography>
-				</div>
 			</CardContent>
 		</Card>
 	)

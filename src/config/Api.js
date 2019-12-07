@@ -121,6 +121,24 @@ class AdminApi {
         }
     }
 
+    fetchUserDashboard = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/fetchUserDashboard`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    createUserDashboard = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/createUserDashboard`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
     fetchSubscriptions = async (args) => {
         try {
             const { data } = await axios.post(`${this.path}/fetchSubscriptions`, args)

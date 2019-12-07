@@ -57,6 +57,7 @@ const SignalAlerts = props => {
 			className={clsx(classes.root, className)}>
 			<CardHeader
 				title='Signal Alerts'
+				subheader='List of all our latest signals including time and date published'
 				action={
 					<IconButton
 						size='small'>

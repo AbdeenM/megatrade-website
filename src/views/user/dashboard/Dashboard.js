@@ -6,7 +6,7 @@
  ************************************************************************** */
 
 import { useSnackbar } from 'notistack'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
@@ -34,6 +34,18 @@ const Dashboard = () => {
 
 	const userId = localStorage.getItem('userId')
 
+	const [dashboardState, setDashboardState] = useState({
+		totalPips: '',
+		totalUsers: '',
+		tradeBudget: '',
+		totalProfits: '',
+		tradeFocus: {
+			data: [],
+			labels: [],
+			backgroundColor: []
+		}
+	})
+
 	useEffect(() => { fetchStatistics() }, [])
 
 	const fetchStatistics = async () => {
@@ -41,8 +53,18 @@ const Dashboard = () => {
 		if (fetchStatisticsResult.error)
 			return enqueueSnackbar(fetchStatisticsResult.message, { variant: 'error' })
 
-		console.log(fetchStatisticsResult);
-
+		setDashboardState(dashboardState => ({
+			...dashboardState,
+			totalPips: fetchStatisticsResult.data.totalPips,
+			totalUsers: fetchStatisticsResult.data.totalUsers,
+			tradeBudget: fetchStatisticsResult.data.tradeBudget,
+			totalProfits: fetchStatisticsResult.data.totalProfits,
+			tradeFocus: {
+				data: fetchStatisticsResult.data.tradeFocus.data,
+				labels: fetchStatisticsResult.data.tradeFocus.labels,
+				backgroundColor: fetchStatisticsResult.data.tradeFocus.backgroundColor
+			}
+		}))
 	}
 
 	return (
@@ -56,7 +78,7 @@ const Dashboard = () => {
 					sm={6}
 					xl={3}
 					xs={12}>
-					<Budget />
+					<Budget budget={dashboardState.tradeBudget} />
 				</Grid>
 
 				<Grid
@@ -65,7 +87,7 @@ const Dashboard = () => {
 					sm={6}
 					xl={3}
 					xs={12}>
-					<TotalUsers />
+					<TotalUsers users={dashboardState.totalUsers} />
 				</Grid>
 
 				<Grid
@@ -74,7 +96,7 @@ const Dashboard = () => {
 					sm={6}
 					xl={3}
 					xs={12}>
-					<TotalPips />
+					<TotalPips pips={dashboardState.totalPips} />
 				</Grid>
 
 				<Grid
@@ -83,13 +105,13 @@ const Dashboard = () => {
 					sm={6}
 					xl={3}
 					xs={12}>
-					<TotalProfits />
+					<TotalProfits profits={dashboardState.totalProfits} />
 				</Grid>
 
 				<Grid
 					item
 					lg={8}
-					xl={9}
+					xl={7}
 					md={12}
 					xs={12}>
 					<LatestAlerts />
@@ -98,10 +120,10 @@ const Dashboard = () => {
 				<Grid
 					item
 					lg={4}
-					xl={3}
+					xl={5}
 					md={12}
 					xs={12}>
-					<TradePie />
+					<TradePie focus={dashboardState.tradeFocus} />
 				</Grid>
 
 				<Grid

@@ -5,16 +5,12 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import { useSnackbar } from 'notistack'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
-import { AdminApi } from '../../../config/Api'
 import NewSubscription from './components/NewSubscription'
 import SubscriptionsList from './components/SubscriptionsList'
-
-const adminApi = new AdminApi()
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -24,17 +20,6 @@ const useStyles = makeStyles(theme => ({
 
 const Subscriptions = () => {
 	const classes = useStyles()
-	const { enqueueSnackbar } = useSnackbar()
-
-	const adminId = localStorage.getItem('adminId')
-
-	useEffect(() => { fetchSubscriptions() }, [])
-
-	const fetchSubscriptions = async () => {
-		const fetchSubscriptionsResult = await adminApi.fetchSubscriptions({ adminId })
-		if (fetchSubscriptionsResult.error)
-			return enqueueSnackbar(fetchSubscriptionsResult.message, { variant: 'error' })
-	}
 
 	return (
 		<div className={classes.root}>
