@@ -27,9 +27,11 @@ import DashboardUser from './views/user/dashboard/Dashboard'
 import EducationUser from './views/user/education/Education'
 import SubscriptionsUser from './views/user/subscriptions/Subscriptions'
 
+import UsersAdmin from './views/admin/users/Users'
 import LoginAdmin from './views/admin/signIn/SignIn'
 import AccountAdmin from './views/admin/account/Account'
 import DashboardAdmin from './views/admin/dashboard/Dashboard'
+import EducationAdmin from './views/admin/education/Education'
 import SubscriptionsAdmin from './views/admin/subscriptions/Subscriptions'
 import UserDashboardAdmin from './views/admin/userDashboard/UserDashboard'
 
@@ -123,8 +125,20 @@ const Routes = () => {
 			<AuthAdminRouteWithLayout
 				exact
 				layout={AdminLayout}
+				path='/admin/education'
+				component={EducationAdmin} />
+
+			<AuthAdminRouteWithLayout
+				exact
+				layout={AdminLayout}
 				path='/admin/account'
 				component={AccountAdmin} />
+
+			<AuthAdminRouteWithLayout
+				exact
+				path='/admin/users'
+				layout={AdminLayout}
+				component={UsersAdmin} />
 
 			<Redirect to='/not-found' />
 		</Switch>
