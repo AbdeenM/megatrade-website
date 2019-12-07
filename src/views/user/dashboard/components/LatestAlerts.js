@@ -122,7 +122,7 @@ const LatestAlerts = props => {
 			className={clsx(classes.root, className)}>
 			<CardHeader
 				title='Latest Alerts'
-				subheader='Our current alert alerts weekly frequency'
+				subheader='Our current and expected alerts for this weeks frequency'
 				action={
 					<Button
 						size='small'

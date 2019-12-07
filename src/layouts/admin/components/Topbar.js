@@ -31,7 +31,6 @@ const Topbar = props => {
 
 	const classes = useStyles()
 
-	const [notifications] = useState([])
 	const [isLogged, setLogged] = useState(true)
 
 	const onSignOut = () => {
