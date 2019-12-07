@@ -6,12 +6,13 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
+import moment from 'moment'
 import Validate from 'validate.js'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent } from '@material-ui/core'
+import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent, Typography } from '@material-ui/core'
 
 import { AdminApi } from '../../../../config/Api'
 
@@ -64,6 +65,13 @@ const schema = {
 
 const useStyles = makeStyles(theme => ({
     root: {},
+    section: {
+        marginBottom: theme.spacing(5)
+    },
+    item: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
     uploadButton: {
         marginRight: theme.spacing(2)
     }
@@ -77,6 +85,8 @@ const NewUserDashboard = props => {
 
     const adminId = localStorage.getItem('adminId')
 
+    const [weekdaysState, setWeekdaysState] = useState([])
+
     const [userDashboardState, setUserDashboardState] = useState({
         errors: {},
         values: {
@@ -89,13 +99,20 @@ const NewUserDashboard = props => {
                 labels: '',
                 backgroundColor: ''
             },
+            latestAlerts: {
+                thisYear: [],
+                lastYear: []
+            }
         },
         touched: {},
         isValid: false,
         isChanged: false
     })
 
-    useEffect(() => { fetchUserDashboard() }, [])
+    useEffect(() => {
+        getWeekDays()
+        fetchUserDashboard()
+    }, [])
 
     useEffect(() => {
         const errors = Validate(userDashboardState.values, schema)
@@ -106,6 +123,20 @@ const NewUserDashboard = props => {
             errors: errors || {}
         }))
     }, [userDashboardState.values])
+
+    const getWeekDays = () => {
+        let weekDays = []
+        const startOfWeek = moment().startOf('week')
+
+        Array(7).fill().map((each, i) => weekDays.push(moment(startOfWeek).add(i, 'days')))
+
+        const labels = []
+        weekDays.forEach(weekday => {
+            labels.push(moment(weekday).format('DD MMM'))
+        })
+
+        setWeekdaysState(labels)
+    }
 
     const onChange = event => {
         event.persist()
@@ -147,6 +178,60 @@ const NewUserDashboard = props => {
         }))
     }
 
+    const onChangeLatestAlertsThisYear = event => {
+        event.persist()
+
+        const index = parseInt(event.target.name)
+        let newArray = userDashboardState.values.latestAlerts.thisYear
+        newArray[index] = event.target.value
+
+        setUserDashboardState(userDashboardState => ({
+            ...userDashboardState,
+            values: {
+                ...userDashboardState.values,
+                latestAlerts: {
+                    ...userDashboardState.values.latestAlerts,
+                    thisYear: newArray
+                }
+            },
+            touched: {
+                ...userDashboardState.touched,
+                latestAlerts: {
+                    ...userDashboardState.touched.latestAlerts,
+                    thisYear: true
+                }
+            },
+            isChanged: true
+        }))
+    }
+
+    const onChangeLatestAlertsLastYear = event => {
+        event.persist()
+
+        const index = parseInt(event.target.name)
+        let newArray = userDashboardState.values.latestAlerts.lastYear
+        newArray[index] = event.target.value
+
+        setUserDashboardState(userDashboardState => ({
+            ...userDashboardState,
+            values: {
+                ...userDashboardState.values,
+                latestAlerts: {
+                    ...userDashboardState.values.latestAlerts,
+                    lastYear: newArray
+                }
+            },
+            touched: {
+                ...userDashboardState.touched,
+                latestAlerts: {
+                    ...userDashboardState.touched.latestAlerts,
+                    lastYear: true
+                }
+            },
+            isChanged: true
+        }))
+    }
+
     const fetchUserDashboard = async () => {
         const fetchUserDashboardResult = await adminApi.fetchUserDashboard({ adminId })
         if (fetchUserDashboardResult.error)
@@ -161,14 +246,16 @@ const NewUserDashboard = props => {
                     data: fetchUserDashboardResult.data.tradeFocus.data.join(', '),
                     labels: fetchUserDashboardResult.data.tradeFocus.labels.join(', '),
                     backgroundColor: fetchUserDashboardResult.data.tradeFocus.backgroundColor.join(', ')
+                },
+                latestAlerts: {
+                    thisYear: fetchUserDashboardResult.data.latestAlerts.thisYear,
+                    lastYear: fetchUserDashboardResult.data.latestAlerts.lastYear
                 }
             }
         }))
     }
 
     const onCreateUserDashboard = async () => {
-        console.log('=====================');
-
         const createResult = await adminApi.createUserDashboard({
             adminId,
             totalPips: userDashboardState.values.totalPips,
@@ -179,6 +266,10 @@ const NewUserDashboard = props => {
                 data: userDashboardState.values.tradeFocus.data.split(', '),
                 labels: userDashboardState.values.tradeFocus.labels.split(', '),
                 backgroundColor: userDashboardState.values.tradeFocus.backgroundColor.split(', ')
+            },
+            latestAlerts: {
+                thisYear: userDashboardState.values.latestAlerts.thisYear,
+                lastYear: userDashboardState.values.latestAlerts.lastYear
             }
         })
 
@@ -199,165 +290,263 @@ const NewUserDashboard = props => {
             <form
                 noValidate
                 autoComplete='off'>
-                <CardHeader
-                    title='User Dashboard - Stats'
-                    subheader='You can edit what users dashboard stats display here' />
+                <div className={classes.section}>
+                    <CardHeader
+                        title='User Dashboard - Stats'
+                        subheader='You can edit what users dashboard stats display here' />
 
-                <Divider />
+                    <Divider />
 
-                <CardContent>
-                    <Grid
-                        container
-                        spacing={3}>
+                    <CardContent>
                         <Grid
-                            item
-                            md={6}
-                            xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                margin='dense'
-                                name='totalPips'
-                                label='Total Pips'
-                                variant='outlined'
-                                onChange={onChange}
-                                error={hasError('totalPips')}
-                                value={userDashboardState.values.totalPips}
-                                helperText={
-                                    hasError('totalPips') ? userDashboardState.errors.totalPips[0] : null
-                                } />
-                        </Grid>
+                            container
+                            spacing={3}>
+                            <Grid
+                                item
+                                md={6}
+                                xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    margin='dense'
+                                    name='totalPips'
+                                    label='Total Pips'
+                                    variant='outlined'
+                                    onChange={onChange}
+                                    error={hasError('totalPips')}
+                                    value={userDashboardState.values.totalPips}
+                                    helperText={
+                                        hasError('totalPips') ? userDashboardState.errors.totalPips[0] : null
+                                    } />
+                            </Grid>
 
+                            <Grid
+                                item
+                                md={6}
+                                xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    multiline
+                                    margin='dense'
+                                    name='totalUsers'
+                                    variant='outlined'
+                                    label='Total Users'
+                                    onChange={onChange}
+                                    error={hasError('totalUsers')}
+                                    value={userDashboardState.values.totalUsers}
+                                    helperText={
+                                        hasError('totalUsers') ? userDashboardState.errors.totalUsers[0] : null
+                                    } />
+                            </Grid>
+
+                            <Grid
+                                item
+                                md={6}
+                                xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    margin='dense'
+                                    name='tradeBudget'
+                                    variant='outlined'
+                                    onChange={onChange}
+                                    label='Trade Budget'
+                                    error={hasError('tradeBudget')}
+                                    InputProps={{ startAdornment: '$' }}
+                                    value={userDashboardState.values.tradeBudget}
+                                    helperText={
+                                        hasError('tradeBudget') ? userDashboardState.errors.tradeBudget[0] : null
+                                    } />
+                            </Grid>
+
+                            <Grid
+                                item
+                                md={6}
+                                xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    margin='dense'
+                                    variant='outlined'
+                                    name='totalProfits'
+                                    onChange={onChange}
+                                    label='Total Profits'
+                                    error={hasError('totalProfits')}
+                                    InputProps={{ startAdornment: '$' }}
+                                    value={userDashboardState.values.totalProfits}
+                                    helperText={
+                                        hasError('totalProfits') ? userDashboardState.errors.totalProfits[0] : null
+                                    } />
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </div>
+
+                <div className={classes.section}>
+                    <CardHeader
+                        title='User Dashboard - Trade Focus'
+                        subheader='You can edit what users dashboard trade focus pie chart display here' />
+
+                    <Divider />
+
+                    <CardContent>
                         <Grid
-                            item
-                            md={6}
-                            xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                multiline
-                                margin='dense'
-                                name='totalUsers'
-                                variant='outlined'
-                                label='Total Users'
-                                onChange={onChange}
-                                error={hasError('totalUsers')}
-                                value={userDashboardState.values.totalUsers}
-                                helperText={
-                                    hasError('totalUsers') ? userDashboardState.errors.totalUsers[0] : null
-                                } />
-                        </Grid>
+                            container
+                            spacing={3}>
+                            <Grid
+                                item
+                                md={6}
+                                xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name='labels'
+                                    label='Labels'
+                                    margin='dense'
+                                    variant='outlined'
+                                    error={hasError('labels')}
+                                    onChange={onChangeTradeFocus}
+                                    value={userDashboardState.values.tradeFocus.labels}
+                                    helperText={
+                                        hasError('labels') ? userDashboardState.errors.labels[0] : 'Enter the labels to be used on the pie chart seperated by a comma. i.e. USD/JPY, EUR/JPY, Wall Street DJI'
+                                    } />
+                            </Grid>
 
+                            <Grid
+                                item
+                                md={6}
+                                xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name='data'
+                                    label='Data'
+                                    margin='dense'
+                                    variant='outlined'
+                                    error={hasError('data')}
+                                    onChange={onChangeTradeFocus}
+                                    value={userDashboardState.values.tradeFocus.data}
+                                    helperText={
+                                        hasError('data') ? userDashboardState.errors.data[0] : 'Enter the percentage you want for each label seperated by a comma. i.e. 63, 15, 22'
+                                    } />
+                            </Grid>
+
+                            <Grid
+                                item
+                                md={6}
+                                xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    margin='dense'
+                                    variant='outlined'
+                                    name='backgroundColor'
+                                    label='Background Color'
+                                    onChange={onChangeTradeFocus}
+                                    error={hasError('backgroundColor')}
+                                    value={userDashboardState.values.tradeFocus.backgroundColor}
+                                    helperText={
+                                        hasError('backgroundColor') ? userDashboardState.errors.backgroundColor[0] : 'Enter the color for each label seperated by a comma. i.e. blue, red, orange'
+                                    } />
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </div>
+
+                <div className={classes.section}>
+                    <CardHeader
+                        title='User Dashboard - Latest Alerts'
+                        subheader='You can edit what users dashboard latest alerts chart display here' />
+
+                    <Divider />
+
+                    <CardContent>
                         <Grid
-                            item
-                            md={6}
-                            xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                margin='dense'
-                                name='tradeBudget'
-                                variant='outlined'
-                                onChange={onChange}
-                                label='Trade Budget'
-                                error={hasError('tradeBudget')}
-                                InputProps={{ startAdornment: '$' }}
-                                value={userDashboardState.values.tradeBudget}
-                                helperText={
-                                    hasError('tradeBudget') ? userDashboardState.errors.tradeBudget[0] : null
-                                } />
+                            container
+                            wrap='wrap'
+                            spacing={3}>
+                            <Grid
+                                item
+                                md={2}
+                                sm={2}
+                                xs={12}
+                                className={classes.item}>
+                                <Typography
+                                    variant='h6'
+                                    gutterBottom>
+                                    Days of current week
+              				    </Typography>
+                                {
+                                    weekdaysState.map((weekday, i) => (
+                                        <TextField
+                                            key={i}
+                                            disabled
+                                            fullWidth
+                                            margin='dense'
+                                            value={weekday}
+                                            variant='outlined'
+                                            label={i + 1 + ' Day of Week'} />
+                                    ))
+                                }
+                            </Grid>
+
+                            <Grid
+                                item
+                                md={5}
+                                sm={5}
+                                xs={12}
+                                className={classes.item}>
+                                <Typography
+                                    variant='h6'
+                                    gutterBottom>
+                                    This Year Stats for each Day
+              				    </Typography>
+                                {
+                                    userDashboardState.values.latestAlerts.thisYear.map((weekday, i) => (
+                                        <TextField
+                                            key={i}
+                                            required
+                                            fullWidth
+                                            margin='dense'
+                                            value={weekday}
+                                            variant='outlined'
+                                            name={i.toString()}
+                                            label='Stat for the Day of Week'
+                                            onChange={onChangeLatestAlertsThisYear} />
+                                    ))
+                                }
+                            </Grid>
+
+                            <Grid
+                                item
+                                md={5}
+                                sm={5}
+                                xs={12}
+                                className={classes.item}>
+                                <Typography
+                                    variant='h6'
+                                    gutterBottom>
+                                    Last Year Stats for each Day
+              				    </Typography>
+                                {
+                                    userDashboardState.values.latestAlerts.lastYear.map((weekday, i) => (
+                                        <TextField
+                                            key={i}
+                                            required
+                                            fullWidth
+                                            margin='dense'
+                                            value={weekday}
+                                            variant='outlined'
+                                            name={i.toString()}
+                                            label='Stat for the Day of Week'
+                                            onChange={onChangeLatestAlertsLastYear} />
+                                    ))
+                                }
+                            </Grid>
                         </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                margin='dense'
-                                variant='outlined'
-                                name='totalProfits'
-                                onChange={onChange}
-                                label='Total Profits'
-                                error={hasError('totalProfits')}
-                                InputProps={{ startAdornment: '$' }}
-                                value={userDashboardState.values.totalProfits}
-                                helperText={
-                                    hasError('totalProfits') ? userDashboardState.errors.totalProfits[0] : null
-                                } />
-                        </Grid>
-                    </Grid>
-                </CardContent>
-
-                <CardHeader
-                    title='User Dashboard - Trade Focus'
-                    subheader='You can edit what users dashboard trade focus pie chat display here' />
-
-                <Divider />
-
-                <CardContent>
-                    <Grid
-                        container
-                        spacing={3}>
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                name='labels'
-                                label='Labels'
-                                margin='dense'
-                                variant='outlined'
-                                error={hasError('labels')}
-                                onChange={onChangeTradeFocus}
-                                value={userDashboardState.values.tradeFocus.labels}
-                                helperText={
-                                    hasError('labels') ? userDashboardState.errors.labels[0] : 'Enter the labels to be used on the pie chart seperated by a comma. i.e. USD/JPY, EUR/JPY, Wall Street DJI'
-                                } />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                name='data'
-                                label='Data'
-                                margin='dense'
-                                variant='outlined'
-                                error={hasError('data')}
-                                onChange={onChangeTradeFocus}
-                                value={userDashboardState.values.tradeFocus.data}
-                                helperText={
-                                    hasError('data') ? userDashboardState.errors.data[0] : 'Enter the percentage you want for each label seperated by a comma. i.e. 63, 15, 22'
-                                } />
-                        </Grid>
-
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                margin='dense'
-                                variant='outlined'
-                                name='backgroundColor'
-                                label='Background Color'
-                                onChange={onChangeTradeFocus}
-                                error={hasError('backgroundColor')}
-                                value={userDashboardState.values.tradeFocus.backgroundColor}
-                                helperText={
-                                    hasError('backgroundColor') ? userDashboardState.errors.backgroundColor[0] : 'Enter the color for each label seperated by a comma. i.e. blue, red, orange'
-                                } />
-                        </Grid>
-                    </Grid>
-                </CardContent>
+                    </CardContent>
+                </div>
 
                 <Divider />
 
@@ -368,6 +557,13 @@ const NewUserDashboard = props => {
                         onClick={onCreateUserDashboard}
                         disabled={!userDashboardState.isChanged || hasError('totalProfits') || userDashboardState.values.totalProfits.length <= 0 || hasError('tradeBudget') || userDashboardState.values.tradeBudget.length <= 0 || hasError('totalUsers') || userDashboardState.values.totalUsers.length <= 0 || hasError('totalPips') || userDashboardState.values.totalPips.length <= 0 || hasError('labels') || userDashboardState.values.tradeFocus.labels.length <= 0 || hasError('data') || userDashboardState.values.tradeFocus.data.length <= 0 || hasError('backgroundColor') || userDashboardState.values.tradeFocus.backgroundColor.length <= 0}>
                         Create User Dashboard Data
+          			</Button>
+
+                    <Button
+                        color='secondary'
+                        variant='contained'
+                        onClick={() => window.location.reload()}>
+                        RESET
           			</Button>
                 </CardActions>
             </form>

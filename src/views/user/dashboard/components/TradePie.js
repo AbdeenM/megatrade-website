@@ -77,24 +77,6 @@ const TradePie = props => {
 		}
 	}
 
-	const tradeOption = [
-		{
-			title: 'Desktop',
-			value: '63',
-			color: theme.palette.primary.main
-		},
-		{
-			title: 'Tablet',
-			value: '15',
-			color: theme.palette.error.main
-		},
-		{
-			title: 'Mobile',
-			value: '23',
-			color: theme.palette.warning.main
-		}
-	]
-
 	return (
 		<Card
 			{...rest}
@@ -119,7 +101,7 @@ const TradePie = props => {
 								key={i}
 								className={classes.option}>
 								<Typography
-									variant='title'>
+									variant='body1'>
 									{option}
 								</Typography>
 

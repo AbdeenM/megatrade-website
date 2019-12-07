@@ -43,6 +43,10 @@ const Dashboard = () => {
 			data: [],
 			labels: [],
 			backgroundColor: []
+		},
+		latestAlerts: {
+			thisYear: [],
+			lastYear: []
 		}
 	})
 
@@ -63,6 +67,10 @@ const Dashboard = () => {
 				data: fetchStatisticsResult.data.tradeFocus.data,
 				labels: fetchStatisticsResult.data.tradeFocus.labels,
 				backgroundColor: fetchStatisticsResult.data.tradeFocus.backgroundColor
+			},
+			latestAlerts: {
+				thisYear: fetchStatisticsResult.data.latestAlerts.thisYear,
+				lastYear: fetchStatisticsResult.data.latestAlerts.lastYear
 			}
 		}))
 	}
@@ -114,7 +122,7 @@ const Dashboard = () => {
 					xl={7}
 					md={12}
 					xs={12}>
-					<LatestAlerts />
+					<LatestAlerts alerts={dashboardState.latestAlerts} />
 				</Grid>
 
 				<Grid

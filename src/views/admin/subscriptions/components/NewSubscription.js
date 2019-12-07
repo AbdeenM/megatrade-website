@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent, Avatar } from '@material-ui/core'
+import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent } from '@material-ui/core'
 
 import { AdminApi } from '../../../../config/Api'
 
@@ -175,7 +175,7 @@ const NewSubscription = props => {
                 <CardContent>
                     <div className={classes.imageContainer}>
                         <img
-                            alt='subscription image'
+                            alt='subscription'
                             className={classes.image}
                             src={subscriptionState.values.image} />
                     </div>
