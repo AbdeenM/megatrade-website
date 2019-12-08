@@ -5,44 +5,56 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React from 'react'
+import { useSnackbar } from 'notistack'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import React, { useEffect, useState } from 'react'
+
+import { AdminApi } from '../../../config/Api'
+import UsersTable from './components/UsersTable'
+
+const adminApi = new AdminApi()
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        padding: theme.spacing(4)
-    }
+	root: {
+		padding: theme.spacing(4)
+	}
 }))
 
 const Subscriptions = () => {
-    const classes = useStyles()
+	const classes = useStyles()
+	const { enqueueSnackbar } = useSnackbar()
 
-    return (
-        <div className={classes.root}>
-            <Grid
-                container
-                spacing={4}>
-                <Grid
-                    item
-                    lg={8}
-                    xl={8}
-                    md={12}
-                    xs={12}>
+	const adminId = localStorage.getItem('adminId')
 
-                </Grid>
+	const [usersListState, setUsersListState] = useState([])
 
-                <Grid
-                    item
-                    lg={4}
-                    xl={4}
-                    md={12}
-                    xs={12}>
+	useEffect(() => { fetchUsersList() }, [])
 
-                </Grid>
-            </Grid>
-        </div>
-    )
+	const fetchUsersList = async () => {
+		const fetchUsersListResult = await adminApi.fetchUsersList({ adminId })
+		if (fetchUsersListResult.error)
+			return enqueueSnackbar(fetchUsersListResult.message, { variant: 'error' })
+
+		setUsersListState(fetchUsersListResult.data)
+	}
+
+	return (
+		<div className={classes.root}>
+			<Grid
+				container
+				spacing={4}>
+				<Grid
+					item
+					lg={12}
+					xl={12}
+					md={12}
+					xs={12}>
+					<UsersTable users={usersListState} />
+				</Grid>
+			</Grid>
+		</div>
+	)
 }
 
 export default Subscriptions

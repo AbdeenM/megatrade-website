@@ -94,15 +94,6 @@ const Topbar = props => {
 									className={classes.rightLink}>
 									{'Sign In'}
 								</Link>
-
-								<Link
-									to='sign-up'
-									variant='h6'
-									underline='none'
-									component={RouterLink}
-									className={clsx(classes.rightLink, classes.linkSecondary)}>
-									{'Sign Up'}
-								</Link>
 							</div>
 					}
 				</Hidden>

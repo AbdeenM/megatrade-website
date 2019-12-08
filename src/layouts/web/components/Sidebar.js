@@ -12,7 +12,6 @@ import { Drawer } from '@material-ui/core'
 import HomeIcon from '@material-ui/icons/Home'
 import { makeStyles } from '@material-ui/styles'
 import SignInIcon from '@material-ui/icons/Input'
-import SignUpIcon from '@material-ui/icons/Assignment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
 
 import SidebarNav from './SidebarNav'
@@ -57,11 +56,6 @@ const Sidebar = props => {
 			title: 'Sign In',
 			href: '/sign-in',
 			icon: <SignInIcon />
-		},
-		{
-			title: 'Sign Up',
-			href: '/sign-up',
-			icon: <SignUpIcon />
 		}]
 
 	const pages = [

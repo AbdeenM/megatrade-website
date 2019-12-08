@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Avatar, Button, Divider, Typography, CardActions, CardContent, LinearProgress } from '@material-ui/core'
+import { Card, Avatar, Button, Divider, Typography, CardActions, CardContent } from '@material-ui/core'
 
 import { AdminApi } from '../../../../config/Api'
 

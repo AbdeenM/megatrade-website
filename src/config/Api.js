@@ -165,6 +165,24 @@ class AdminApi {
             throw error
         }
     }
+
+    createUser = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/createUser`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    fetchUsersList = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/fetchUsersList`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 class MiscellaneousApi {
