@@ -56,7 +56,7 @@ const Signals = () => {
 		<div className={classes.root}>
 			<Grid
 				container
-				spacing={4}>
+				spacing={10}>
 				<Grid
 					item
 					lg={12}

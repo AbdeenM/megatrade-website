@@ -296,8 +296,8 @@ const SignalsTable = props => {
 						margin='normal'
 						variant='outlined'
 						value={searchState}
-						label='Search Signals'
 						onChange={onChangeSearch}
+						label='Search Free Signals'
 						className={classes.searchInput} />
 
 					<span className={classes.spacer} />

@@ -9,7 +9,7 @@ import React from 'react'
 import { Switch, Redirect } from 'react-router-dom'
 
 import WebLayout from './layouts/web/Web'
-import MainLayout from './layouts/main/Main'
+import MainLayout from './layouts/user/Main'
 import AdminLayout from './layouts/admin/Main'
 import RouteWithLayout from './components/RouteWithLayout'
 import AuthRouteWithLayout from './components/AuthRouteWithLayout'

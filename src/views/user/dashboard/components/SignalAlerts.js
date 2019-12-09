@@ -36,7 +36,9 @@ const SignalAlerts = props => {
 	const statusColors = {
 		buy: 'lightgreen',
 		hold: 'lightblue',
-		sell: 'lightcoral'
+		sell: 'lightcoral',
+		close: 'lightyellow',
+		'break even': 'lightgrey'
 	}
 
 	return (
@@ -87,7 +89,7 @@ const SignalAlerts = props => {
 											<TableCell>
 												<Button
 													variant='contained'
-													style={{ backgroundColor: statusColors[signal.status] }}>
+													style={{ backgroundColor: statusColors[signal.status.toLowerCase()] }}>
 													{signal.status}
 												</Button>
 											</TableCell>

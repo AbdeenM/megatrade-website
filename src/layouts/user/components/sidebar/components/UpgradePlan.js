@@ -69,7 +69,7 @@ const UpgradePlan = props => {
 				<Button
 					color='primary'
 					component={Link}
-					to='/subscription'
+					to='/subscriptions'
 					variant='contained'>
 					Upgrade
         		</Button>
