@@ -183,6 +183,24 @@ class AdminApi {
             throw error
         }
     }
+
+    deleteUsers = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/deleteUsers`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    editUser = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/editUser`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 class MiscellaneousApi {
