@@ -78,6 +78,15 @@ class UserApi {
             throw error
         }
     }
+
+    fetchSignals = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/fetchSignals`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 class AdminApi {
@@ -166,15 +175,6 @@ class AdminApi {
         }
     }
 
-    createUser = async (args) => {
-        try {
-            const { data } = await axios.post(`${this.path}/createUser`, args)
-            return data
-        } catch (error) {
-            throw error
-        }
-    }
-
     fetchUsersList = async (args) => {
         try {
             const { data } = await axios.post(`${this.path}/fetchUsersList`, args)
@@ -196,6 +196,87 @@ class AdminApi {
     editUser = async (args) => {
         try {
             const { data } = await axios.post(`${this.path}/editUser`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    createUser = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/createUser`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    fetchSignals = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/fetchSignals`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    fetchFreeSignals = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/fetchFreeSignals`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    deleteSignals = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/deleteSignals`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    editSignal = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/editSignal`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    createSignal = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/createSignal`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    deleteFreeSignals = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/deleteFreeSignals`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    editFreeSignal = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/editFreeSignal`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    createFreeSignal = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/createFreeSignal`, args)
             return data
         } catch (error) {
             throw error

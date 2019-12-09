@@ -34,6 +34,7 @@ const Dashboard = () => {
 
 	const userId = localStorage.getItem('userId')
 
+	const [signalsState, setSignalsState] = useState([])
 	const [dashboardState, setDashboardState] = useState({
 		totalPips: '',
 		totalUsers: '',
@@ -50,7 +51,10 @@ const Dashboard = () => {
 		}
 	})
 
-	useEffect(() => { fetchStatistics() }, [])
+	useEffect(() => {
+		fetchSignals()
+		fetchStatistics()
+	}, [])
 
 	const fetchStatistics = async () => {
 		const fetchStatisticsResult = await userApi.fetchStatistics({ userId })
@@ -73,6 +77,14 @@ const Dashboard = () => {
 				lastYear: fetchStatisticsResult.data.latestAlerts.lastYear
 			}
 		}))
+	}
+
+	const fetchSignals = async () => {
+		const fetchSignalsResult = await userApi.fetchSignals({ userId })
+		if (fetchSignalsResult.error)
+			return enqueueSnackbar(fetchSignalsResult.message, { variant: 'error' })
+
+		setSignalsState(fetchSignalsResult.data)
 	}
 
 	return (
@@ -140,7 +152,9 @@ const Dashboard = () => {
 					xl={12}
 					md={12}
 					xs={12}>
-					<SignalAlerts />
+					<SignalAlerts
+						signals={signalsState}
+						onRefreshSignals={fetchSignals} />
 				</Grid>
 			</Grid>
 		</div>

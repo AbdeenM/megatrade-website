@@ -61,8 +61,7 @@ const Sidebar = props => {
 	const [profileState, setProfileState] = useState({
 		avatar: '',
 		lastName: '',
-		firstName: '',
-		package: ''
+		firstName: ''
 	})
 
 	useEffect(() => { fetchProfileDetails() }, [])

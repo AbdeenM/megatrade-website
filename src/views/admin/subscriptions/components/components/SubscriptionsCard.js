@@ -51,7 +51,7 @@ const SubscriptionsCard = props => {
 
 	const adminId = localStorage.getItem('adminId')
 
-	const onRemovePackage = async () => {
+	const onRemoveMembership = async () => {
 		const removeResult = await adminApi.removeSubscriptions({
 			adminId,
 			subscriptionId: subscription._id
@@ -114,7 +114,7 @@ const SubscriptionsCard = props => {
 						<Button
 							color='secondary'
 							variant='contained'
-							onClick={onRemovePackage}>
+							onClick={onRemoveMembership}>
 							REMOVE
 						</Button>
 					</Grid>

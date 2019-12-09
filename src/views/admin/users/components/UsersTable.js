@@ -10,9 +10,11 @@ import moment from 'moment'
 import Validate from 'validate.js'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
-import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/styles'
+import React, { useState, useEffect } from 'react'
+import Visibility from '@material-ui/icons/Visibility'
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel } from '@material-ui/core'
 
 import Palette from '../../../../theme/Palette'
@@ -22,6 +24,12 @@ import getInitials from '../../../../helpers/getInitials'
 const adminApi = new AdminApi()
 
 const schema = {
+	membership: {
+		presence: { allowEmpty: false, message: 'is required' },
+		length: {
+			maximum: 32
+		}
+	},
 	firstName: {
 		presence: { allowEmpty: false, message: 'is required' },
 		length: {
@@ -36,6 +44,12 @@ const schema = {
 	},
 	email: {
 		email: true,
+		presence: { allowEmpty: false, message: 'is required' },
+		length: {
+			maximum: 64
+		}
+	},
+	password: {
 		presence: { allowEmpty: false, message: 'is required' },
 		length: {
 			maximum: 64
@@ -143,9 +157,10 @@ const UsersTable = props => {
 			status: '',
 			userId: '',
 			country: '',
+			membership: '',
 			lastName: '',
+			password: '',
 			firstName: '',
-			package: '',
 			notifications: {
 				alerts: {
 					email: false,
@@ -169,7 +184,8 @@ const UsersTable = props => {
 		},
 		touched: {},
 		isValid: false,
-		isChanged: false
+		isChanged: false,
+		showPassword: false
 	})
 
 	useEffect(() => {
@@ -186,6 +202,13 @@ const UsersTable = props => {
 			errors: errors || {}
 		}))
 	}, [userProfileState.values])
+
+	const onShowPassword = () => {
+		setUserProfileState(userProfileState => ({
+			...userProfileState,
+			showPassword: !userProfileState.showPassword
+		}))
+	}
 
 	const onChangeText = event => {
 		event.persist()
@@ -355,7 +378,7 @@ const UsersTable = props => {
 				number: userDetails.number,
 				status: userDetails.status,
 				country: userDetails.country,
-				package: userDetails.package,
+				membership: userDetails.membership,
 				lastName: userDetails.lastName,
 				firstName: userDetails.firstName,
 				notifications: {
@@ -397,8 +420,9 @@ const UsersTable = props => {
 			status: userProfileState.values.status,
 			userId: userProfileState.values.userId,
 			country: userProfileState.values.country,
-			package: userProfileState.values.package,
+			membership: userProfileState.values.membership,
 			lastName: userProfileState.values.lastName,
+			password: userProfileState.values.password,
 			firstName: userProfileState.values.firstName,
 			notifications: {
 				alerts: {
@@ -429,8 +453,92 @@ const UsersTable = props => {
 		window.location.reload()
 	}
 
-	const onCreateUser = async () => {
+	const onCreateUserClick = async () => {
+		setUserProfileState(userProfileState => ({
+			errors: {},
+			values: {
+				city: '',
+				email: '',
+				avatar: {
+					isBase64: false,
+					image: ''
+				},
+				number: '',
+				status: '',
+				userId: '',
+				country: '',
+				lastName: '',
+				password: '',
+				firstName: '',
+				membership: '',
+				notifications: {
+					alerts: {
+						email: false,
+						dashboard: false,
+						phoneCalls: false,
+						textMessages: false
+					},
+					promotions: {
+						email: false,
+						dashboard: false,
+						phoneCalls: false,
+						textMessages: false
+					},
+					partnerPromotions: {
+						email: false,
+						dashboard: false,
+						phoneCalls: false,
+						textMessages: false
+					}
+				}
+			},
+			touched: {},
+			isValid: false,
+			isChanged: false
+		}))
 
+		setShowCreateUserDialog(true)
+	}
+
+	const onCreateUser = async () => {
+		const createResult = await adminApi.createUser({
+			adminId,
+			city: userProfileState.values.city,
+			email: userProfileState.values.email,
+			avatar: userProfileState.values.avatar,
+			number: userProfileState.values.number,
+			country: userProfileState.values.country,
+			membership: userProfileState.values.membership,
+			lastName: userProfileState.values.lastName,
+			password: userProfileState.values.password,
+			firstName: userProfileState.values.firstName,
+			notifications: {
+				alerts: {
+					email: userProfileState.values.notifications.alerts.email,
+					dashboard: userProfileState.values.notifications.alerts.dashboard,
+					phoneCalls: userProfileState.values.notifications.alerts.phoneCalls,
+					textMessages: userProfileState.values.notifications.alerts.textMessages
+				},
+				promotions: {
+					email: userProfileState.values.notifications.promotions.email,
+					dashboard: userProfileState.values.notifications.promotions.dashboard,
+					phoneCalls: userProfileState.values.notifications.promotions.phoneCalls,
+					textMessages: userProfileState.values.notifications.promotions.textMessages
+				},
+				partnerPromotions: {
+					email: userProfileState.values.notifications.partnerPromotions.email,
+					dashboard: userProfileState.values.notifications.partnerPromotions.dashboard,
+					phoneCalls: userProfileState.values.notifications.partnerPromotions.phoneCalls,
+					textMessages: userProfileState.values.notifications.partnerPromotions.textMessages
+				}
+			}
+		})
+
+		if (createResult.error)
+			return enqueueSnackbar(createResult.message, { variant: 'error' })
+
+		enqueueSnackbar(createResult.message, { variant: 'success' })
+		window.location.reload()
 	}
 
 	const onDeleteUsers = async () => {
@@ -483,7 +591,7 @@ const UsersTable = props => {
 					<Button
 						color='primary'
 						variant='contained'
-						onClick={() => setShowCreateUserDialog(true)}>
+						onClick={onCreateUserClick}>
 						CREATE USER
         			</Button>
 				</div>
@@ -509,7 +617,7 @@ const UsersTable = props => {
 
 										<TableCell>Name</TableCell>
 
-										<TableCell>Package</TableCell>
+										<TableCell>Membership</TableCell>
 
 										<TableCell>Email</TableCell>
 
@@ -549,7 +657,7 @@ const UsersTable = props => {
 													</div>
 												</TableCell>
 
-												<TableCell>{user.package}</TableCell>
+												<TableCell>{user.membership}</TableCell>
 
 												<TableCell>{user.email}</TableCell>
 
@@ -612,10 +720,10 @@ const UsersTable = props => {
 						disabled
 						fullWidth
 						margin='dense'
-						name='package'
+						name='membership'
 						label='Membership'
 						variant='outlined'
-						value={userProfileState.values.package} />
+						value={userProfileState.values.membership} />
 
 					<TextField
 						disabled
@@ -668,6 +776,22 @@ const UsersTable = props => {
 						helperText={
 							hasError('email') ? userProfileState.errors.email[0] : null
 						} />
+
+					<TextField
+						fullWidth
+						name='password'
+						label='Password'
+						variant='outlined'
+						onChange={onChangeText}
+						value={userProfileState.values.password}
+						type={userProfileState.showPassword ? 'text' : 'password'}
+						InputProps={{
+							endAdornment: userProfileState.showPassword
+								? <VisibilityOff
+									onClick={onShowPassword} />
+								: <Visibility
+									onClick={onShowPassword} />
+						}} />
 
 					<TextField
 						fullWidth
@@ -866,7 +990,7 @@ const UsersTable = props => {
 							variant='text'
 							color='primary'
 							component='span'>
-							Upload picture
+							UPLOAD PROFILE PICUTRE
 						</Button>
 					</label>
 
@@ -875,7 +999,7 @@ const UsersTable = props => {
 					<Button
 						color='secondary'
 						onClick={() => setShowEditUserDialog(false)}>
-						Cancel
+						CANCEL
          			 </Button>
 
 					<Button
@@ -883,7 +1007,316 @@ const UsersTable = props => {
 						variant='contained'
 						onClick={onEditUser}
 						disabled={!userProfileState.isChanged || hasError('firstName') || hasError('lastName') || hasError('email') || hasError('number') || hasError('city') || hasError('country')}>
-						Edit
+						EDIT USER
+         			 </Button>
+				</DialogActions>
+			</Dialog>
+
+			<Dialog
+				open={showCreateUserDialog}
+				aria-labelledby='form-dialog-title'
+				onClose={() => setShowCreateUserDialog(false)}>
+				<DialogTitle id='form-dialog-title'>Create User Profile</DialogTitle>
+
+				<DialogContent>
+					<DialogContentText>
+						Create the user details here.
+          			</DialogContentText>
+
+					<div className={classes.imageContainer}>
+						<Avatar
+							className={classes.image}
+							src={userProfileState.values.avatar.image || '/images/profile-avatar.png'} />
+					</div>
+
+					<TextField
+						required
+						fullWidth
+						name='membership'
+						margin='dense'
+						label='Membership'
+						variant='outlined'
+						onChange={onChangeText}
+						error={hasError('membership')}
+						value={userProfileState.values.membership}
+						helperText={
+							hasError('membership') ? userProfileState.errors.firstName[0] : null
+						} />
+
+					<TextField
+						required
+						fullWidth
+						margin='dense'
+						name='firstName'
+						label='First name'
+						variant='outlined'
+						onChange={onChangeText}
+						error={hasError('firstName')}
+						value={userProfileState.values.firstName}
+						helperText={
+							hasError('firstName') ? userProfileState.errors.firstName[0] : null
+						} />
+
+
+					<TextField
+						required
+						fullWidth
+						margin='dense'
+						name='lastName'
+						label='Last name'
+						variant='outlined'
+						onChange={onChangeText}
+						error={hasError('lastName')}
+						value={userProfileState.values.lastName}
+						helperText={
+							hasError('lastName') ? userProfileState.errors.lastName[0] : null
+						} />
+
+					<TextField
+						required
+						fullWidth
+						name='email'
+						margin='dense'
+						variant='outlined'
+						label='Email Address'
+						onChange={onChangeText}
+						error={hasError('email')}
+						value={userProfileState.values.email}
+						helperText={
+							hasError('email') ? userProfileState.errors.email[0] : null
+						} />
+
+					<TextField
+						fullWidth
+						name='password'
+						label='Password'
+						variant='outlined'
+						onChange={onChangeText}
+						value={userProfileState.values.password}
+						type={userProfileState.showPassword ? 'text' : 'password'}
+						InputProps={{
+							endAdornment: userProfileState.showPassword
+								? <VisibilityOff
+									onClick={onShowPassword} />
+								: <Visibility
+									onClick={onShowPassword} />
+						}} />
+
+					<TextField
+						fullWidth
+						name='number'
+						margin='dense'
+						variant='outlined'
+						label='Phone Number'
+						onChange={onChangeText}
+						error={hasError('number')}
+						value={userProfileState.values.number}
+						helperText={
+							hasError('number') ? userProfileState.errors.number[0] : null
+						} />
+
+					<TextField
+						fullWidth
+						name='city'
+						label='City'
+						margin='dense'
+						variant='outlined'
+						onChange={onChangeText}
+						error={hasError('city')}
+						value={userProfileState.values.city}
+						helperText={
+							hasError('city') ? userProfileState.errors.city[0] : null
+						} />
+
+					<TextField
+						fullWidth
+						name='country'
+						margin='dense'
+						label='Country'
+						variant='outlined'
+						onChange={onChangeText}
+						error={hasError('country')}
+						value={userProfileState.values.country}
+						helperText={
+							hasError('country') ? userProfileState.errors.country[0] : null
+						} />
+
+					<div className={classes.checkboxes}>
+						<Typography
+							variant='h6'
+							gutterBottom>
+							Signal Alerts
+						</Typography>
+
+						<FormControlLabel
+							name='dashboard'
+							label='Dashboard'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangeAlerts}
+									checked={userProfileState.values.notifications.alerts.dashboard} />
+							} />
+
+						<FormControlLabel
+							name='email'
+							label='Email'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangeAlerts}
+									checked={userProfileState.values.notifications.alerts.email} />
+							} />
+
+						<FormControlLabel
+							name='textMessages'
+							label='Text Messages'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangeAlerts}
+									checked={userProfileState.values.notifications.alerts.textMessages} />
+							} />
+
+						<FormControlLabel
+							name='phoneCalls'
+							label='Phone Calls'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangeAlerts}
+									checked={userProfileState.values.notifications.alerts.phoneCalls} />
+							} />
+					</div>
+
+					<div className={classes.checkboxes}>
+						<Typography
+							variant='h6'
+							gutterBottom>
+							MegaTrade Promotions
+						</Typography>
+
+						<FormControlLabel
+							name='dashboard'
+							label='Dashboard'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangePromotions}
+									checked={userProfileState.values.notifications.promotions.dashboard} />
+							} />
+
+						<FormControlLabel
+							name='email'
+							label='Email'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangePromotions}
+									checked={userProfileState.values.notifications.promotions.email} />
+							} />
+
+						<FormControlLabel
+							name='textMessages'
+							label='Text Messages'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangePromotions}
+									checked={userProfileState.values.notifications.promotions.textMessages} />
+							} />
+
+						<FormControlLabel
+							name='phoneCalls'
+							label='Phone Calls'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangePromotions}
+									checked={userProfileState.values.notifications.promotions.phoneCalls} />
+							} />
+					</div>
+
+					<div className={classes.checkboxes}>
+						<Typography
+							variant='h6'
+							gutterBottom>
+							Our Partner Promotions
+              				</Typography>
+
+						<FormControlLabel
+							name='dashboard'
+							label='Dashboard'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangePartnerPromotions}
+									checked={userProfileState.values.notifications.partnerPromotions.dashboard} />
+							} />
+
+						<FormControlLabel
+							name='email'
+							label='Email'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangePartnerPromotions}
+									checked={userProfileState.values.notifications.partnerPromotions.email} />
+							} />
+
+						<FormControlLabel
+							name='textMessages'
+							label='Text Messages'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangePartnerPromotions}
+									checked={userProfileState.values.notifications.partnerPromotions.textMessages} />
+							} />
+
+						<FormControlLabel
+							name='phoneCalls'
+							label='Phone Calls'
+							control={
+								<Checkbox
+									color='primary'
+									onChange={onChangePartnerPromotions}
+									checked={userProfileState.values.notifications.partnerPromotions.phoneCalls} />
+							} />
+					</div>
+				</DialogContent>
+
+				<DialogActions>
+					<input
+						type='file'
+						accept='image/*'
+						id='upload-image'
+						onChange={onUploadPicture}
+						style={{ display: 'none' }} />
+
+					<label htmlFor='upload-image'>
+						<Button
+							variant='text'
+							color='primary'
+							component='span'>
+							UPLOAD PROFILE PICUTRE
+						</Button>
+					</label>
+
+					<span className={classes.spacer} />
+
+					<Button
+						color='secondary'
+						onClick={() => setShowEditUserDialog(false)}>
+						CANCEL
+         			 </Button>
+
+					<Button
+						color='primary'
+						variant='contained'
+						onClick={onCreateUser}
+						disabled={!userProfileState.isChanged || hasError('membership') || hasError('firstName') || hasError('lastName') || hasError('email') || hasError('number') || hasError('city') || hasError('country') || userProfileState.values.membership.length < 1 || userProfileState.values.firstName.length < 1 || userProfileState.values.lastName.length < 1 || userProfileState.values.email.length < 1 || userProfileState.values.password.length < 1}>
+						CREATE USER
          			 </Button>
 				</DialogActions>
 			</Dialog>

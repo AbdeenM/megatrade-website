@@ -6,17 +6,14 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
+import React from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
-import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 import { Card, CardHeader, CardContent, Divider, Table, TableBody, TableCell, TableHead, TableRow, IconButton, CardActions, Button } from '@material-ui/core'
-
-import mockData from './components/DataSignal'
-import StatusBullet from '../../../../components/StatusBullet'
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -26,30 +23,21 @@ const useStyles = makeStyles(theme => ({
 	inner: {
 		minWidth: 800
 	},
-	statusContainer: {
-		display: 'flex',
-		alignItems: 'center'
-	},
-	status: {
-		marginRight: theme.spacing(1)
-	},
 	actions: {
 		justifyContent: 'flex-end'
 	}
 }))
 
-const statusColors = {
-	hold: 'info',
-	buy: 'success',
-	sell: 'danger'
-}
-
 const SignalAlerts = props => {
-	const { className, ...rest } = props
+	const { className, signals, onRefreshSignals, ...rest } = props
 
 	const classes = useStyles()
 
-	const [orders] = useState(mockData)
+	const statusColors = {
+		buy: 'lightgreen',
+		hold: 'lightblue',
+		sell: 'lightcoral'
+	}
 
 	return (
 		<Card
@@ -60,7 +48,8 @@ const SignalAlerts = props => {
 				subheader='List of all our latest signals including time and date published'
 				action={
 					<IconButton
-						size='small'>
+						size='small'
+						onClick={onRefreshSignals}>
 						<RefreshIcon />
 					</IconButton>
 				} />
@@ -73,45 +62,50 @@ const SignalAlerts = props => {
 						<Table>
 							<TableHead>
 								<TableRow>
-									<TableCell>Ref</TableCell>
-
 									<TableCell>Signal</TableCell>
+
+									<TableCell>Status</TableCell>
 
 									<TableCell>Time</TableCell>
 
 									<TableCell>Date</TableCell>
 
-									<TableCell>Status</TableCell>
+									<TableCell>Entry Price</TableCell>
+
+									<TableCell>Stop Loss</TableCell>
 								</TableRow>
 							</TableHead>
 
 							<TableBody>
 								{
-									orders.map(order => (
+									signals.map((signal, i) => (
 										<TableRow
 											hover
-											key={order.id}>
-											<TableCell>{order.ref}</TableCell>
-
-											<TableCell>{order.customer.name}</TableCell>
+											key={i}>
+											<TableCell>{signal.name}</TableCell>
 
 											<TableCell>
-												{moment(order.createdAt).format('HH:mm')}
+												<Button
+													variant='contained'
+													style={{ backgroundColor: statusColors[signal.status] }}>
+													{signal.status}
+												</Button>
 											</TableCell>
 
 											<TableCell>
-												{moment(order.createdAt).format('DD/MM/YYYY')}
+												{moment(signal.createdAt).format('HH:mm')}
 											</TableCell>
 
 											<TableCell>
-												<div className={classes.statusContainer}>
-													<StatusBullet
-														size='md'
-														className={classes.status}
-														color={statusColors[order.status]} />
+												{moment(signal.createdAt).format('DD/MM/YYYY')}
+											</TableCell>
 
-													{order.status}
-												</div>
+											<TableCell>
+												{signal.entryPrice}
+											</TableCell>
+
+											<TableCell>
+												{signal.stopLoss}
 											</TableCell>
 										</TableRow>
 									))

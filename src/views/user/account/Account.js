@@ -40,8 +40,8 @@ const Account = () => {
 		country: '',
 		lastName: '',
 		firstName: '',
-		package: '',
-		packageAmount: '',
+		membership: '',
+		membershipAmount: '',
 		notifications: {
 			alerts: {
 				email: false,
@@ -82,8 +82,8 @@ const Account = () => {
 			country: fetchAccountResult.data.country || '',
 			lastName: fetchAccountResult.data.lastName || '',
 			firstName: fetchAccountResult.data.firstName || '',
-			package: fetchAccountResult.data.package || '',
-			packageAmount: fetchAccountResult.data.packageAmount || '',
+			membership: fetchAccountResult.data.membership || '',
+			membershipAmount: fetchAccountResult.data.membershipAmount || '',
 			notifications: {
 				alerts: {
 					email: fetchAccountResult.data.notifications.alerts.email || false,
@@ -150,8 +150,8 @@ const Account = () => {
 						country: profileState.country,
 						lastName: profileState.lastName,
 						firstName: profileState.firstName,
-						package: profileState.package,
-						packageAmount: profileState.packageAmount
+						membership: profileState.membership,
+						membershipAmount: profileState.membershipAmount
 					}} />
 				</Grid>
 

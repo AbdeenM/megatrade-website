@@ -37,7 +37,7 @@ const Profile = props => {
 		avatar: '',
 		lastName: '',
 		firstName: '',
-		package: ''
+		membership: ''
 	})
 
 	useEffect(() => {
@@ -46,7 +46,7 @@ const Profile = props => {
 			avatar: profile.avatar,
 			lastName: profile.lastName,
 			firstName: profile.firstName,
-			package: profile.package
+			membership: profile.membership
 		}))
 	}, [profile])
 
@@ -67,7 +67,7 @@ const Profile = props => {
 				{profileState.firstName + ' ' + profileState.lastName}
 			</Typography>
 
-			<Typography variant='body2'>{profileState.package}</Typography>
+			<Typography variant='body2'>{profileState.membership}</Typography>
 		</div>
 	)
 }

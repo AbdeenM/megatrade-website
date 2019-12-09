@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const Subscriptions = () => {
+const Users = () => {
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
@@ -57,4 +57,4 @@ const Subscriptions = () => {
 	)
 }
 
-export default Subscriptions
+export default Users

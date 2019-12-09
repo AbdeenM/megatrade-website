@@ -43,7 +43,7 @@ const SubscriptionsCard = props => {
 
 	const classes = useStyles()
 
-	const onGetPackage = () => {
+	const onGetMembership = () => {
 
 	}
 
@@ -97,9 +97,9 @@ const SubscriptionsCard = props => {
 						<Button
 							color='primary'
 							variant='contained'
-							onClick={onGetPackage}
-							disabled={props.package === subscription.title}>
-							{props.package === subscription.title ? 'CURRENT PACKAGE' : 'GET PACKAGE'}
+							onClick={onGetMembership}
+							disabled={props.membership === subscription.title}>
+							{props.membership === subscription.title ? 'CURRENT PACKAGE' : 'GET PACKAGE'}
 						</Button>
 					</Grid>
 

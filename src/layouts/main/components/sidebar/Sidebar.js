@@ -58,7 +58,7 @@ const Sidebar = props => {
 		avatar: '',
 		lastName: '',
 		firstName: '',
-		package: ''
+		membership: ''
 	})
 
 	useEffect(() => { fetchProfileDetails() }, [])
@@ -73,7 +73,7 @@ const Sidebar = props => {
 			avatar: fetchAccountResult.data.avatar || '',
 			lastName: fetchAccountResult.data.lastName || '',
 			firstName: fetchAccountResult.data.firstName || '',
-			package: fetchAccountResult.data.package || ''
+			membership: fetchAccountResult.data.membership || ''
 		})
 	}
 
@@ -119,7 +119,7 @@ const Sidebar = props => {
 					className={classes.nav} />
 
 				{
-					profileState.package === 'Free Package'
+					profileState.membership === 'Free Membership'
 						? <UpgradePlan />
 						: <div />
 				}

@@ -77,10 +77,10 @@ const AccountDetails = props => {
 			email: '',
 			number: '',
 			country: '',
-			package: '',
+			membership: '',
 			lastName: '',
 			firstName: '',
-			packageAmount: ''
+			membershipAmount: ''
 		},
 		touched: {},
 		isValid: false,
@@ -97,8 +97,8 @@ const AccountDetails = props => {
 				country: profile.country,
 				lastName: profile.lastName,
 				firstName: profile.firstName,
-				package: profile.package,
-				packageAmount: profile.packageAmount
+				membership: profile.membership,
+				membershipAmount: profile.membershipAmount
 			}
 		}))
 	}, [profile])
@@ -137,10 +137,10 @@ const AccountDetails = props => {
 			email: profileState.values.email,
 			number: profileState.values.number,
 			country: profileState.values.country,
-			package: profileState.values.package,
+			membership: profileState.values.membership,
 			lastName: profileState.values.lastName,
 			firstName: profileState.values.firstName,
-			packageAmount: profileState.values.packageAmount
+			membershipAmount: profileState.values.membershipAmount
 		})
 
 		if (saveResult.error)
@@ -178,10 +178,10 @@ const AccountDetails = props => {
 								disabled
 								fullWidth
 								margin='dense'
-								name='package'
+								name='membership'
 								label='Membership'
 								variant='outlined'
-								value={profileState.values.package} />
+								value={profileState.values.membership} />
 						</Grid>
 
 						<Grid
@@ -193,10 +193,10 @@ const AccountDetails = props => {
 								fullWidth
 								margin='dense'
 								variant='outlined'
-								name='package amount'
+								name='membership amount'
 								label='Membership Amount'
 								InputProps={{ startAdornment: '$' }}
-								value={profileState.values.packageAmount} />
+								value={profileState.values.membershipAmount} />
 						</Grid>
 
 						<Grid

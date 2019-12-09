@@ -42,7 +42,7 @@ const SubscriptionsList = () => {
 
 	const userId = localStorage.getItem('userId')
 
-	const [userPackageState, setUserPackageState] = useState('')
+	const [userMembershipState, setUserMembershipState] = useState('')
 	const [subscriptionsState, setSubscriptionsState] = useState([])
 
 	useEffect(() => { fetchSubscriptions() }, [])
@@ -52,7 +52,7 @@ const SubscriptionsList = () => {
 		if (fetchSubscriptionsResult.error)
 			return enqueueSnackbar(fetchSubscriptionsResult.message, { variant: 'error' })
 
-		setUserPackageState(fetchSubscriptionsResult.data.userPackage)
+		setUserMembershipState(fetchSubscriptionsResult.data.userMembership)
 		setSubscriptionsState(fetchSubscriptionsResult.data.subscriptions)
 	}
 
@@ -71,7 +71,7 @@ const SubscriptionsList = () => {
 								xs={12}
 								key={i}>
 								<SubscriptionsCard
-									package={userPackageState}
+									membership={userMembershipState}
 									subscription={subscription} />
 							</Grid>
 						))

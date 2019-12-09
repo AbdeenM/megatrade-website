@@ -36,8 +36,7 @@ const Profile = props => {
 	const [profileState, setProfileState] = useState({
 		avatar: '',
 		lastName: '',
-		firstName: '',
-		package: ''
+		firstName: ''
 	})
 
 	useEffect(() => {
@@ -45,8 +44,7 @@ const Profile = props => {
 			...profileState,
 			avatar: profile.avatar,
 			lastName: profile.lastName,
-			firstName: profile.firstName,
-			package: profile.package
+			firstName: profile.firstName
 		}))
 	}, [profile])
 

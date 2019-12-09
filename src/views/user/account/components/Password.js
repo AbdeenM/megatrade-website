@@ -38,33 +38,33 @@ const Password = props => {
 
 	const userId = localStorage.getItem('userId')
 
-	const [profileState, setProfileState] = useState({
+	const [passwordState, setPasswordState] = useState({
 		confirm: '',
 		password: '',
 		showPassword: false
 	})
 
 	const onShowPassword = () => {
-		setProfileState({
-			...profileState,
-			showPassword: !profileState.showPassword
-		});
+		setPasswordState(passwordState => ({
+			...passwordState,
+			showPassword: !passwordState.showPassword
+		}))
 	}
 
 	const onChange = event => {
-		setProfileState({
-			...profileState,
+		setPasswordState({
+			...passwordState,
 			[event.target.name]: event.target.value
 		})
 	}
 
 	const onUpdatePassword = async () => {
-		if (profileState.password !== profileState.confirm)
+		if (passwordState.password !== passwordState.confirm)
 			return enqueueSnackbar('Your password and confirmed password does not match, please try again', { variant: 'info' })
 
 		const saveResult = await userApi.updateAccount({
 			userId,
-			password: profileState.password
+			password: passwordState.password
 		})
 
 		if (saveResult.error)
@@ -92,10 +92,10 @@ const Password = props => {
 						label='Password'
 						variant='outlined'
 						onChange={onChange}
-						value={profileState.password}
-						type={profileState.showPassword ? 'text' : 'password'}
+						value={passwordState.password}
+						type={passwordState.showPassword ? 'text' : 'password'}
 						InputProps={{
-							endAdornment: profileState.showPassword
+							endAdornment: passwordState.showPassword
 								? <VisibilityOff
 									onClick={onShowPassword} />
 								: <Visibility
@@ -109,7 +109,7 @@ const Password = props => {
 						variant='outlined'
 						onChange={onChange}
 						label='Confirm Password'
-						value={profileState.confirm}
+						value={passwordState.confirm}
 						style={{ marginTop: '1rem' }} />
 				</CardContent>
 
@@ -120,7 +120,7 @@ const Password = props => {
 						color='primary'
 						variant='contained'
 						onClick={onUpdatePassword}
-						disabled={(profileState.password.length <= 3 || profileState.confirm.length <= 3) || (profileState.password.length !== profileState.confirm.length)}>
+						disabled={(passwordState.password.length <= 3 || passwordState.confirm.length <= 3) || (passwordState.password.length !== passwordState.confirm.length)}>
 						Update Password
           			</Button>
 				</CardActions>
