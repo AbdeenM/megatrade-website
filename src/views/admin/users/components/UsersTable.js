@@ -135,7 +135,10 @@ const UsersTable = props => {
 		values: {
 			city: '',
 			email: '',
-			avatar: '',
+			avatar: {
+				isBase64: false,
+				image: ''
+			},
 			number: '',
 			status: '',
 			userId: '',
@@ -284,7 +287,10 @@ const UsersTable = props => {
 			...userProfileState,
 			values: {
 				...userProfileState.values,
-				avatar: imageBase64
+				avatar: {
+					isBase64: true,
+					image: imageBase64
+				}
 			},
 			isChanged: true
 		}))
@@ -342,7 +348,10 @@ const UsersTable = props => {
 				city: userDetails.city,
 				userId: userDetails._id,
 				email: userDetails.email,
-				avatar: userDetails.avatar,
+				avatar: {
+					isBase64: false,
+					image: userDetails.avatar
+				},
 				number: userDetails.number,
 				status: userDetails.status,
 				country: userDetails.country,
@@ -587,7 +596,7 @@ const UsersTable = props => {
 					<div className={classes.imageContainer}>
 						<Avatar
 							className={classes.image}
-							src={userProfileState.values.avatar || '/images/profile-avatar.png'} />
+							src={userProfileState.values.avatar.image || '/images/profile-avatar.png'} />
 					</div>
 
 					<TextField
