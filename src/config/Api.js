@@ -87,6 +87,15 @@ class UserApi {
             throw error
         }
     }
+
+    offersRegister = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/offersRegister`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 class AdminApi {
