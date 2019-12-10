@@ -22,6 +22,7 @@ import SignUp from './views/web/signUp/SignUp'
 import Landing from './views/web/landing/Landing'
 import NotFound from './views/web/notFound/NotFound'
 
+import MarketUser from './views/user/market/Market'
 import AccountUser from './views/user/account/Account'
 import DashboardUser from './views/user/dashboard/Dashboard'
 import EducationUser from './views/user/education/Education'
@@ -98,6 +99,12 @@ const Routes = () => {
 				path='/account'
 				layout={MainLayout}
 				component={AccountUser} />
+
+			<AuthRouteWithLayout
+				exact
+				path='/market'
+				layout={MainLayout}
+				component={MarketUser} />
 
 			<AuthRouteWithLayout
 				exact

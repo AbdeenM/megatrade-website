@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import EducationIcon from '@material-ui/icons/Book'
 import { Divider, Drawer } from '@material-ui/core'
+import MarketIcon from '@material-ui/icons/TrendingUp'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
@@ -82,6 +83,11 @@ const Sidebar = props => {
 			title: 'Dashboard',
 			href: '/dashboard',
 			icon: <DashboardIcon />
+		},
+		{
+			href: '/market',
+			title: 'Real-Time Market',
+			icon: <MarketIcon />
 		},
 		{
 			title: 'Education',

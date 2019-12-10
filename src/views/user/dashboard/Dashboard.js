@@ -6,9 +6,9 @@
  ************************************************************************** */
 
 import { useSnackbar } from 'notistack'
-import React, { useEffect, useState } from 'react'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import React, { useEffect, useState, useRef } from 'react'
 
 import Budget from './components/Budget'
 import TradePie from './components/TradePie'
@@ -34,6 +34,7 @@ const Dashboard = () => {
 
 	const userId = localStorage.getItem('userId')
 
+	const tickerTape = useRef(null)
 	const [signalsState, setSignalsState] = useState([])
 	const [dashboardState, setDashboardState] = useState({
 		totalPips: '',
@@ -54,6 +55,13 @@ const Dashboard = () => {
 	useEffect(() => {
 		fetchSignals()
 		fetchStatistics()
+	}, [])
+
+	useEffect(() => {
+		const script = document.createElement('script')
+		script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js'
+		script.async = true
+		script.innerHTML = tickerTape.current.appendChild(script)
 	}, [])
 
 	const fetchStatistics = async () => {
@@ -92,6 +100,15 @@ const Dashboard = () => {
 			<Grid
 				container
 				spacing={4}>
+				<Grid
+					item
+					lg={12}
+					sm={12}
+					xl={12}
+					xs={12}>
+					<div ref={tickerTape} />
+				</Grid>
+
 				<Grid
 					item
 					lg={3}

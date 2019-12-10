@@ -36,9 +36,10 @@ const SignalAlerts = props => {
 	const statusColors = {
 		buy: 'lightgreen',
 		hold: 'lightblue',
+		close: 'lightgrey',
 		sell: 'lightcoral',
-		close: 'lightyellow',
-		'break even': 'lightgrey'
+		'break even': 'lightyellow',
+		'take profit': 'lightseagreen'
 	}
 
 	return (

@@ -11,9 +11,9 @@ import Validate from 'validate.js'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
-import React, { useState, useEffect } from 'react'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { Card, CardActions, CardContent, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
+import React, { useState, useEffect, useRef } from 'react'
+import { Card, CardActions, CardContent, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Menu, MenuItem, Typography } from '@material-ui/core'
 
 import Palette from '../../../../theme/Palette'
 import { AdminApi } from '../../../../config/Api'
@@ -80,6 +80,18 @@ const useStyles = makeStyles(theme => ({
 	},
 	actions: {
 		justifyContent: 'flex-end'
+	},
+	rowStatus: {
+		display: 'flex',
+		marginTop: theme.spacing(3),
+		marginBottom: theme.spacing(3)
+	},
+	rowSignalStatus: {
+		marginLeft: 'auto'
+	},
+	signalStatus: {
+		marginTop: theme.spacing(1),
+		marginBottom: theme.spacing(1)
 	}
 }))
 
@@ -91,21 +103,24 @@ const SignalsTable = props => {
 
 	const adminId = localStorage.getItem('adminId')
 
+	const anchorRef = useRef(null)
+
 	const [page, setPage] = useState(0)
 	const [allSignals, setAllSignals] = useState([])
 	const [rowsPerPage, setRowsPerPage] = useState(10)
 	const [searchState, setSearchState] = useState('')
 	const [listedSignals, setListedSignals] = useState([])
 	const [selectedSignals, setSelectedSignals] = useState([])
+	const [showStatusMenu, setShowStatusMenu] = useState(false)
 	const [showEditSignalDialog, setShowEditSignalsDialog] = useState(false)
 	const [showCreateSignalDialog, setShowCreateSignalDialog] = useState(false)
 	const [signalsState, setSignalsState] = useState({
 		errors: {},
 		values: {
 			name: '',
-			status: '',
 			signalId: '',
 			stopLoss: '',
+			status: 'BUY',
 			entryPrice: ''
 		},
 		touched: {},
@@ -195,6 +210,22 @@ const SignalsTable = props => {
 		setPage(0)
 	}
 
+	const onSelectStatus = status => {
+		setSignalsState(signalsState => ({
+			...signalsState,
+			errors: {},
+			values: {
+				...signalsState.values,
+				status
+			},
+			touched: {},
+			isValid: false,
+			isChanged: true
+		}))
+
+		setShowStatusMenu(false)
+	}
+
 	const onEditSignalClick = () => {
 		let signalDetails = allSignals.filter(signal => signal._id === selectedSignals[0])[0]
 
@@ -213,17 +244,18 @@ const SignalsTable = props => {
 			isChanged: false
 		}))
 
+		setShowStatusMenu(false)
 		setShowEditSignalsDialog(true)
 	}
 
 	const onEditSignal = async () => {
 		const editResult = await adminApi.editFreeSignal({
 			adminId,
-			name: signalsState.values.name,
-			status: signalsState.values.status,
 			stopLoss: signalsState.values.stopLoss,
 			signalId: signalsState.values.signalId,
-			entryPrice: signalsState.values.entryPrice
+			entryPrice: signalsState.values.entryPrice,
+			name: signalsState.values.name.toUpperCase(),
+			status: signalsState.values.status.toUpperCase()
 		})
 
 		if (editResult.error)
@@ -239,9 +271,9 @@ const SignalsTable = props => {
 			errors: {},
 			values: {
 				name: '',
-				status: '',
 				stopLoss: '',
 				signalId: '',
+				status: 'BUY',
 				entryPrice: ''
 			},
 			touched: {},
@@ -249,17 +281,18 @@ const SignalsTable = props => {
 			isChanged: false
 		}))
 
+		setShowStatusMenu(false)
 		setShowCreateSignalDialog(true)
 	}
 
 	const onCreateSignal = async () => {
 		const createResult = await adminApi.createFreeSignal({
 			adminId,
-			name: signalsState.values.name,
-			status: signalsState.values.status,
 			stopLoss: signalsState.values.stopLoss,
 			signalId: signalsState.values.signalId,
-			entryPrice: signalsState.values.entryPrice
+			entryPrice: signalsState.values.entryPrice,
+			name: signalsState.values.name.toUpperCase(),
+			status: signalsState.values.status.toUpperCase()
 		})
 
 		if (createResult.error)
@@ -443,20 +476,36 @@ const SignalsTable = props => {
 							hasError('name') ? signalsState.errors.name[0] : null
 						} />
 
+					<div className={classes.rowStatus}>
+						<Typography
+							variant='body1'
+							className={classes.signalStatus}>
+							SIGNAL STATUS
+							</Typography>
 
-					<TextField
-						required
-						fullWidth
-						name='status'
-						margin='dense'
-						variant='outlined'
-						label='Signal Status'
-						onChange={onChangeText}
-						error={hasError('status')}
-						value={signalsState.values.status}
-						helperText={
-							hasError('status') ? signalsState.errors.status[0] : null
-						} />
+						<Button
+							ref={anchorRef}
+							aria-haspopup='true'
+							className={classes.rowSignalStatus}
+							onClick={() => setShowStatusMenu(!showStatusMenu)}
+							aria-controls='simple-menu'>
+							{signalsState.values.status}
+						</Button>
+					</div>
+
+					<Menu
+						keepMounted
+						id='simple-menu'
+						open={showStatusMenu}
+						anchorEl={anchorRef.current}
+						onClose={() => setShowStatusMenu(false)}>
+						<MenuItem onClick={() => onSelectStatus('BUY')}>BUY</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('SELL')}>SELL</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('HOLD')}>HOLD</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('CLOSE')}>CLOSE</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('BREAK EVEN')}>BREAK EVEN</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('TAKE PROFIT')}>TAKE PROFIT</MenuItem>
+					</Menu>
 
 					<TextField
 						required
@@ -528,20 +577,36 @@ const SignalsTable = props => {
 							hasError('name') ? signalsState.errors.name[0] : null
 						} />
 
+					<div className={classes.rowStatus}>
+						<Typography
+							variant='body1'
+							className={classes.signalStatus}>
+							SIGNAL STATUS
+							</Typography>
 
-					<TextField
-						required
-						fullWidth
-						name='status'
-						margin='dense'
-						variant='outlined'
-						label='Signal Status'
-						onChange={onChangeText}
-						error={hasError('status')}
-						value={signalsState.values.status}
-						helperText={
-							hasError('status') ? signalsState.errors.status[0] : null
-						} />
+						<Button
+							ref={anchorRef}
+							aria-haspopup='true'
+							className={classes.rowSignalStatus}
+							onClick={() => setShowStatusMenu(!showStatusMenu)}
+							aria-controls='simple-menu'>
+							{signalsState.values.status}
+						</Button>
+					</div>
+
+					<Menu
+						keepMounted
+						id='simple-menu'
+						open={showStatusMenu}
+						anchorEl={anchorRef.current}
+						onClose={() => setShowStatusMenu(false)}>
+						<MenuItem onClick={() => onSelectStatus('BUY')}>BUY</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('SELL')}>SELL</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('HOLD')}>HOLD</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('CLOSE')}>CLOSE</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('BREAK EVEN')}>BREAK EVEN</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('TAKE PROFIT')}>TAKE PROFIT</MenuItem>
+					</Menu>
 
 					<TextField
 						required

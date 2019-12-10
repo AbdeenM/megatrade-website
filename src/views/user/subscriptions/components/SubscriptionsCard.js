@@ -99,7 +99,7 @@ const SubscriptionsCard = props => {
 							variant='contained'
 							onClick={onGetMembership}
 							disabled={props.membership === subscription.title}>
-							{props.membership === subscription.title ? 'CURRENT PACKAGE' : 'GET PACKAGE'}
+							{props.membership === subscription.title ? 'CURRENT MEMBERSHIP' : 'GET MEMBERSHIP'}
 						</Button>
 					</Grid>
 
