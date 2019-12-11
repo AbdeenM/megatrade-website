@@ -15,8 +15,10 @@ import EducationIcon from '@material-ui/icons/Book'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
+import MarketIcon from '@material-ui/icons/MonetizationOn'
 import VerifiedIcon from '@material-ui/icons/VerifiedUser'
 import TradeSignalIcon from '@material-ui/icons/TrendingUp'
+import DashboardUserIcon from '@material-ui/icons/DeveloperBoard'
 
 import Profile from './components/Profile'
 import SidebarNav from './components/SidebarNav'
@@ -86,9 +88,14 @@ const Sidebar = props => {
 			icon: <DashboardIcon />
 		},
 		{
+			title: 'Real-Time Market',
+			href: '/admin/market',
+			icon: <MarketIcon />
+		},
+		{
 			title: 'User Dashboard',
 			href: '/admin/userDashboard',
-			icon: <DashboardIcon />
+			icon: <DashboardUserIcon />
 		},
 		{
 			title: 'Trade Signals',

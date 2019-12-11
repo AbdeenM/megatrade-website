@@ -61,7 +61,52 @@ const Dashboard = () => {
 		const script = document.createElement('script')
 		script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js'
 		script.async = true
-		script.innerHTML = tickerTape.current.appendChild(script)
+		script.innerHTML = JSON.stringify({
+			'locale': 'en',
+			'colorTheme': 'light',
+			'isTransparent': false,
+			'displayMode': 'adaptive',
+			'symbols': [
+				{
+					'proName': 'OANDA:SPX500USD',
+					'title': 'S&P 500'
+				},
+				{
+					'proName': 'FX_IDC:EURUSD',
+					'title': 'EUR/USD'
+				},
+				{
+					'proName': 'BITSTAMP:BTCUSD',
+					'title': 'BTC/USD'
+				},
+				{
+					'description': 'Wall Street',
+					'proName': 'OANDA:US30USD'
+				},
+				{
+					'description': 'GBP/USD',
+					'proName': 'OANDA:GBPUSD'
+				},
+				{
+					'description': 'XAU/USD',
+					'proName': 'OANDA:XAUUSD'
+				},
+				{
+					'description': 'WTI CRUDE',
+					'proName': 'TVC:USOIL'
+				},
+				{
+					'description': 'US TECH 100',
+					'proName': 'FOREXCOM:NSXUSD'
+				},
+				{
+					'description': 'AMAZON',
+					'proName': 'NASDAQ:AMZN'
+				}
+			]
+		})
+
+		tickerTape.current.appendChild(script)
 	}, [])
 
 	const fetchStatistics = async () => {
