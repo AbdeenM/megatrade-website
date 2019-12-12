@@ -52,7 +52,7 @@ const schema = {
 	password: {
 		presence: { allowEmpty: false, message: 'is required' },
 		length: {
-			maximum: 64
+			maximum: 32
 		}
 	},
 	number: {
@@ -368,6 +368,7 @@ const UsersTable = props => {
 			...userProfileState,
 			errors: {},
 			values: {
+				...userProfileState.values,
 				city: userDetails.city,
 				userId: userDetails._id,
 				email: userDetails.email,
@@ -1307,7 +1308,7 @@ const UsersTable = props => {
 
 					<Button
 						color='secondary'
-						onClick={() => setShowEditUserDialog(false)}>
+						onClick={() => setShowCreateUserDialog(false)}>
 						CANCEL
          			 </Button>
 

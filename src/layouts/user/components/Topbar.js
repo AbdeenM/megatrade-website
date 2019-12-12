@@ -36,7 +36,7 @@ const Topbar = props => {
 	const [isLogged, setLogged] = useState(true)
 
 	const onSignOut = () => {
-		localStorage.clear()
+		localStorage.setItem('userId', '')
 		setLogged(false)
 	}
 

@@ -29,7 +29,7 @@ export const dataScreener = {
 export const dataAnalysis = {
     'locale': 'en',
     'width': '100%',
-    'height': '900',
+    'height': '600',
     'interval': '1D',
     'colorTheme': 'light',
     'isTransparent': true,

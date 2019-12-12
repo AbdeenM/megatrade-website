@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Divider, Drawer } from '@material-ui/core'
+import { Divider, Drawer, Typography } from '@material-ui/core'
 import EducationIcon from '@material-ui/icons/Book'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	title: {
 		marginTop: theme.spacing(3)
-	},
+	}
 }))
 
 const Sidebar = props => {
@@ -81,7 +81,7 @@ const Sidebar = props => {
 		})
 	}
 
-	const pages = [
+	const admin = [
 		{
 			title: 'Dashboard',
 			href: '/admin/dashboard',
@@ -93,6 +93,14 @@ const Sidebar = props => {
 			icon: <MarketIcon />
 		},
 		{
+			title: 'Account',
+			href: '/admin/account',
+			icon: <VerifiedIcon />
+		}
+	]
+
+	const users = [
+		{
 			title: 'User Dashboard',
 			href: '/admin/userDashboard',
 			icon: <DashboardUserIcon />
@@ -103,26 +111,23 @@ const Sidebar = props => {
 			icon: <TradeSignalIcon />
 		},
 		{
-			title: 'Subscriptions',
-			href: '/admin/subscriptions',
-			icon: <SubscriptionIcon />
-		},
-		{
 			title: 'Education',
 			href: '/admin/education',
 			icon: <EducationIcon />
 		},
 		{
+			title: 'Subscriptions',
+			href: '/admin/subscriptions',
+			icon: <SubscriptionIcon />
+		},
+		{
 			title: 'Users',
 			href: '/admin/users',
 			icon: <AccountIcon />
-		},
-		{
-			title: 'Account',
-			href: '/admin/account',
-			icon: <VerifiedIcon />
 		}
 	]
+
+	const marketing = []
 
 	return (
 		<Drawer
@@ -138,8 +143,34 @@ const Sidebar = props => {
 
 				<Divider className={classes.divider} />
 
+				<Typography
+					variant='h5'
+					className={classes.title}>
+					Administrator
+				</Typography>
+
 				<SidebarNav
-					pages={pages}
+					pages={admin}
+					className={classes.nav} />
+
+				<Typography
+					variant='h5'
+					className={classes.title}>
+					Customers
+				</Typography>
+
+				<SidebarNav
+					pages={users}
+					className={classes.nav} />
+
+				<Typography
+					variant='h5'
+					className={classes.title}>
+					Marketing
+				</Typography>
+
+				<SidebarNav
+					pages={marketing}
 					className={classes.nav} />
 			</div>
 		</Drawer>

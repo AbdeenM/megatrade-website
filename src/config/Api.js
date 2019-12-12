@@ -291,6 +291,15 @@ class AdminApi {
             throw error
         }
     }
+
+    fetchStatistics = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/fetchStatistics`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 class MiscellaneousApi {

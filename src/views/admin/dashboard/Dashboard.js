@@ -5,9 +5,20 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React from 'react'
+import { useSnackbar } from 'notistack'
 import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import React, { useEffect, useState } from 'react'
+
+import TotalUsers from './components/TotalUsers'
+import TotalLogins from './components/TotalLogins'
+import TotalProfits from './components/TotalProfits'
+import TotalSignals from './components/TotalSignals'
+import TotalFreeSignals from './components/TotalFreeSignals'
+
+import { AdminApi } from '../../../config/Api'
+
+const adminApi = new AdminApi()
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -17,12 +28,86 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = () => {
     const classes = useStyles()
+    const { enqueueSnackbar } = useSnackbar()
+
+    const adminId = localStorage.getItem('adminId')
+
+    const [dashboardState, setDashboardState] = useState({
+        totalUsers: '',
+        totalLogins: '',
+        totalProfits: '',
+        totalSignals: '',
+        totalFreeSignals: ''
+    })
+
+    useEffect(() => {
+        fetchStatistics()
+    }, [])
+
+    const fetchStatistics = async () => {
+        const fetchStatisticsResult = await adminApi.fetchStatistics({ adminId })
+        if (fetchStatisticsResult.error)
+            return enqueueSnackbar(fetchStatisticsResult.message, { variant: 'error' })
+
+        setDashboardState(dashboardState => ({
+            ...dashboardState,
+            totalUsers: fetchStatisticsResult.data.totalUsers,
+            totalLogins: fetchStatisticsResult.data.totalLogins,
+            totalProfits: fetchStatisticsResult.data.totalProfits,
+            totalSignals: fetchStatisticsResult.data.totalSignals,
+            totalFreeSignals: fetchStatisticsResult.data.totalFreeSignals
+        }))
+    }
 
     return (
         <div className={classes.root}>
             <Grid
                 container
                 spacing={4}>
+                <Grid
+                    item
+                    lg={3}
+                    sm={6}
+                    xl={3}
+                    xs={12}>
+                    <TotalUsers users={dashboardState.totalUsers} />
+                </Grid>
+
+                <Grid
+                    item
+                    lg={3}
+                    sm={6}
+                    xl={3}
+                    xs={12}>
+                    <TotalFreeSignals freeSignals={dashboardState.totalFreeSignals} />
+                </Grid>
+
+                <Grid
+                    item
+                    lg={3}
+                    sm={6}
+                    xl={3}
+                    xs={12}>
+                    <TotalSignals signals={dashboardState.totalSignals} />
+                </Grid>
+
+                <Grid
+                    item
+                    lg={3}
+                    sm={6}
+                    xl={3}
+                    xs={12}>
+                    <TotalProfits profits={dashboardState.totalProfits} />
+                </Grid>
+
+                <Grid
+                    item
+                    lg={3}
+                    sm={6}
+                    xl={3}
+                    xs={12}>
+                    <TotalLogins logins={dashboardState.totalLogins} />
+                </Grid>
             </Grid>
         </div>
     )

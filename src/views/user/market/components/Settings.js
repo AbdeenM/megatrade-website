@@ -51,6 +51,21 @@ export const dataCalender = {
     'currencyFilter': 'GBP,AUD,CNY,DEM,ITL,EUR,JPY,CAD,FRF,USD,NZD,SGD,HKD,TWD,CHF'
 }
 
+export const dataAnalysis = {
+    'style': '1',
+    'locale': 'en',
+    'width': '980',
+    'height': '610',
+    'interval': 'D',
+    'theme': 'Light',
+    'timezone': 'Etc/UTC',
+    'toolbar_bg': '#f1f3f6',
+    'symbol': 'FX_IDC:USDEUR',
+    'enable_publishing': false,
+    'allow_symbol_change': true,
+    'container_id': 'tradingview_97fe0'
+}
+
 export const dataOverview = {
     'locale': 'en',
     'width': '100%',
