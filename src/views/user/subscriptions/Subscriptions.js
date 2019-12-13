@@ -88,10 +88,6 @@ const SubscriptionsList = () => {
 		})
 	}
 
-	const onCreateSubscription = (data, actions) => {
-		return
-	}
-
 	return (
 		<div className={classes.root}>
 			<div className={classes.content}>

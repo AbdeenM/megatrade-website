@@ -6,7 +6,6 @@
  ************************************************************************** */
 
 import Validate from 'validate.js'
-import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
@@ -191,7 +190,6 @@ const Offers = () => {
 
 								<div className={classes.spacing}>
 									<TextField
-										noBorder
 										fullWidth
 										name='email'
 										onChange={onChange}
@@ -252,10 +250,6 @@ const Offers = () => {
 			</Container>
 		</div>
 	)
-}
-
-Offers.propTypes = {
-	classes: PropTypes.object.isRequired
 }
 
 export default Offers
