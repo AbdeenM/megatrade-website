@@ -79,6 +79,24 @@ class UserApi {
         }
     }
 
+    createSubscription = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/createSubscription`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    cancelSubscription = async (args) => {
+        try {
+            const { data } = await axios.post(`${this.path}/cancelSubscription`, args)
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
     fetchSignals = async (args) => {
         try {
             const { data } = await axios.post(`${this.path}/fetchSignals`, args)

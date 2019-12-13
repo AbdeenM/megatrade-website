@@ -58,9 +58,6 @@ const SubscriptionsList = () => {
 
 		setUserMembershipState(fetchSubscriptionsResult.data.userMembership)
 		setSubscriptionsState(fetchSubscriptionsResult.data.subscriptions)
-
-		console.log('============================ SUBSCRIPTIONS ============================')
-		console.log(fetchSubscriptionsResult.data.subscriptions)
 	}
 
 	const onGetMembership = membership => {
@@ -73,19 +70,27 @@ const SubscriptionsList = () => {
 	}
 
 	const onSuccessPayment = (details, actions) => {
-		console.log('============================== SUCCESS PAYMENT FIRST DETAILS ==========================')
-		console.log(details)
-
-		return actions.subscription.get().then(async (data, details) => {
+		actions.subscription.get().then(async (data, details) => {
 			enqueueSnackbar('Your payment and subscription completed successfully', { variant: 'success' })
 
+			const createSubscriptionResult = await userApi.createSubscription({
+				userId,
+				planId: data.plan_id,
+				orderId: details.orderID,
+				startTime: data.start_time,
+				subscriptionId: details.subscriptionID,
+				nextBilling: data.billing_info.next_billing_time
+			})
 
-			console.log('============================== SUCCESS PAYMENT DATA ==========================')
-			console.log(data)
+			if (createSubscriptionResult.error)
+				return enqueueSnackbar(createSubscriptionResult.message, { variant: 'error' })
 
-			console.log('============================== SUCCESS PAYMENT DETAILS ==========================')
-			console.log(details)
+			return enqueueSnackbar(createSubscriptionResult.message, { variant: 'success' })
 		})
+	}
+
+	const cancelSubscription = () => {
+
 	}
 
 	return (
