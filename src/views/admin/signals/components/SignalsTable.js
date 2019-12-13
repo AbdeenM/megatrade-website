@@ -357,8 +357,7 @@ const SignalsTable = props => {
         			</Button>
 				</div>
 
-				<div className={classes.row}>
-				</div>
+				<div className={classes.row} />
 			</div>
 
 			<Card>

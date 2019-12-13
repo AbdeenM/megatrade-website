@@ -6,9 +6,10 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
-import React from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -81,7 +82,7 @@ const SignalAlerts = props => {
 
 							<TableBody>
 								{
-									signals.map((signal, i) => (
+									signals.slice(0, 10).map((signal, i) => (
 										<TableRow
 											hover
 											key={i}>
@@ -122,12 +123,14 @@ const SignalAlerts = props => {
 			<Divider />
 
 			<CardActions className={classes.actions}>
-				<Button
-					size='small'
-					variant='text'
-					color='primary'>
-					View all <ArrowRightIcon />
-				</Button>
+				<Link to='/view-signals'>
+					<Button
+						size='small'
+						variant='text'
+						color='primary'>
+						View all <ArrowRightIcon />
+					</Button>
+				</Link>
 			</CardActions>
 		</Card>
 	)

@@ -39,13 +39,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SubscriptionsCard = props => {
-	const { className, subscription, ...rest } = props
+	const { className, subscription, onGetMembership, ...rest } = props
 
 	const classes = useStyles()
-
-	const onGetMembership = () => {
-
-	}
 
 	return (
 		<Card
@@ -116,7 +112,7 @@ const SubscriptionsCard = props => {
 					</Grid>
 				</Grid>
 			</CardActions>
-		</Card >
+		</Card>
 	)
 }
 

@@ -253,7 +253,7 @@ const SignIn = () => {
                     </form>
                 </div>
             </Grid>
-        </div >
+        </div>
     )
 }
 

@@ -36,6 +36,12 @@ const schema = {
             maximum: 32
         }
     },
+    planId: {
+        presence: { allowEmpty: false, message: 'is required' },
+        length: {
+            maximum: 256
+        }
+    },
     validity: {
         presence: { allowEmpty: false, message: 'is required' },
         length: {
@@ -81,6 +87,7 @@ const NewSubscription = props => {
             image: '',
             price: '',
             title: '',
+            planId: '',
             validity: '',
             description: ''
         },
@@ -145,6 +152,7 @@ const NewSubscription = props => {
             image: subscriptionState.values.image,
             price: subscriptionState.values.price,
             title: subscriptionState.values.title,
+            planId: subscriptionState.values.planId,
             validity: subscriptionState.values.validity,
             description: subscriptionState.values.description
         })
@@ -260,6 +268,25 @@ const NewSubscription = props => {
                                     hasError('validity') ? subscriptionState.errors.validity[0] : null
                                 } />
                         </Grid>
+
+                        <Grid
+                            item
+                            md={6}
+                            xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                name='planId'
+                                margin='dense'
+                                label='Plan ID'
+                                variant='outlined'
+                                onChange={onChange}
+                                error={hasError('planId')}
+                                value={subscriptionState.values.planId}
+                                helperText={
+                                    hasError('planId') ? subscriptionState.errors.planId[0] : null
+                                } />
+                        </Grid>
                     </Grid>
                 </CardContent>
 
@@ -270,7 +297,7 @@ const NewSubscription = props => {
                         color='primary'
                         variant='contained'
                         onClick={onSaveDetails}
-                        disabled={!subscriptionState.isChanged || hasError('image') || subscriptionState.values.image.length <= 0 || hasError('title') || subscriptionState.values.title.length <= 0 || hasError('description') || subscriptionState.values.description.length <= 0 || hasError('price') || subscriptionState.values.price.length <= 0 || hasError('validity') || subscriptionState.values.validity.length <= 0}>
+                        disabled={!subscriptionState.isChanged || hasError('image') || subscriptionState.values.image.length <= 0 || hasError('title') || subscriptionState.values.title.length <= 0 || hasError('description') || subscriptionState.values.description.length <= 0 || hasError('price') || subscriptionState.values.price.length <= 0 || hasError('planId') || subscriptionState.values.planId.length <= 0 || hasError('validity') || subscriptionState.values.validity.length <= 0}>
                         Create Subscription
           			</Button>
 

@@ -132,7 +132,7 @@ const SubscriptionsCard = props => {
 					</Grid>
 				</Grid>
 			</CardActions>
-		</Card >
+		</Card>
 	)
 }
 

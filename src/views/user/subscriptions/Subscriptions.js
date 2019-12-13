@@ -6,9 +6,10 @@
  ************************************************************************** */
 
 import { useSnackbar } from 'notistack'
-import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import { Grid, Dialog, DialogTitle, DialogContent } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
+import { PayPalButton } from 'react-paypal-button-v2'
 
 import { UserApi } from '../../../config/Api'
 import SubscriptionsCard from './components/SubscriptionsCard'
@@ -28,11 +29,9 @@ const useStyles = makeStyles(theme => ({
 	content: {
 		marginTop: theme.spacing(2)
 	},
-	pagination: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'flex-end',
-		marginTop: theme.spacing(3)
+	dialog: {
+		width: 500,
+		height: '100%'
 	}
 }))
 
@@ -42,8 +41,13 @@ const SubscriptionsList = () => {
 
 	const userId = localStorage.getItem('userId')
 
-	const [userMembershipState, setUserMembershipState] = useState('')
 	const [subscriptionsState, setSubscriptionsState] = useState([])
+	const [showPaymentDialog, setShowPaymentDialog] = useState(false)
+	const [userMembershipState, setUserMembershipState] = useState('')
+	const [membershipSelectedState, setMembershipSelectedState] = useState({
+		price: '',
+		planId: ''
+	})
 
 	useEffect(() => { fetchSubscriptions() }, [])
 
@@ -54,6 +58,38 @@ const SubscriptionsList = () => {
 
 		setUserMembershipState(fetchSubscriptionsResult.data.userMembership)
 		setSubscriptionsState(fetchSubscriptionsResult.data.subscriptions)
+
+		console.log('============================ SUBSCRIPTIONS ============================')
+		console.log(fetchSubscriptionsResult.data.subscriptions)
+	}
+
+	const onGetMembership = membership => {
+		setMembershipSelectedState({
+			price: membership.price,
+			planId: membership.planId
+		})
+
+		setShowPaymentDialog(true)
+	}
+
+	const onSuccessPayment = (details, actions) => {
+		console.log('============================== SUCCESS PAYMENT FIRST DETAILS ==========================')
+		console.log(details)
+
+		return actions.subscription.get().then(async (data, details) => {
+			enqueueSnackbar('Your payment and subscription completed successfully', { variant: 'success' })
+
+
+			console.log('============================== SUCCESS PAYMENT DATA ==========================')
+			console.log(data)
+
+			console.log('============================== SUCCESS PAYMENT DETAILS ==========================')
+			console.log(details)
+		})
+	}
+
+	const onCreateSubscription = (data, actions) => {
+		return
 	}
 
 	return (
@@ -71,13 +107,30 @@ const SubscriptionsList = () => {
 								xs={12}
 								key={i}>
 								<SubscriptionsCard
+									subscription={subscription}
 									membership={userMembershipState}
-									subscription={subscription} />
+									onGetMembership={() => onGetMembership(subscription)} />
 							</Grid>
 						))
 					}
 				</Grid>
 			</div>
+
+			<Dialog
+				open={showPaymentDialog}
+				onClose={() => setShowPaymentDialog(false)}>
+				<DialogTitle>Choose a payment method</DialogTitle>
+
+				<DialogContent className={classes.dialog}>
+					<PayPalButton
+						options={{ vault: true, clientId: 'Aa2rJcWmC_XykxcxM05acV61xmdV_g3Iqtjv2MiOAXKOi74Ynl1VtSMh0e9tLmWyEU-4ZVnGY1b875lX' }}
+						onApprove={(data, actions) => onSuccessPayment(data, actions)}
+						onError={(error) => enqueueSnackbar(error, { variant: 'error' })}
+						catchError={(error) => enqueueSnackbar(error, { variant: 'error' })}
+						createSubscription={(data, actions) => actions.subscription.create({ plan_id: membershipSelectedState.planId })}
+						onCancel={() => enqueueSnackbar('Your payment attempt to the memebership has been cancelled', { variant: 'info' })} />
+				</DialogContent>
+			</Dialog>
 		</div>
 	)
 }

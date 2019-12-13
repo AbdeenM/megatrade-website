@@ -111,7 +111,6 @@ const Market = () => {
 					xl={12}
 					md={12}>
 					<TradingViewWidget
-						style='1'
 						locale='en'
 						width='100%'
 						height='900'

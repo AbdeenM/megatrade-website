@@ -26,6 +26,7 @@ import MarketUser from './views/user/market/Market'
 import AccountUser from './views/user/account/Account'
 import DashboardUser from './views/user/dashboard/Dashboard'
 import EducationUser from './views/user/education/Education'
+import ViewSignalsUser from './views/user/viewSignals/ViewSignals'
 import SubscriptionsUser from './views/user/subscriptions/Subscriptions'
 
 import UsersAdmin from './views/admin/users/Users'
@@ -94,6 +95,12 @@ const Routes = () => {
 				path='/education'
 				layout={MainLayout}
 				component={EducationUser} />
+
+			<AuthRouteWithLayout
+				exact
+				layout={MainLayout}
+				path='/view-signals'
+				component={ViewSignalsUser} />
 
 			<AuthRouteWithLayout
 				exact

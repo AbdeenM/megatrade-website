@@ -205,7 +205,7 @@ const Terms = () => {
 					</div>
 				</Grid>
 			</Grid>
-		</div >
+		</div>
 	)
 }
 

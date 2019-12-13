@@ -597,8 +597,7 @@ const UsersTable = props => {
         			</Button>
 				</div>
 
-				<div className={classes.row}>
-				</div>
+				<div className={classes.row} />
 			</div>
 
 			<Card>
@@ -634,9 +633,9 @@ const UsersTable = props => {
 									{
 										listedUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (
 											<TableRow
-												className={classes.tableRow}
 												hover
 												key={user._id}
+												className={classes.tableRow}
 												selected={selectedUsers.indexOf(user._id) !== -1}>
 												<TableCell padding='checkbox'>
 													<Checkbox
