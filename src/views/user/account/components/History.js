@@ -1,0 +1,116 @@
+/* **************************************************************************
+ * Copyright(C) Mega Trade Website, Inc - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
+ ************************************************************************** */
+
+import clsx from 'clsx'
+import React from 'react'
+import moment from 'moment'
+import PropTypes from 'prop-types'
+import { makeStyles } from '@material-ui/styles'
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import { Card, CardContent, Table, TableBody, TableCell, TableHead, TableRow, Button, CardHeader, Divider } from '@material-ui/core'
+
+import Palette from '../../../../theme/Palette'
+
+const useStyles = makeStyles(theme => ({
+    root: {},
+    row: {
+        height: '42px',
+        display: 'flex',
+        alignItems: 'center',
+        marginTop: theme.spacing(1)
+    },
+    spacer: {
+        flexGrow: 1
+    },
+    Input: {
+        marginRight: theme.spacing(1),
+        backgroundColor: Palette.background.paper
+    },
+    content: {
+        padding: 0
+    },
+    inner: {
+        minWidth: 1050
+    },
+    actions: {
+        justifyContent: 'flex-end'
+    }
+}))
+
+const SignalsTable = props => {
+    const { className, memberships, ...rest } = props
+
+    const classes = useStyles()
+
+    return (
+        <Card
+            {...rest}
+            className={clsx(classes.root, className)}>
+            <CardHeader
+                title='Membership History'
+                subheader='List of your previous membership packages and their details.' />
+
+            <Divider />
+
+            <CardContent className={classes.content}>
+
+                <PerfectScrollbar>
+                    <div className={classes.inner}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Membership Package</TableCell>
+
+                                    <TableCell>Amount Paid</TableCell>
+
+                                    <TableCell>Subscription ID</TableCell>
+
+                                    <TableCell>Membership Date</TableCell>
+
+                                    <TableCell>Next Billing</TableCell>
+                                </TableRow>
+                            </TableHead>
+
+                            <TableBody>
+                                {
+                                    memberships.map((membership, i) => (
+                                        <TableRow
+                                            hover
+                                            key={i}
+                                            className={classes.tableRow}>
+
+                                            <TableCell>{membership.package}</TableCell>
+
+                                            <TableCell>{membership.price}</TableCell>
+
+                                            <TableCell>{membership.subscriptionId}</TableCell>
+
+                                            <TableCell>
+                                                {moment(membership.startTime).format('DD/MM/YYYY')}
+                                            </TableCell>
+
+                                            <TableCell>
+                                                {moment(membership.nextBilling).format('DD/MM/YYYY')}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                }
+                            </TableBody>
+                        </Table>
+                    </div>
+                </PerfectScrollbar>
+            </CardContent>
+        </Card>
+    )
+}
+
+SignalsTable.propTypes = {
+    className: PropTypes.string,
+    signals: PropTypes.array.isRequired
+}
+
+export default SignalsTable

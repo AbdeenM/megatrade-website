@@ -12,9 +12,9 @@ import React, { useEffect, useState } from 'react'
 
 import TotalUsers from './components/TotalUsers'
 import TotalLogins from './components/TotalLogins'
-import TotalProfits from './components/TotalProfits'
 import TotalSignals from './components/TotalSignals'
 import TotalFreeSignals from './components/TotalFreeSignals'
+import TotalPayingUsers from './components/TotalPayingUsers'
 
 import { AdminApi } from '../../../config/Api'
 
@@ -35,9 +35,9 @@ const Dashboard = () => {
     const [dashboardState, setDashboardState] = useState({
         totalUsers: '',
         totalLogins: '',
-        totalProfits: '',
         totalSignals: '',
-        totalFreeSignals: ''
+        totalFreeSignals: '',
+        totalPayingUsers: ''
     })
 
     useEffect(() => {
@@ -53,9 +53,9 @@ const Dashboard = () => {
             ...dashboardState,
             totalUsers: fetchStatisticsResult.data.totalUsers,
             totalLogins: fetchStatisticsResult.data.totalLogins,
-            totalProfits: fetchStatisticsResult.data.totalProfits,
             totalSignals: fetchStatisticsResult.data.totalSignals,
-            totalFreeSignals: fetchStatisticsResult.data.totalFreeSignals
+            totalFreeSignals: fetchStatisticsResult.data.totalFreeSignals,
+            totalPayingUsers: fetchStatisticsResult.data.totalPayingUsers
         }))
     }
 
@@ -97,7 +97,7 @@ const Dashboard = () => {
                     sm={6}
                     xl={3}
                     xs={12}>
-                    <TotalProfits profits={dashboardState.totalProfits} />
+                    <TotalPayingUsers payingUsers={dashboardState.totalPayingUsers} />
                 </Grid>
 
                 <Grid

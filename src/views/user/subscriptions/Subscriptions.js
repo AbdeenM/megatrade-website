@@ -70,7 +70,7 @@ const SubscriptionsList = () => {
 	}
 
 	const onSuccessPayment = (details, actions) => {
-		actions.subscription.get().then(async (data, details) => {
+		actions.subscription.get().then(async (data, action) => {
 			enqueueSnackbar('Your payment and subscription completed successfully', { variant: 'success' })
 
 			const createSubscriptionResult = await userApi.createSubscription({
@@ -83,9 +83,10 @@ const SubscriptionsList = () => {
 			})
 
 			if (createSubscriptionResult.error)
-				return enqueueSnackbar(createSubscriptionResult.message, { variant: 'error' })
+				enqueueSnackbar(createSubscriptionResult.message, { variant: 'error' })
 
-			return enqueueSnackbar(createSubscriptionResult.message, { variant: 'success' })
+			enqueueSnackbar(createSubscriptionResult.message, { variant: 'success' })
+			window.location.reload()
 		})
 	}
 

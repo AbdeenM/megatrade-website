@@ -10,6 +10,7 @@ import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState } from 'react'
 
+import History from './components/History'
 import Alerts from '../account/components/Alerts'
 import Password from '../account/components/Password'
 import AccountDetails from './components/AccountDetails'
@@ -42,6 +43,7 @@ const Account = () => {
 		firstName: '',
 		membership: '',
 		membershipAmount: '',
+		membershipHistory: [],
 		notifications: {
 			alerts: {
 				email: false,
@@ -84,6 +86,7 @@ const Account = () => {
 			firstName: fetchAccountResult.data.firstName || '',
 			membership: fetchAccountResult.data.membership || '',
 			membershipAmount: fetchAccountResult.data.membershipAmount || '',
+			membershipHistory: fetchAccountResult.data.membershipHistory || [],
 			notifications: {
 				alerts: {
 					email: fetchAccountResult.data.notifications.alerts.email || false,
@@ -162,6 +165,15 @@ const Account = () => {
 					md={12}
 					xs={12}>
 					<Password />
+				</Grid>
+
+				<Grid
+					item
+					lg={12}
+					xl={12}
+					md={12}
+					xs={12}>
+					<History subscriptions={profileState.membershipHistory} />
 				</Grid>
 			</Grid>
 		</div>
