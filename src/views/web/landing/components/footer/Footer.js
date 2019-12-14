@@ -29,8 +29,6 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 	},
 	icon: {
-		width: 48,
-		height: 48,
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
@@ -62,7 +60,7 @@ const LANGUAGES = [
 	}
 ]
 
-export default function AppFooter() {
+const Footer = () => {
 	const classes = useStyles()
 
 	return (
@@ -107,7 +105,7 @@ export default function AppFooter() {
 									target='_blank'
 									className={classes.icon}
 									rel='noopener noreferrer'
-									href='https://www.instagram.com/megatrade.world'>
+									href='https://instagram.com/megatrade.world'>
 									<img
 										alt='instagram'
 										src='/images/footer-instagram.png' />
@@ -194,3 +192,5 @@ export default function AppFooter() {
 		</Typography>
 	)
 }
+
+export default Footer

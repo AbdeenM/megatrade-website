@@ -65,21 +65,11 @@ const useStyles = makeStyles(theme => ({
 	imagesWrapper: {
 		position: 'relative'
 	},
-	imageDots: {
-		top: -67,
-		right: 0,
-		left: -67,
-		bottom: 0,
-		width: '100%',
-		position: 'absolute',
-		background: 'url(https://github.com/mui-org/material-ui/blob/master/docs/static/themes/onepirate/productCTAImageDots.png)'
-	},
 	image: {
-		top: -28,
 		right: 0,
-		left: -28,
+		top: -100,
+		left: -80,
 		bottom: 0,
-		width: '100%',
 		maxWidth: 600,
 		position: 'absolute'
 	},
@@ -220,12 +210,10 @@ const Offers = () => {
 						xs={12}
 						className={classes.imagesWrapper}>
 						<Hidden smDown>
-							<div className={classes.imageDots} />
-
 							<img
-								alt='call to action'
+								alt='trading offers'
 								className={classes.image}
-								src='https://images.unsplash.com/photo-1527853787696-f7be74f2e39a?auto=format&fit=crop&w=750&q=80' />
+								src='/images/offers-background.png' />
 						</Hidden>
 					</Grid>
 				</Grid>

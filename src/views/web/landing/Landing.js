@@ -13,6 +13,7 @@ import Banner from './components/banner/Banner'
 import Offers from './components/offers/Offers'
 import Footer from './components/footer/Footer'
 import Features from './components/features/Features'
+import Disclaimer from './components/disclaimer/Disclaimer'
 
 const Landing = () => {
 	return (
@@ -22,6 +23,8 @@ const Landing = () => {
 			<Features />
 
 			<Offers />
+
+			<Disclaimer />
 
 			<Footer />
 		</React.Fragment>

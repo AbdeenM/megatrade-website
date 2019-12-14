@@ -10,14 +10,15 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Divider, Drawer, Typography } from '@material-ui/core'
 import EducationIcon from '@material-ui/icons/Book'
+import MediaIcon from '@material-ui/icons/PermMedia'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
 import MarketIcon from '@material-ui/icons/MonetizationOn'
 import VerifiedIcon from '@material-ui/icons/VerifiedUser'
 import TradeSignalIcon from '@material-ui/icons/TrendingUp'
+import { Divider, Drawer, Typography } from '@material-ui/core'
 import DashboardUserIcon from '@material-ui/icons/DeveloperBoard'
 
 import Profile from './components/Profile'
@@ -127,7 +128,12 @@ const Sidebar = props => {
 		}
 	]
 
-	const marketing = []
+	const marketing = [
+		{
+			title: 'Social',
+			href: '/admin/social',
+			icon: <MediaIcon />
+		}]
 
 	return (
 		<Drawer

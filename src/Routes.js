@@ -31,6 +31,7 @@ import SubscriptionsUser from './views/user/subscriptions/Subscriptions'
 
 import UsersAdmin from './views/admin/users/Users'
 import LoginAdmin from './views/admin/signIn/SignIn'
+import SocialAdmin from './views/admin/social/Social'
 import MarketAdmin from './views/admin/market/Market'
 import AccountAdmin from './views/admin/account/Account'
 import SignalsAdmin from './views/admin/signals/Signals'
@@ -161,6 +162,12 @@ const Routes = () => {
 				layout={AdminLayout}
 				path='/admin/account'
 				component={AccountAdmin} />
+
+			<AuthAdminRouteWithLayout
+				exact
+				path='/admin/social'
+				layout={AdminLayout}
+				component={SocialAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact

@@ -350,6 +350,20 @@ class MiscellaneousApi {
             throw error
         }
     }
+
+    twitter = async () => {
+        try {
+        } catch (error) {
+            throw error
+        }
+    }
+
+    facebook = async () => {
+        try {
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 export {
