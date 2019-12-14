@@ -125,12 +125,12 @@ const SubscriptionsList = () => {
 
 				<DialogContent className={classes.dialog}>
 					<PayPalButton
-						options={{ vault: true, clientId: 'Aa2rJcWmC_XykxcxM05acV61xmdV_g3Iqtjv2MiOAXKOi74Ynl1VtSMh0e9tLmWyEU-4ZVnGY1b875lX' }}
 						onApprove={(data, actions) => onSuccessPayment(data, actions)}
 						onError={(error) => enqueueSnackbar(error, { variant: 'error' })}
 						catchError={(error) => enqueueSnackbar(error, { variant: 'error' })}
 						createSubscription={(data, actions) => actions.subscription.create({ plan_id: membershipSelectedState.planId })}
-						onCancel={() => enqueueSnackbar('Your payment attempt to the memebership has been cancelled', { variant: 'info' })} />
+						onCancel={() => enqueueSnackbar('Your payment attempt to the memebership has been cancelled', { variant: 'info' })}
+						options={{ vault: true, clientId: 'AUqdMKQ9m1Mg5jz05jo1DL-j8vVPrzXOH7G_LgirWrADGRRJHgq__AMqLNpWhVBnZtGhJRUuf_mSQsoB' }} />
 				</DialogContent>
 			</Dialog>
 		</div>
