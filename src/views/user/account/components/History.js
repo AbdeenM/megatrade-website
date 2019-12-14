@@ -6,12 +6,12 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
-import React from 'react'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
+import React, { useState, useEffect } from 'react'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { Card, CardContent, Table, TableBody, TableCell, TableHead, TableRow, Button, CardHeader, Divider } from '@material-ui/core'
+import { Card, CardContent, Table, TableBody, TableCell, TableHead, TableRow, CardHeader, Divider } from '@material-ui/core'
 
 import Palette from '../../../../theme/Palette'
 
@@ -42,9 +42,13 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SignalsTable = props => {
-    const { className, memberships, ...rest } = props
+    const { className, subscriptions, ...rest } = props
 
     const classes = useStyles()
+
+    const [allMemberships, setAllMemberships] = useState([])
+
+    useEffect(() => { setAllMemberships(subscriptions) }, [subscriptions])
 
     return (
         <Card
@@ -77,12 +81,10 @@ const SignalsTable = props => {
 
                             <TableBody>
                                 {
-                                    memberships.map((membership, i) => (
+                                    allMemberships.map((membership, i) => (
                                         <TableRow
                                             hover
-                                            key={i}
-                                            className={classes.tableRow}>
-
+                                            key={i}>
                                             <TableCell>{membership.package}</TableCell>
 
                                             <TableCell>{membership.price}</TableCell>

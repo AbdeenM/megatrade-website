@@ -182,11 +182,10 @@ const SignalsTable = props => {
 
                                 <TableBody>
                                     {
-                                        listedSignals.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(signals => (
+                                        listedSignals.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((signals, i) => (
                                             <TableRow
                                                 hover
-                                                key={signals._id}
-                                                className={classes.tableRow}
+                                                key={i}
                                                 selected={selectedSignals.indexOf(signals._id) !== -1}>
                                                 <TableCell padding='checkbox'>
                                                     <Checkbox

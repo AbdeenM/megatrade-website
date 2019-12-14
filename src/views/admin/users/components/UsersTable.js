@@ -631,11 +631,10 @@ const UsersTable = props => {
 
 								<TableBody>
 									{
-										listedUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(user => (
+										listedUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user, i) => (
 											<TableRow
 												hover
-												key={user._id}
-												className={classes.tableRow}
+												key={i}
 												selected={selectedUsers.indexOf(user._id) !== -1}>
 												<TableCell padding='checkbox'>
 													<Checkbox
