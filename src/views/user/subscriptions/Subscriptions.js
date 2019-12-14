@@ -11,10 +11,11 @@ import React, { useState, useEffect } from 'react'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { Grid, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core'
 
-import { UserApi } from '../../../config/Api'
 import SubscriptionsCard from './components/SubscriptionsCard'
+import { UserApi, MiscellaneousApi } from '../../../config/Api'
 
 const userApi = new UserApi()
+const miscellaneousApi = new MiscellaneousApi()
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -45,6 +46,7 @@ const SubscriptionsList = () => {
 	const [subscriptionsState, setSubscriptionsState] = useState([])
 	const [showPaymentDialog, setShowPaymentDialog] = useState(false)
 	const [userMembershipState, setUserMembershipState] = useState('')
+	const [userSubscriptionIdState, setUserSubscriptionIdState] = useState('')
 	const [membershipSelectedState, setMembershipSelectedState] = useState({
 		price: '',
 		planId: ''
@@ -57,8 +59,9 @@ const SubscriptionsList = () => {
 		if (fetchSubscriptionsResult.error)
 			return enqueueSnackbar(fetchSubscriptionsResult.message, { variant: 'error' })
 
-		setUserMembershipState(fetchSubscriptionsResult.data.userMembership)
 		setSubscriptionsState(fetchSubscriptionsResult.data.subscriptions)
+		setUserMembershipState(fetchSubscriptionsResult.data.userMembership)
+		setUserSubscriptionIdState(fetchSubscriptionsResult.data.userSubscriptionId)
 	}
 
 	const onGetMembership = membership => {
@@ -96,6 +99,9 @@ const SubscriptionsList = () => {
 	}
 
 	const onCancelSubscription = async () => {
+		await miscellaneousApi.paypalCancelSubscription(userSubscriptionIdState)
+		enqueueSnackbar('Your paypal subscription has been cancelled successfully', { variant: 'success' })
+
 		const cancelSubscriptionResult = await userApi.cancelSubscription({ userId })
 
 		if (cancelSubscriptionResult.error)

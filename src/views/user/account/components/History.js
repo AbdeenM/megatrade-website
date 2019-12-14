@@ -81,7 +81,7 @@ const SignalsTable = props => {
 
                             <TableBody>
                                 {
-                                    allMemberships.map((membership, i) => (
+                                    allMemberships.reverse().map((membership, i) => (
                                         <TableRow
                                             hover
                                             key={i}>

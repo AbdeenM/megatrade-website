@@ -321,7 +321,35 @@ class AdminApi {
 }
 
 class MiscellaneousApi {
+    paypalGetSubscription = async (id) => {
+        try {
+            const data = await axios.get(`https://api.sandbox.paypal.com/v1/billing/subscriptions/${id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer A21AAFale8HrU4TiJ06HdfhYe6G6f22EkEep6NwC4W5LLstlapewsDSbQ7ID2oJhsbD1Y1hKXPad8xak0QO2DZKhkEzwTm2gw'
+                }
+            })
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 
+    paypalCancelSubscription = async (id) => {
+        try {
+            const data = await axios.post(`https://api.sandbox.paypal.com/v1/billing/subscriptions/${id}/cancel`, {
+                reason: 'Want to get Adventurous'
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer A21AAFale8HrU4TiJ06HdfhYe6G6f22EkEep6NwC4W5LLstlapewsDSbQ7ID2oJhsbD1Y1hKXPad8xak0QO2DZKhkEzwTm2gw'
+                }
+            })
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
 }
 
 export {
