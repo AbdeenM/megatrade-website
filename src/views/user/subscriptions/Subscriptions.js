@@ -69,8 +69,6 @@ const SubscriptionsList = () => {
 		setShowPaymentDialog(true)
 	}
 
-	const onCreateSubscription = actions => actions.subscription.create({ plan_id: membershipSelectedState.planId })
-
 	const onSuccessPayment = (details, actions) => {
 		actions.subscription.get().then(async (data, action) => {
 			enqueueSnackbar('Your payment and subscription completed successfully', { variant: 'success' })
@@ -131,7 +129,7 @@ const SubscriptionsList = () => {
 						onApprove={(data, actions) => onSuccessPayment(data, actions)}
 						onError={(error) => enqueueSnackbar(error, { variant: 'error' })}
 						catchError={(error) => enqueueSnackbar(error, { variant: 'error' })}
-						createSubscription={(data, actions) => onCreateSubscription(actions)}
+						createSubscription={(data, actions) => actions.subscription.create({ plan_id: membershipSelectedState.planId })}
 						onCancel={() => enqueueSnackbar('Your payment attempt to the memebership has been cancelled', { variant: 'info' })} />
 				</DialogContent>
 			</Dialog>
