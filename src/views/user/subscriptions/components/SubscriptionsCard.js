@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SubscriptionsCard = props => {
-	const { className, subscription, onGetMembership, ...rest } = props
+	const { className, subscription, onGetMembership, onCancelSubscription, ...rest } = props
 
 	const classes = useStyles()
 
@@ -90,13 +90,22 @@ const SubscriptionsCard = props => {
 					<Grid
 						item
 						className={classes.statsItem}>
-						<Button
-							color='primary'
-							variant='contained'
-							onClick={onGetMembership}
-							disabled={props.membership === subscription.title}>
-							{props.membership === subscription.title ? 'CURRENT MEMBERSHIP' : 'GET MEMBERSHIP'}
-						</Button>
+						{
+							props.membership === subscription.title
+								? <Button
+									color='secondary'
+									variant='contained'
+									onClick={onCancelSubscription}
+									disabled={props.membership === 'Free Membership'}>
+									{props.membership === 'Free Membership' ? 'CURRENT MEMBERSHIP' : 'CANCEL MEMBERSHIP'}
+								</Button>
+								: <Button
+									color='primary'
+									variant='contained'
+									onClick={onGetMembership}>
+									GET MEMBERSHIP
+								</Button>
+						}
 					</Grid>
 
 					<Grid

@@ -7,9 +7,9 @@
 
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
-import { Grid, Dialog, DialogTitle, DialogContent } from '@material-ui/core'
 import React, { useState, useEffect } from 'react'
 import { PayPalButton } from 'react-paypal-button-v2'
+import { Grid, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core'
 
 import { UserApi } from '../../../config/Api'
 import SubscriptionsCard from './components/SubscriptionsCard'
@@ -30,8 +30,8 @@ const useStyles = makeStyles(theme => ({
 		marginTop: theme.spacing(2)
 	},
 	dialog: {
-		width: 500,
-		height: '100%'
+		width: 'auto',
+		height: 'auto'
 	}
 }))
 
@@ -41,6 +41,7 @@ const SubscriptionsList = () => {
 
 	const userId = localStorage.getItem('userId')
 
+	const [showFreeDialog, setShowFreeDialog] = useState(false)
 	const [subscriptionsState, setSubscriptionsState] = useState([])
 	const [showPaymentDialog, setShowPaymentDialog] = useState(false)
 	const [userMembershipState, setUserMembershipState] = useState('')
@@ -61,12 +62,16 @@ const SubscriptionsList = () => {
 	}
 
 	const onGetMembership = membership => {
-		setMembershipSelectedState({
-			price: membership.price,
-			planId: membership.planId
-		})
+		if (membership.title === 'Free Membership') {
+			setShowFreeDialog(true)
+		} else {
+			setMembershipSelectedState({
+				price: membership.price,
+				planId: membership.planId
+			})
 
-		setShowPaymentDialog(true)
+			setShowPaymentDialog(true)
+		}
 	}
 
 	const onSuccessPayment = (details, actions) => {
@@ -90,8 +95,14 @@ const SubscriptionsList = () => {
 		})
 	}
 
-	const cancelSubscription = () => {
+	const onCancelSubscription = async () => {
+		const cancelSubscriptionResult = await userApi.cancelSubscription({ userId })
 
+		if (cancelSubscriptionResult.error)
+			enqueueSnackbar(cancelSubscriptionResult.message, { variant: 'error' })
+
+		enqueueSnackbar(cancelSubscriptionResult.message, { variant: 'success' })
+		window.location.reload()
 	}
 
 	return (
@@ -111,6 +122,7 @@ const SubscriptionsList = () => {
 								<SubscriptionsCard
 									subscription={subscription}
 									membership={userMembershipState}
+									onCancelSubscription={onCancelSubscription}
 									onGetMembership={() => onGetMembership(subscription)} />
 							</Grid>
 						))
@@ -132,6 +144,27 @@ const SubscriptionsList = () => {
 						onCancel={() => enqueueSnackbar('Your payment attempt to the memebership has been cancelled', { variant: 'info' })}
 						options={{ vault: true, clientId: 'AUqdMKQ9m1Mg5jz05jo1DL-j8vVPrzXOH7G_LgirWrADGRRJHgq__AMqLNpWhVBnZtGhJRUuf_mSQsoB' }} />
 				</DialogContent>
+			</Dialog>
+
+			<Dialog
+				open={showFreeDialog}
+				onClose={() => setShowFreeDialog(false)}>
+				<DialogTitle>Are you sure you want opt to the free membership?</DialogTitle>
+
+				<DialogActions>
+					<Button
+						color='secondary'
+						onClick={() => setShowFreeDialog(false)}>
+						NO
+					</Button>
+
+					<Button
+						color='primary'
+						variant='contained'
+						onClick={onCancelSubscription}>
+						YES
+					</Button>
+				</DialogActions>
 			</Dialog>
 		</div>
 	)
