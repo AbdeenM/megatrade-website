@@ -130,7 +130,7 @@ const Sidebar = props => {
 
 	const marketing = [
 		{
-			title: 'Social',
+			title: 'Social Media',
 			href: '/admin/social',
 			icon: <MediaIcon />
 		}]

@@ -321,6 +321,10 @@ class AdminApi {
 }
 
 class MiscellaneousApi {
+    constructor() {
+        this.path = '/miscellaneous'
+    }
+
     paypalGetSubscription = async (id) => {
         try {
             const data = await axios.get(`https://api.sandbox.paypal.com/v1/billing/subscriptions/${id}`, {
@@ -351,8 +355,10 @@ class MiscellaneousApi {
         }
     }
 
-    twitter = async () => {
+    twitterPost = async args => {
         try {
+            const { data } = await axios.post(`${this.path}/twitterPost`, args)
+            return data
         } catch (error) {
             throw error
         }

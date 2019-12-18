@@ -23,8 +23,15 @@ const schema = {
     }
 }
 
-const useStyles = makeStyles(() => ({
-    root: {}
+const useStyles = makeStyles(theme => ({
+    root: {},
+    imageContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2)
+    },
 }))
 
 const Post = props => {
@@ -32,6 +39,8 @@ const Post = props => {
 
     const classes = useStyles()
     const { enqueueSnackbar } = useSnackbar()
+
+    const adminId = localStorage.getItem('adminId')
 
     const [postState, setPostState] = useState({
         errors: {},
@@ -71,7 +80,41 @@ const Post = props => {
         }))
     }
 
+    const toBase64 = file => {
+        return new Promise(resolve => {
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onload = () => { resolve(reader.result) }
+            reader.onerror = () => { return enqueueSnackbar('Error while uploading your picture, please try again', { variant: 'error' }) }
+        })
+    }
+
+    const onUploadPicture = async event => {
+        event.persist()
+
+        const imageBase64 = await toBase64(event.target.files[0])
+
+        setPostState(postState => ({
+            ...postState,
+            values: {
+                ...postState.values,
+                image: imageBase64
+            },
+            isChanged: true
+        }))
+    }
+
     const onPostToSocialMedia = async () => {
+        const twitterPostResult = await miscellaneousApi.twitterPost({
+            adminId,
+            post: postState.values.post,
+            image: postState.values.image
+        })
+
+        if (twitterPostResult.error)
+            enqueueSnackbar(twitterPostResult.message, { variant: 'error' })
+        else
+            enqueueSnackbar(twitterPostResult.message, { variant: 'success' })
 
         window.location.reload()
     }
@@ -89,6 +132,16 @@ const Post = props => {
                     subheader='Post to our facebook, twitter and instagram social accounts' />
 
                 <Divider />
+
+                {
+                    postState.values.image.length > 1
+                        ? <div className={classes.imageContainer}>
+                            <img
+                                alt='post image'
+                                src={postState.values.image} />
+                        </div> :
+                        <div />
+                }
 
                 <CardContent>
                     <TextField
@@ -109,7 +162,22 @@ const Post = props => {
 
                 <Divider />
 
-                <CardActions>
+                <CardActions><input
+                    type='file'
+                    accept='image/*'
+                    id='upload-image'
+                    onChange={onUploadPicture}
+                    style={{ display: 'none' }} />
+
+                    <label htmlFor='upload-image'>
+                        <Button
+                            variant='text'
+                            color='primary'
+                            component='span'>
+                            UPLOAD PROFILE PICUTRE
+						</Button>
+                    </label>
+
                     <Button
                         color='primary'
                         variant='contained'
