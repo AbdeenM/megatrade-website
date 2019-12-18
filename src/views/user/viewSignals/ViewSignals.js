@@ -6,9 +6,9 @@
  ************************************************************************** */
 
 import { useSnackbar } from 'notistack'
-import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState } from 'react'
+import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { UserApi } from '../../../config/Api'
 import SignalsTable from './components/SignalsTable'
@@ -27,17 +27,30 @@ const ViewSignals = () => {
 
     const userId = localStorage.getItem('userId')
 
+    const [isLoading, setIsLoading] = useState(true)
     const [signalsState, setSignalsState] = useState([])
 
     useEffect(() => { fetchSignals() }, [])
 
     const fetchSignals = async () => {
         const fetchSignalsResult = await userApi.fetchSignals({ userId })
-        if (fetchSignalsResult.error)
+        if (fetchSignalsResult.error) {
+            setIsLoading(false)
             return enqueueSnackbar(fetchSignalsResult.message, { variant: 'error' })
+        }
 
         setSignalsState(fetchSignalsResult.data)
+        setIsLoading(false)
     }
+
+    if (isLoading)
+        return (
+            <Dialog open={isLoading}>
+                <DialogContent>
+                    <CircularProgress />
+                </DialogContent>
+            </Dialog>
+        )
 
     return (
         <div className={classes.root}>

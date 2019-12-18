@@ -6,9 +6,9 @@
  ************************************************************************** */
 
 import { useSnackbar } from 'notistack'
-import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState } from 'react'
+import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { AdminApi } from '../../../config/Api'
 import UsersTable from './components/UsersTable'
@@ -27,17 +27,30 @@ const Users = () => {
 
 	const adminId = localStorage.getItem('adminId')
 
+	const [isLoading, setIsLoading] = useState(true)
 	const [usersListState, setUsersListState] = useState([])
 
 	useEffect(() => { fetchUsersList() }, [])
 
 	const fetchUsersList = async () => {
 		const fetchUsersListResult = await adminApi.fetchUsersList({ adminId })
-		if (fetchUsersListResult.error)
+		if (fetchUsersListResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(fetchUsersListResult.message, { variant: 'error' })
+		}
 
 		setUsersListState(fetchUsersListResult.data)
+		setIsLoading(false)
 	}
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<div className={classes.root}>

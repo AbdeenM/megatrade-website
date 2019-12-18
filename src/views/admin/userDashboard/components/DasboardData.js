@@ -12,7 +12,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent, Typography } from '@material-ui/core'
+import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent, Typography, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { AdminApi } from '../../../../config/Api'
 
@@ -85,8 +85,8 @@ const NewUserDashboard = props => {
 
     const adminId = localStorage.getItem('adminId')
 
+    const [isLoading, setIsLoading] = useState(false)
     const [weekdaysState, setWeekdaysState] = useState([])
-
     const [userDashboardState, setUserDashboardState] = useState({
         errors: {},
         values: {
@@ -233,9 +233,12 @@ const NewUserDashboard = props => {
     }
 
     const fetchUserDashboard = async () => {
+        setIsLoading(true)
         const fetchUserDashboardResult = await adminApi.fetchUserDashboard({ adminId })
-        if (fetchUserDashboardResult.error)
+        if (fetchUserDashboardResult.error) {
+            setIsLoading(false)
             return enqueueSnackbar(fetchUserDashboardResult.message, { variant: 'error' })
+        }
 
         setUserDashboardState(userDashboardState => ({
             ...userDashboardState,
@@ -253,9 +256,12 @@ const NewUserDashboard = props => {
                 }
             }
         }))
+
+        setIsLoading(false)
     }
 
     const onCreateUserDashboard = async () => {
+        setIsLoading(true)
         const createResult = await adminApi.createUserDashboard({
             adminId,
             totalPips: userDashboardState.values.totalPips,
@@ -273,15 +279,27 @@ const NewUserDashboard = props => {
             }
         })
 
-        if (createResult.error)
+        if (createResult.error) {
+            setIsLoading(false)
             return enqueueSnackbar(createResult.message, { variant: 'error' })
+        }
 
         enqueueSnackbar(createResult.message, { variant: 'success' })
+        setIsLoading(false)
         window.location.reload()
     }
 
     const hasError = field =>
         userDashboardState.touched[field] && userDashboardState.errors[field] ? true : false
+
+    if (isLoading)
+        return (
+            <Dialog open={isLoading}>
+                <DialogContent>
+                    <CircularProgress />
+                </DialogContent>
+            </Dialog>
+        )
 
     return (
         <Card

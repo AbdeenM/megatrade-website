@@ -6,9 +6,9 @@
  ************************************************************************** */
 
 import { useSnackbar } from 'notistack'
-import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState, useRef } from 'react'
+import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import Budget from './components/Budget'
 import TradePie from './components/TradePie'
@@ -35,7 +35,9 @@ const Dashboard = () => {
 	const userId = localStorage.getItem('userId')
 
 	const tickerTape = useRef(null)
+	const [isLoading, setIsLoading] = useState(true)
 	const [signalsState, setSignalsState] = useState([])
+	const [isTaperLoaded, setIsTaperLoaded] = useState(false)
 	const [dashboardState, setDashboardState] = useState({
 		totalPips: '',
 		totalUsers: '',
@@ -57,7 +59,7 @@ const Dashboard = () => {
 		fetchStatistics()
 	}, [])
 
-	useEffect(() => {
+	const onLoadTaper = () => {
 		const script = document.createElement('script')
 		script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js'
 		script.async = true
@@ -107,12 +109,15 @@ const Dashboard = () => {
 		})
 
 		tickerTape.current.appendChild(script)
-	}, [])
+		setIsTaperLoaded(true)
+	}
 
 	const fetchStatistics = async () => {
 		const fetchStatisticsResult = await userApi.fetchStatistics({ userId })
-		if (fetchStatisticsResult.error)
+		if (fetchStatisticsResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(fetchStatisticsResult.message, { variant: 'error' })
+		}
 
 		setDashboardState(dashboardState => ({
 			...dashboardState,
@@ -130,15 +135,29 @@ const Dashboard = () => {
 				lastYear: fetchStatisticsResult.data.latestAlerts.lastYear
 			}
 		}))
+
+		setIsLoading(false)
 	}
 
 	const fetchSignals = async () => {
 		const fetchSignalsResult = await userApi.fetchSignals({ userId })
-		if (fetchSignalsResult.error)
+		if (fetchSignalsResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(fetchSignalsResult.message, { variant: 'error' })
+		}
 
 		setSignalsState(fetchSignalsResult.data)
+		setIsLoading(false)
 	}
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<div className={classes.root}>
@@ -221,6 +240,9 @@ const Dashboard = () => {
 			</Grid>
 		</div>
 	)
+
+	if (!isLoading && !isTaperLoaded)
+		onLoadTaper()
 }
 
 export default Dashboard

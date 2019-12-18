@@ -6,9 +6,9 @@
  ************************************************************************** */
 
 import { useSnackbar } from 'notistack'
-import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState } from 'react'
+import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import TotalUsers from './components/TotalUsers'
 import TotalLogins from './components/TotalLogins'
@@ -32,6 +32,7 @@ const Dashboard = () => {
 
     const adminId = localStorage.getItem('adminId')
 
+    const [isLoading, setIsLoading] = useState(true)
     const [dashboardState, setDashboardState] = useState({
         totalUsers: '',
         totalLogins: '',
@@ -46,8 +47,10 @@ const Dashboard = () => {
 
     const fetchStatistics = async () => {
         const fetchStatisticsResult = await adminApi.fetchStatistics({ adminId })
-        if (fetchStatisticsResult.error)
+        if (fetchStatisticsResult.error) {
+            setIsLoading(false)
             return enqueueSnackbar(fetchStatisticsResult.message, { variant: 'error' })
+        }
 
         setDashboardState(dashboardState => ({
             ...dashboardState,
@@ -57,7 +60,18 @@ const Dashboard = () => {
             totalFreeSignals: fetchStatisticsResult.data.totalFreeSignals,
             totalPayingUsers: fetchStatisticsResult.data.totalPayingUsers
         }))
+
+        setIsLoading(false)
     }
+
+    if (isLoading)
+        return (
+            <Dialog open={isLoading}>
+                <DialogContent>
+                    <CircularProgress />
+                </DialogContent>
+            </Dialog>
+        )
 
     return (
         <div className={classes.root}>

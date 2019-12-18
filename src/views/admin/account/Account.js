@@ -6,9 +6,9 @@
  ************************************************************************** */
 
 import { useSnackbar } from 'notistack'
-import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState } from 'react'
+import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import Password from '../account/components/Password'
 import AccountDetails from './components/AccountDetails'
@@ -30,6 +30,7 @@ const Account = () => {
 
 	const adminId = localStorage.getItem('adminId')
 
+	const [isLoading, setIsLoading] = useState(true)
 	const [profileState, setProfileState] = useState({
 		city: '',
 		email: '',
@@ -45,8 +46,10 @@ const Account = () => {
 	const fetchProfileDetails = async () => {
 		const fetchAccountResult = await adminApi.fetchAccount({ adminId })
 
-		if (fetchAccountResult.error)
+		if (fetchAccountResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(fetchAccountResult.message, { variant: 'error' })
+		}
 
 		setProfileState(profileState => ({
 			...profileState,
@@ -58,7 +61,18 @@ const Account = () => {
 			lastName: fetchAccountResult.data.lastName || '',
 			firstName: fetchAccountResult.data.firstName || ''
 		}))
+
+		setIsLoading(false)
 	}
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<div className={classes.root}>

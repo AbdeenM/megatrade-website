@@ -13,7 +13,7 @@ import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import React, { useState, useEffect, useRef } from 'react'
-import { Card, CardActions, CardContent, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Menu, MenuItem, Typography } from '@material-ui/core'
+import { Card, CardActions, CardContent, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Menu, MenuItem, Typography, CircularProgress } from '@material-ui/core'
 
 import Palette from '../../../../theme/Palette'
 import { AdminApi } from '../../../../config/Api'
@@ -107,6 +107,7 @@ const SignalsTable = props => {
 
 	const [page, setPage] = useState(0)
 	const [allSignals, setAllSignals] = useState([])
+	const [isLoading, setIsLoading] = useState(false)
 	const [rowsPerPage, setRowsPerPage] = useState(10)
 	const [searchState, setSearchState] = useState('')
 	const [listedSignals, setListedSignals] = useState([])
@@ -249,6 +250,7 @@ const SignalsTable = props => {
 	}
 
 	const onEditSignal = async () => {
+		setIsLoading(true)
 		const editResult = await adminApi.editSignal({
 			adminId,
 			stopLoss: signalsState.values.stopLoss,
@@ -258,10 +260,13 @@ const SignalsTable = props => {
 			status: signalsState.values.status.toUpperCase()
 		})
 
-		if (editResult.error)
+		if (editResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(editResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(editResult.message, { variant: 'success' })
+		setIsLoading(false)
 		window.location.reload()
 	}
 
@@ -286,6 +291,7 @@ const SignalsTable = props => {
 	}
 
 	const onCreateSignal = async () => {
+		setIsLoading(true)
 		const createResult = await adminApi.createSignal({
 			adminId,
 			stopLoss: signalsState.values.stopLoss,
@@ -295,28 +301,44 @@ const SignalsTable = props => {
 			status: signalsState.values.status.toUpperCase()
 		})
 
-		if (createResult.error)
+		if (createResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(createResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(createResult.message, { variant: 'success' })
+		setIsLoading(false)
 		window.location.reload()
 	}
 
 	const onDeleteSignals = async () => {
+		setIsLoading(true)
 		const deleteResult = await adminApi.deleteSignals({
 			adminId,
 			signals: selectedSignals
 		})
 
-		if (deleteResult.error)
+		if (deleteResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(deleteResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(deleteResult.message, { variant: 'success' })
+		setIsLoading(false)
 		window.location.reload()
 	}
 
 	const hasError = field =>
 		signalsState.touched[field] && signalsState.errors[field] ? true : false
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<div
@@ -442,9 +464,8 @@ const SignalsTable = props => {
 
 			<Dialog
 				open={showEditSignalDialog}
-				aria-labelledby='form-dialog-title'
 				onClose={() => setShowEditSignalsDialog(false)}>
-				<DialogTitle id='form-dialog-title'>Edit Signal</DialogTitle>
+				<DialogTitle>Edit Signal</DialogTitle>
 
 				<DialogContent>
 					<DialogContentText>
@@ -552,9 +573,8 @@ const SignalsTable = props => {
 
 			<Dialog
 				open={showCreateSignalDialog}
-				aria-labelledby='form-dialog-title'
 				onClose={() => setShowCreateSignalDialog(false)}>
-				<DialogTitle id='form-dialog-title'>Create Signal</DialogTitle>
+				<DialogTitle>Create Signal</DialogTitle>
 
 				<DialogContent>
 					<DialogContentText>

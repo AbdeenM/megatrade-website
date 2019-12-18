@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Grid, Button, Divider, Checkbox, CardHeader, Typography, CardContent, CardActions, FormControlLabel } from '@material-ui/core'
+import { Card, Grid, Button, Divider, Checkbox, CardHeader, Typography, CardContent, CardActions, FormControlLabel, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { UserApi } from '../../../../config/Api'
 
@@ -32,6 +32,7 @@ const Alerts = props => {
 
 	const userId = localStorage.getItem('userId')
 
+	const [isLoading, setIsLoading] = useState(false)
 	const [profileState, setProfileState] = useState({
 		notifications: {
 			alerts: {
@@ -112,17 +113,30 @@ const Alerts = props => {
 	}
 
 	const onSaveDetails = async () => {
+		setIsLoading(true)
 		const saveResult = await userApi.updateAccount({
 			userId,
 			notifications: profileState.notifications
 		})
 
-		if (saveResult.error)
+		if (saveResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(saveResult.message, { variant: 'error' })
+		}
 
+		setIsLoading(false)
 		enqueueSnackbar(saveResult.message, { variant: 'success' })
 		window.location.reload()
 	}
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<Card

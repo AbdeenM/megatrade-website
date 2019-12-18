@@ -15,7 +15,7 @@ import React, { useState, useEffect } from 'react'
 import Visibility from '@material-ui/icons/Visibility'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel } from '@material-ui/core'
+import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress } from '@material-ui/core'
 
 import Palette from '../../../../theme/Palette'
 import { AdminApi } from '../../../../config/Api'
@@ -138,6 +138,7 @@ const UsersTable = props => {
 
 	const [page, setPage] = useState(0)
 	const [allUsers, setAllUsers] = useState([])
+	const [isLoading, setIsLoading] = useState(false)
 	const [rowsPerPage, setRowsPerPage] = useState(10)
 	const [searchState, setSearchState] = useState('')
 	const [listedUsers, setListedUsers] = useState([])
@@ -412,6 +413,7 @@ const UsersTable = props => {
 	}
 
 	const onEditUser = async () => {
+		setIsLoading(true)
 		const editResult = await adminApi.editUser({
 			adminId,
 			city: userProfileState.values.city,
@@ -447,15 +449,18 @@ const UsersTable = props => {
 			}
 		})
 
-		if (editResult.error)
+		if (editResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(editResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(editResult.message, { variant: 'success' })
+		setIsLoading(false)
 		window.location.reload()
 	}
 
 	const onCreateUserClick = async () => {
-		setUserProfileState(userProfileState => ({
+		setUserProfileState(() => ({
 			errors: {},
 			values: {
 				city: '',
@@ -502,6 +507,7 @@ const UsersTable = props => {
 	}
 
 	const onCreateUser = async () => {
+		setIsLoading(true)
 		const createResult = await adminApi.createUser({
 			adminId,
 			city: userProfileState.values.city,
@@ -535,28 +541,44 @@ const UsersTable = props => {
 			}
 		})
 
-		if (createResult.error)
+		if (createResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(createResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(createResult.message, { variant: 'success' })
+		setIsLoading(false)
 		window.location.reload()
 	}
 
 	const onDeleteUsers = async () => {
+		setIsLoading(true)
 		const deleteResult = await adminApi.deleteUsers({
 			adminId,
 			users: selectedUsers
 		})
 
-		if (deleteResult.error)
+		if (deleteResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(deleteResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(deleteResult.message, { variant: 'success' })
+		setIsLoading(false)
 		window.location.reload()
 	}
 
 	const hasError = field =>
 		userProfileState.touched[field] && userProfileState.errors[field] ? true : false
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<div

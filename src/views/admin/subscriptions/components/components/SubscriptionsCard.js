@@ -6,13 +6,13 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
-import React from 'react'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import MoneyIcon from '@material-ui/icons/AttachMoney'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
-import { Card, Grid, Divider, Typography, CardContent, CardActions, Button } from '@material-ui/core'
+import { Card, Grid, Divider, Typography, CardContent, CardActions, Button, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { AdminApi } from '../../../../../config/Api'
 
@@ -51,18 +51,33 @@ const SubscriptionsCard = props => {
 
 	const adminId = localStorage.getItem('adminId')
 
+	const [isLoading, setIsLoading] = useState(false)
+
 	const onRemoveMembership = async () => {
+		setIsLoading(true)
 		const removeResult = await adminApi.removeSubscriptions({
 			adminId,
 			subscriptionId: subscription._id
 		})
 
-		if (removeResult.error)
+		if (removeResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(removeResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(removeResult.message, { variant: 'success' })
+		setIsLoading(false)
 		window.location.reload()
 	}
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<Card

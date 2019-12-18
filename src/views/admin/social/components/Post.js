@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Button, Divider, TextField, CardHeader, CardContent, CardActions } from '@material-ui/core'
+import { Card, Button, Divider, TextField, CardHeader, CardContent, CardActions, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { MiscellaneousApi } from '../../../../config/Api'
 
@@ -42,6 +42,7 @@ const Post = props => {
 
     const adminId = localStorage.getItem('adminId')
 
+    const [isLoading, setIsLoading] = useState(false)
     const [postState, setPostState] = useState({
         errors: {},
         values: {
@@ -105,22 +106,36 @@ const Post = props => {
     }
 
     const onPostToSocialMedia = async () => {
+        setIsLoading(true)
         const twitterPostResult = await miscellaneousApi.twitterPost({
             adminId,
             post: postState.values.post,
             image: postState.values.image
         })
 
-        if (twitterPostResult.error)
+        if (twitterPostResult.error) {
+            setIsLoading(false)
             enqueueSnackbar(twitterPostResult.message, { variant: 'error' })
-        else
+        }
+        else {
+            setIsLoading(false)
             enqueueSnackbar(twitterPostResult.message, { variant: 'success' })
+        }
 
         window.location.reload()
     }
 
     const hasError = field =>
         postState.touched[field] && postState.errors[field] ? true : false
+
+    if (isLoading)
+        return (
+            <Dialog open={isLoading}>
+                <DialogContent>
+                    <CircularProgress />
+                </DialogContent>
+            </Dialog>
+        )
 
     return (
         <Card

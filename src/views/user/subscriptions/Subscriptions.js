@@ -9,7 +9,7 @@ import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import { PayPalButton } from 'react-paypal-button-v2'
-import { Grid, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core'
+import { Grid, Dialog, DialogTitle, DialogContent, DialogActions, Button, CircularProgress } from '@material-ui/core'
 
 import SubscriptionsCard from './components/SubscriptionsCard'
 import { UserApi, MiscellaneousApi } from '../../../config/Api'
@@ -42,6 +42,7 @@ const SubscriptionsList = () => {
 
 	const userId = localStorage.getItem('userId')
 
+	const [isLoading, setIsLoading] = useState(true)
 	const [showFreeDialog, setShowFreeDialog] = useState(false)
 	const [subscriptionsState, setSubscriptionsState] = useState([])
 	const [showPaymentDialog, setShowPaymentDialog] = useState(false)
@@ -56,12 +57,16 @@ const SubscriptionsList = () => {
 
 	const fetchSubscriptions = async () => {
 		const fetchSubscriptionsResult = await userApi.fetchSubscriptions({ userId })
-		if (fetchSubscriptionsResult.error)
+		if (fetchSubscriptionsResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(fetchSubscriptionsResult.message, { variant: 'error' })
+		}
 
 		setSubscriptionsState(fetchSubscriptionsResult.data.subscriptions)
 		setUserMembershipState(fetchSubscriptionsResult.data.userMembership)
 		setUserSubscriptionIdState(fetchSubscriptionsResult.data.userSubscriptionId)
+
+		setIsLoading(false)
 	}
 
 	const onGetMembership = membership => {
@@ -81,6 +86,7 @@ const SubscriptionsList = () => {
 		actions.subscription.get().then(async (data, action) => {
 			enqueueSnackbar('Your payment and subscription completed successfully', { variant: 'success' })
 
+			setIsLoading(true)
 			const createSubscriptionResult = await userApi.createSubscription({
 				userId,
 				planId: data.plan_id,
@@ -90,11 +96,14 @@ const SubscriptionsList = () => {
 				nextBilling: data.billing_info.next_billing_time
 			})
 
-			if (createSubscriptionResult.error)
+			if (createSubscriptionResult.error) {
+				setIsLoading(false)
 				enqueueSnackbar(createSubscriptionResult.message, { variant: 'error' })
-
-			enqueueSnackbar(createSubscriptionResult.message, { variant: 'success' })
-			window.location.reload()
+			} else {
+				setIsLoading(false)
+				enqueueSnackbar(createSubscriptionResult.message, { variant: 'success' })
+				window.location.reload()
+			}
 		})
 	}
 
@@ -102,14 +111,26 @@ const SubscriptionsList = () => {
 		await miscellaneousApi.paypalCancelSubscription(userSubscriptionIdState)
 		enqueueSnackbar('Your paypal subscription has been cancelled successfully', { variant: 'success' })
 
+		setIsLoading(true)
 		const cancelSubscriptionResult = await userApi.cancelSubscription({ userId })
-
-		if (cancelSubscriptionResult.error)
+		if (cancelSubscriptionResult.error) {
+			setIsLoading(false)
 			enqueueSnackbar(cancelSubscriptionResult.message, { variant: 'error' })
-
-		enqueueSnackbar(cancelSubscriptionResult.message, { variant: 'success' })
-		window.location.reload()
+		} else {
+			setIsLoading(false)
+			enqueueSnackbar(cancelSubscriptionResult.message, { variant: 'success' })
+			window.location.reload()
+		}
 	}
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<div className={classes.root}>

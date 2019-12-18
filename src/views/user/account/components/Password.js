@@ -12,15 +12,7 @@ import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import {
-	Card,
-	Button,
-	Divider,
-	TextField,
-	CardHeader,
-	CardContent,
-	CardActions
-} from '@material-ui/core'
+import { Card, Button, Divider, TextField, CardHeader, CardContent, CardActions, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { UserApi } from '../../../../config/Api'
 
@@ -38,6 +30,7 @@ const Password = props => {
 
 	const userId = localStorage.getItem('userId')
 
+	const [isLoading, setIsLoading] = useState(false)
 	const [passwordState, setPasswordState] = useState({
 		confirm: '',
 		password: '',
@@ -62,17 +55,30 @@ const Password = props => {
 		if (passwordState.password !== passwordState.confirm)
 			return enqueueSnackbar('Your password and confirmed password does not match, please try again', { variant: 'info' })
 
+		setIsLoading(false)
 		const saveResult = await userApi.updateAccount({
 			userId,
 			password: passwordState.password
 		})
 
-		if (saveResult.error)
+		if (saveResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(saveResult.message, { variant: 'error' })
+		}
 
+		setIsLoading(false)
 		enqueueSnackbar(saveResult.message, { variant: 'success' })
 		window.location.reload()
 	}
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<Card

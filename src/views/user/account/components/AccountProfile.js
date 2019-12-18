@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Avatar, Button, Divider, Typography, CardActions, CardContent, LinearProgress } from '@material-ui/core'
+import { Card, Avatar, Button, Divider, Typography, CardActions, CardContent, LinearProgress, Dialog, DialogContent, CircularProgress } from '@material-ui/core'
 
 import { UserApi } from '../../../../config/Api'
 
@@ -46,6 +46,7 @@ const AccountProfile = props => {
 
 	const userId = localStorage.getItem('userId')
 
+	const [isLoading, setIsLoading] = useState(false)
 	const [profileState, setProfileState] = useState({
 		city: '',
 		avatar: '',
@@ -81,6 +82,7 @@ const AccountProfile = props => {
 
 		const imageBase64 = await toBase64(event.target.files[0])
 
+		setIsLoading(true)
 		const uploadPictureResult = await userApi.updateAccount({
 			userId,
 			avatar: {
@@ -89,12 +91,24 @@ const AccountProfile = props => {
 			}
 		})
 
-		if (uploadPictureResult.error)
+		if (uploadPictureResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(uploadPictureResult.message, { variant: 'error' })
+		}
 
+		setIsLoading(false)
 		enqueueSnackbar(uploadPictureResult.message, { variant: 'success' })
 		window.location.reload()
 	}
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<Card

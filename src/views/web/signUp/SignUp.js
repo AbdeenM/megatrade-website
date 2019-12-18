@@ -14,7 +14,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
-import { Grid, Link, Button, Checkbox, TextField, IconButton, Typography, FormHelperText } from '@material-ui/core'
+import { Grid, Link, Button, Checkbox, TextField, IconButton, Typography, FormHelperText, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { UserApi } from '../../../config/Api'
 
@@ -143,6 +143,7 @@ const SignUp = props => {
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
+	const [isLoading, setIsLoading] = useState(false)
 	const [isRegisted, setRegister] = useState(false)
 	const [formState, setFormState] = useState({
 		errors: {},
@@ -195,6 +196,7 @@ const SignUp = props => {
 	const onSignUp = async event => {
 		event.preventDefault()
 
+		setIsLoading(true)
 		const signUpResult = await userApi.register({
 			email: formState.values.email,
 			lastName: formState.values.lastName,
@@ -202,12 +204,15 @@ const SignUp = props => {
 			firstName: formState.values.firstName
 		})
 
-		if (signUpResult.error)
+		if (signUpResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(signUpResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(signUpResult.message, { variant: 'success' })
 		localStorage.setItem('userId', signUpResult.data._id)
 		setRegister(true)
+		setIsLoading(false)
 	}
 
 	const hasError = field =>
@@ -215,6 +220,15 @@ const SignUp = props => {
 
 	if (isRegisted)
 		return <Redirect to='/dashboard' />
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<div className={classes.root}>

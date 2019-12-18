@@ -17,14 +17,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 
 import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
-import {
-	Grid,
-	Link,
-	Button,
-	TextField,
-	IconButton,
-	Typography
-} from '@material-ui/core'
+import { Grid, Link, Button, TextField, IconButton, Typography, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { UserApi } from '../../../config/Api'
 import GoogleIcon from './components/GoogleIcon'
@@ -142,6 +135,7 @@ const SignIn = props => {
 	const { enqueueSnackbar } = useSnackbar()
 
 	const [isLogged, setLogged] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 	const [formState, setFormState] = useState({
 		errors: {},
 		values: {},
@@ -193,16 +187,20 @@ const SignIn = props => {
 	const onSignIn = async event => {
 		event.preventDefault()
 
+		setIsLoading(true)
 		const signInResult = await userApi.login({
 			email: formState.values.email,
 			password: formState.values.password
 		})
 
-		if (signInResult.error)
+		if (signInResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(signInResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(signInResult.message, { variant: 'success' })
 		localStorage.setItem('userId', signInResult.data._id)
+		setIsLoading(false)
 		setLogged(true)
 	}
 
@@ -211,17 +209,21 @@ const SignIn = props => {
 			return enqueueSnackbar('Your login attempt with facebook failed', { variant: 'info' })
 
 
+		setIsLoading(true)
 		const socialSignInResult = await userApi.socialLogin({
 			email: response.email,
 			lastName: response.name.split(' ')[1],
 			firstName: response.name.split(' ')[0]
 		})
 
-		if (socialSignInResult.error)
+		if (socialSignInResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(socialSignInResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(socialSignInResult.message, { variant: 'success' })
 		localStorage.setItem('userId', socialSignInResult.data._id)
+		setIsLoading(false)
 		setLogged(true)
 	}
 
@@ -229,6 +231,7 @@ const SignIn = props => {
 		if (response.error)
 			return enqueueSnackbar('Your login attempt with google failed', { variant: 'info' })
 
+		setIsLoading(true)
 		const socialSignInResult = await userApi.socialLogin({
 			email: response.profileObj.email,
 			avatar: response.profileObj.imageUrl,
@@ -236,21 +239,31 @@ const SignIn = props => {
 			firstName: response.profileObj.givenName
 		})
 
-		if (socialSignInResult.error)
+		if (socialSignInResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(socialSignInResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(socialSignInResult.message, { variant: 'success' })
 		localStorage.setItem('userId', socialSignInResult.data._id)
+		setIsLoading(false)
 		setLogged(true)
-
 	}
 
 	const hasError = field =>
 		formState.touched[field] && formState.errors[field] ? true : false
 
-
 	if (isLogged)
 		return <Redirect to='/dashboard' />
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<div className={classes.root}>

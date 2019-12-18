@@ -6,9 +6,9 @@
  ************************************************************************** */
 
 import { useSnackbar } from 'notistack'
-import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
+import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { AdminApi } from '../../../../config/Api'
 import SubscriptionsCard from './components/SubscriptionsCard'
@@ -40,17 +40,30 @@ const SubscriptionsList = () => {
 
     const adminId = localStorage.getItem('adminId')
 
+    const [isLoading, setIsLoading] = useState(true)
     const [subscriptionsState, setSubscriptionsState] = useState([])
 
     useEffect(() => { fetchSubscriptions() }, [])
 
     const fetchSubscriptions = async () => {
         const fetchSubscriptionsResult = await adminApi.fetchSubscriptions({ adminId })
-        if (fetchSubscriptionsResult.error)
+        if (fetchSubscriptionsResult.error) {
+            setIsLoading(false)
             return enqueueSnackbar(fetchSubscriptionsResult.message, { variant: 'error' })
+        }
 
         setSubscriptionsState(fetchSubscriptionsResult.data)
+        setIsLoading(false)
     }
+
+    if (isLoading)
+        return (
+            <Dialog open={isLoading}>
+                <DialogContent>
+                    <CircularProgress />
+                </DialogContent>
+            </Dialog>
+        )
 
     return (
         <div className={classes.root}>

@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent } from '@material-ui/core'
+import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { AdminApi } from '../../../../config/Api'
 
@@ -81,6 +81,7 @@ const NewSubscription = props => {
 
     const adminId = localStorage.getItem('adminId')
 
+    const [isLoading, setIsLoading] = useState(false)
     const [subscriptionState, setSubscriptionState] = useState({
         errors: {},
         values: {
@@ -147,6 +148,7 @@ const NewSubscription = props => {
     }
 
     const onSaveDetails = async () => {
+        setIsLoading(true)
         const createResult = await adminApi.createSubscriptions({
             adminId,
             image: subscriptionState.values.image,
@@ -157,15 +159,27 @@ const NewSubscription = props => {
             description: subscriptionState.values.description
         })
 
-        if (createResult.error)
+        if (createResult.error) {
+            setIsLoading(false)
             return enqueueSnackbar(createResult.message, { variant: 'error' })
+        }
 
         enqueueSnackbar(createResult.message, { variant: 'success' })
+        setIsLoading(false)
         window.location.reload()
     }
 
     const hasError = field =>
         subscriptionState.touched[field] && subscriptionState.errors[field] ? true : false
+
+    if (isLoading)
+        return (
+            <Dialog open={isLoading}>
+                <DialogContent>
+                    <CircularProgress />
+                </DialogContent>
+            </Dialog>
+        )
 
     return (
         <Card

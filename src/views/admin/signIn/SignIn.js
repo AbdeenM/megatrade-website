@@ -11,15 +11,9 @@ import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
-
 import { withRouter, Redirect } from 'react-router-dom'
-import {
-    Grid,
-    Button,
-    TextField,
-    Typography
-} from '@material-ui/core'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import { Grid, Button, TextField, Typography, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { AdminApi } from '../../../config/Api'
 
@@ -114,10 +108,13 @@ const SignIn = () => {
     const adminId = localStorage.getItem('adminId')
 
     const [isLogged, setLogged] = useState(false)
-
+    const [isLoading, setIsLoading] = useState(false)
     const [formState, setFormState] = useState({
         errors: {},
-        values: {},
+        values: {
+            email: '',
+            password: ''
+        },
         touched: {},
         isValid: false,
         showPassword: false
@@ -162,17 +159,21 @@ const SignIn = () => {
     const onSignIn = async event => {
         event.preventDefault()
 
+        setIsLoading(true)
         const signInResult = await adminApi.login({
             email: formState.values.email,
             password: formState.values.password
         })
 
-        if (signInResult.error)
+        if (signInResult.error) {
+            setIsLoading(false)
             return enqueueSnackbar(signInResult.message, { variant: 'error' })
+        }
 
         enqueueSnackbar(signInResult.message, { variant: 'success' })
         localStorage.setItem('adminId', signInResult.data._id)
         setLogged(true)
+        setIsLoading(false)
     }
 
     const hasError = field =>
@@ -180,6 +181,15 @@ const SignIn = () => {
 
     if (isLogged || adminId)
         return <Redirect to='/admin/dashboard' />
+
+    if (isLoading)
+        return (
+            <Dialog open={isLoading}>
+                <DialogContent>
+                    <CircularProgress />
+                </DialogContent>
+            </Dialog>
+        )
 
     return (
         <div className={classes.root}>

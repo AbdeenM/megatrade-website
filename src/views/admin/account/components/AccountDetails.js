@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent } from '@material-ui/core'
+import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { AdminApi } from '../../../../config/Api'
 
@@ -70,6 +70,7 @@ const AccountDetails = props => {
 
 	const adminId = localStorage.getItem('adminId')
 
+	const [isLoading, setIsLoading] = useState(false)
 	const [profileState, setProfileState] = useState({
 		errors: {},
 		values: {
@@ -127,6 +128,7 @@ const AccountDetails = props => {
 	}
 
 	const onSaveDetails = async () => {
+		setIsLoading(true)
 		const saveResult = await adminApi.updateAccount({
 			adminId,
 			city: profileState.values.city,
@@ -137,15 +139,27 @@ const AccountDetails = props => {
 			firstName: profileState.values.firstName
 		})
 
-		if (saveResult.error)
+		if (saveResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(saveResult.message, { variant: 'error' })
+		}
 
 		enqueueSnackbar(saveResult.message, { variant: 'success' })
+		setIsLoading(false)
 		window.location.reload()
 	}
 
 	const hasError = field =>
 		profileState.touched[field] && profileState.errors[field] ? true : false
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<Card

@@ -6,9 +6,9 @@
  ************************************************************************** */
 
 import { useSnackbar } from 'notistack'
-import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState } from 'react'
+import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
 import { AdminApi } from '../../../config/Api'
 import SignalsTable from './components/SignalsTable'
@@ -28,6 +28,7 @@ const Signals = () => {
 
 	const adminId = localStorage.getItem('adminId')
 
+	const [isLoading, setIsLoading] = useState(true)
 	const [signalsState, setSignalsState] = useState([])
 	const [freeSignalsState, setFreeSignalsState] = useState([])
 
@@ -38,19 +39,34 @@ const Signals = () => {
 
 	const fetchFreeSignalsList = async () => {
 		const fetchFreeSignalsListResult = await adminApi.fetchFreeSignals({ adminId })
-		if (fetchFreeSignalsListResult.error)
+		if (fetchFreeSignalsListResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(fetchFreeSignalsListResult.message, { variant: 'error' })
+		}
 
 		setFreeSignalsState(fetchFreeSignalsListResult.data)
+		setIsLoading(false)
 	}
 
 	const fetchSignalsList = async () => {
 		const fetchSignalsListResult = await adminApi.fetchSignals({ adminId })
-		if (fetchSignalsListResult.error)
+		if (fetchSignalsListResult.error) {
+			setIsLoading(false)
 			return enqueueSnackbar(fetchSignalsListResult.message, { variant: 'error' })
+		}
 
 		setSignalsState(fetchSignalsListResult.data)
+		setIsLoading(false)
 	}
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<div className={classes.root}>
