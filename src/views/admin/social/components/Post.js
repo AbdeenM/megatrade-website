@@ -174,7 +174,7 @@ const Post = props => {
                             variant='text'
                             color='primary'
                             component='span'>
-                            UPLOAD PROFILE PICUTRE
+                            UPLOAD POST PICUTRE
 						</Button>
                     </label>
 
