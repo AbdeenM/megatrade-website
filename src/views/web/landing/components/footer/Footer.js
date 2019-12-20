@@ -174,6 +174,7 @@ const Footer = () => {
 
 						<TextField
 							select
+							margin='normal'
 							className={classes.language}
 							SelectProps={{ native: true }}>
 							{

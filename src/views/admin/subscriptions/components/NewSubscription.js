@@ -214,7 +214,7 @@ const NewSubscription = props => {
                                 fullWidth
                                 name='title'
                                 label='Title'
-                                margin='dense'
+                                margin='normal'
                                 variant='outlined'
                                 onChange={onChange}
                                 error={hasError('title')}
@@ -232,7 +232,7 @@ const NewSubscription = props => {
                                 required
                                 fullWidth
                                 multiline
-                                margin='dense'
+                                margin='normal'
                                 name='description'
                                 variant='outlined'
                                 label='Description'
@@ -253,7 +253,7 @@ const NewSubscription = props => {
                                 fullWidth
                                 name='price'
                                 label='Price'
-                                margin='dense'
+                                margin='normal'
                                 variant='outlined'
                                 onChange={onChange}
                                 error={hasError('price')}
@@ -271,8 +271,8 @@ const NewSubscription = props => {
                             <TextField
                                 required
                                 fullWidth
-                                margin='dense'
                                 name='validity'
+                                margin='normal'
                                 label='Validity'
                                 variant='outlined'
                                 onChange={onChange}
@@ -291,8 +291,8 @@ const NewSubscription = props => {
                                 required
                                 fullWidth
                                 name='planId'
-                                margin='dense'
                                 label='Plan ID'
+                                margin='normal'
                                 variant='outlined'
                                 onChange={onChange}
                                 error={hasError('planId')}

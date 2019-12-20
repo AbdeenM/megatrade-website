@@ -4,16 +4,16 @@
  * Proprietary and confidential
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
-
-import PropTypes from 'prop-types'
 import Validate from 'validate.js'
+import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
-import { makeStyles } from '@material-ui/styles'
+import { Redirect } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
+import { makeStyles } from '@material-ui/core/styles'
 import Visibility from '@material-ui/icons/Visibility'
-import { withRouter, Redirect } from 'react-router-dom'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import { Grid, Button, TextField, Typography, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Typography, Container, Dialog, DialogContent, CircularProgress } from '@material-ui/core'
 
 import { AdminApi } from 'config/Api'
 
@@ -36,68 +36,22 @@ const schema = {
 }
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        height: '100%',
-        backgroundColor: theme.palette.background.default
-    },
-    content: {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    contentHeader: {
-        marginTop: 50,
+    paper: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: theme.spacing(5),
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
-        paddingBototm: theme.spacing(2)
+        flexDirection: 'column',
+        marginTop: theme.spacing(8)
     },
-    imageContainer: {
-        width: 150,
-        height: 150,
-        display: 'flex',
-        margin: '0 auto',
-        overflow: 'hidden',
-        borderRadius: '5px',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: theme.spacing(5),
-        border: `1px solid ${theme.palette.divider}`
-    },
-    image: {
-        width: 150,
-        height: 150
-    },
-    contentBody: {
-        flexGrow: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        [theme.breakpoints.down('md')]: {
-            justifyContent: 'center'
-        }
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.primary.main
     },
     form: {
-        flexBasis: 700,
-        paddingLeft: 100,
-        paddingRight: 100,
-        paddingBottom: 125,
-        [theme.breakpoints.down('sm')]: {
-            paddingLeft: theme.spacing(2),
-            paddingRight: theme.spacing(2)
-        }
+        width: '100%',
+        marginTop: theme.spacing(1)
     },
-    title: {
-        marginTop: theme.spacing(3)
-    },
-    textField: {
-        marginTop: theme.spacing(2)
-    },
-    signInButton: {
-        margin: theme.spacing(2, 0)
+    submit: {
+        margin: theme.spacing(3, 0, 2)
     }
 }))
 
@@ -192,78 +146,80 @@ const SignIn = () => {
         )
 
     return (
-        <div className={classes.root}>
-            <Grid
-                container
-                className={classes.content}>
-                <div className={classes.contentHeader}>
-                    <Typography
-                        variant='h1'
-                        className={classes.title}>
-                        ADMIN LOG IN
-                    </Typography>
-                </div>
+        <Container
+            maxWidth='xs'
+            component='main'>
+            <CssBaseline />
 
-                <div className={classes.imageContainer}>
-                    <img
-                        alt='logo'
-                        className={classes.image}
-                        src='/images/logo-512.png' />
-                </div>
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon />
+                </Avatar>
 
-                <div className={classes.contentBody}>
-                    <form
-                        onSubmit={onSignIn}
-                        className={classes.form}>
-                        <TextField
-                            fullWidth
-                            type='text'
-                            name='email'
-                            variant='outlined'
-                            onChange={onChange}
-                            label='Email address'
-                            error={hasError('email')}
-                            className={classes.textField}
-                            value={formState.values.email || ''}
-                            helperText={
-                                hasError('email') ? formState.errors.email[0] : null
-                            } />
+                <Typography
+                    variant='h5'
+                    component='h1'>
+                    Admin Login
+                </Typography>
 
-                        <TextField
-                            fullWidth
-                            name='password'
-                            label='Password'
-                            variant='outlined'
-                            onChange={onChange}
-                            error={hasError('password')}
-                            className={classes.textField}
-                            value={formState.values.password || ''}
-                            type={formState.showPassword ? 'text' : 'password'}
-                            helperText={
-                                hasError('password') ? formState.errors.password[0] : null
-                            }
-                            InputProps={{
-                                endAdornment: formState.showPassword
-                                    ? <VisibilityOff
-                                        onClick={onShowPassword} />
-                                    : <Visibility
-                                        onClick={onShowPassword} />
-                            }} />
+                <form className={classes.form}>
+                    <TextField
+                        fullWidth
+                        type='text'
+                        name='email'
+                        margin='normal'
+                        variant='outlined'
+                        onChange={onChange}
+                        label='Email address'
+                        error={hasError('email')}
+                        className={classes.textField}
+                        value={formState.values.email || ''}
+                        helperText={
+                            hasError('email') ? formState.errors.email[0] : null
+                        } />
 
-                        <Button
-                            fullWidth
-                            size='large'
-                            type='submit'
+                    <TextField
+                        fullWidth
+                        name='password'
+                        margin='normal'
+                        label='Password'
+                        variant='outlined'
+                        onChange={onChange}
+                        error={hasError('password')}
+                        className={classes.textField}
+                        value={formState.values.password || ''}
+                        type={formState.showPassword ? 'text' : 'password'}
+                        helperText={
+                            hasError('password') ? formState.errors.password[0] : null
+                        }
+                        InputProps={{
+                            endAdornment: formState.showPassword
+                                ? <VisibilityOff
+                                    onClick={onShowPassword} />
+                                : <Visibility
+                                    onClick={onShowPassword} />
+                        }} />
+
+                    <FormControlLabel
+                        label='Remember me'
+                        control={<Checkbox
                             color='primary'
-                            variant='contained'
-                            disabled={!formState.isValid}
-                            className={classes.signInButton}>
-                            Log In
-                        </Button>
-                    </form>
-                </div>
-            </Grid>
-        </div>
+                            value='remember' />} />
+
+                    <Button
+                        fullWidth
+                        size='large'
+                        type='submit'
+                        color='primary'
+                        onClick={onSignIn}
+                        variant='contained'
+                        className={classes.submit}
+                        disabled={!formState.isValid}>
+                        Log In
+					</Button>
+                </form>
+            </div>
+        </Container>
     )
 }
 
@@ -271,4 +227,4 @@ SignIn.propTypes = {
     history: PropTypes.object
 }
 
-export default withRouter(SignIn)
+export default SignIn

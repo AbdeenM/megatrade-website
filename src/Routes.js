@@ -8,7 +8,7 @@
 import React from 'react'
 import { Switch, Redirect } from 'react-router-dom'
 
-import WebLayout from './layouts/web/Web'
+import WebLayout from './layouts/web/Main'
 import MainLayout from './layouts/user/Main'
 import AdminLayout from './layouts/admin/Main'
 import RouteWithLayout from './components/RouteWithLayout'

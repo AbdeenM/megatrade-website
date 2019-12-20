@@ -95,6 +95,7 @@ const Password = props => {
 					<TextField
 						fullWidth
 						name='password'
+						margin='normal'
 						label='Password'
 						variant='outlined'
 						onChange={onChange}
@@ -112,6 +113,7 @@ const Password = props => {
 						fullWidth
 						name='confirm'
 						type='password'
+						margin='normal'
 						variant='outlined'
 						onChange={onChange}
 						label='Confirm Password'

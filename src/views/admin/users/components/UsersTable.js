@@ -732,7 +732,7 @@ const UsersTable = props => {
 						disabled
 						fullWidth
 						name='id'
-						margin='dense'
+						margin='normal'
 						label='User ID'
 						variant='outlined'
 						value={userProfileState.values.userId} />
@@ -740,7 +740,7 @@ const UsersTable = props => {
 					<TextField
 						disabled
 						fullWidth
-						margin='dense'
+						margin='normal'
 						name='membership'
 						label='Membership'
 						variant='outlined'
@@ -750,7 +750,7 @@ const UsersTable = props => {
 						disabled
 						fullWidth
 						name='status'
-						margin='dense'
+						margin='normal'
 						variant='outlined'
 						label='Profile Status'
 						value={userProfileState.values.status + ' %'} />
@@ -758,7 +758,7 @@ const UsersTable = props => {
 					<TextField
 						required
 						fullWidth
-						margin='dense'
+						margin='normal'
 						name='firstName'
 						label='First name'
 						variant='outlined'
@@ -773,7 +773,7 @@ const UsersTable = props => {
 					<TextField
 						required
 						fullWidth
-						margin='dense'
+						margin='normal'
 						name='lastName'
 						label='Last name'
 						variant='outlined'
@@ -788,7 +788,7 @@ const UsersTable = props => {
 						required
 						fullWidth
 						name='email'
-						margin='dense'
+						margin='normal'
 						variant='outlined'
 						label='Email Address'
 						onChange={onChangeText}
@@ -817,7 +817,7 @@ const UsersTable = props => {
 					<TextField
 						fullWidth
 						name='number'
-						margin='dense'
+						margin='normal'
 						variant='outlined'
 						label='Phone Number'
 						onChange={onChangeText}
@@ -831,7 +831,7 @@ const UsersTable = props => {
 						fullWidth
 						name='city'
 						label='City'
-						margin='dense'
+						margin='normal'
 						variant='outlined'
 						onChange={onChangeText}
 						error={hasError('city')}
@@ -843,7 +843,7 @@ const UsersTable = props => {
 					<TextField
 						fullWidth
 						name='country'
-						margin='dense'
+						margin='normal'
 						label='Country'
 						variant='outlined'
 						onChange={onChangeText}
@@ -1054,7 +1054,7 @@ const UsersTable = props => {
 						required
 						fullWidth
 						name='membership'
-						margin='dense'
+						margin='normal'
 						label='Membership'
 						variant='outlined'
 						onChange={onChangeText}
@@ -1067,7 +1067,7 @@ const UsersTable = props => {
 					<TextField
 						required
 						fullWidth
-						margin='dense'
+						margin='normal'
 						name='firstName'
 						label='First name'
 						variant='outlined'
@@ -1082,7 +1082,7 @@ const UsersTable = props => {
 					<TextField
 						required
 						fullWidth
-						margin='dense'
+						margin='normal'
 						name='lastName'
 						label='Last name'
 						variant='outlined'
@@ -1097,7 +1097,7 @@ const UsersTable = props => {
 						required
 						fullWidth
 						name='email'
-						margin='dense'
+						margin='normal'
 						variant='outlined'
 						label='Email Address'
 						onChange={onChangeText}
@@ -1126,7 +1126,7 @@ const UsersTable = props => {
 					<TextField
 						fullWidth
 						name='number'
-						margin='dense'
+						margin='normal'
 						variant='outlined'
 						label='Phone Number'
 						onChange={onChangeText}
@@ -1140,7 +1140,7 @@ const UsersTable = props => {
 						fullWidth
 						name='city'
 						label='City'
-						margin='dense'
+						margin='normal'
 						variant='outlined'
 						onChange={onChangeText}
 						error={hasError('city')}
@@ -1152,7 +1152,7 @@ const UsersTable = props => {
 					<TextField
 						fullWidth
 						name='country'
-						margin='dense'
+						margin='normal'
 						label='Country'
 						variant='outlined'
 						onChange={onChangeText}

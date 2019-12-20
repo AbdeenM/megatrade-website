@@ -273,6 +273,7 @@ const SignUp = props => {
 								<TextField
 									fullWidth
 									type='text'
+									margin='normal'
 									name='firstName'
 									label='First name'
 									variant='outlined'
@@ -288,6 +289,7 @@ const SignUp = props => {
 									fullWidth
 									type='text'
 									name='lastName'
+									margin='normal'
 									label='Last name'
 									variant='outlined'
 									onChange={onChange}
@@ -302,6 +304,7 @@ const SignUp = props => {
 									fullWidth
 									type='text'
 									name='email'
+									margin='normal'
 									variant='outlined'
 									label='Email address'
 									onChange={onChange}
@@ -315,6 +318,7 @@ const SignUp = props => {
 								<TextField
 									fullWidth
 									name='password'
+									margin='normal'
 									label='Password'
 									variant='outlined'
 									onChange={onChange}

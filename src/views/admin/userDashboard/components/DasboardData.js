@@ -326,7 +326,7 @@ const NewUserDashboard = props => {
                                 <TextField
                                     required
                                     fullWidth
-                                    margin='dense'
+                                    margin='normal'
                                     name='totalPips'
                                     label='Total Pips'
                                     variant='outlined'
@@ -346,7 +346,7 @@ const NewUserDashboard = props => {
                                     required
                                     fullWidth
                                     multiline
-                                    margin='dense'
+                                    margin='normal'
                                     name='totalUsers'
                                     variant='outlined'
                                     label='Total Users'
@@ -365,7 +365,7 @@ const NewUserDashboard = props => {
                                 <TextField
                                     required
                                     fullWidth
-                                    margin='dense'
+                                    margin='normal'
                                     name='tradeBudget'
                                     variant='outlined'
                                     onChange={onChange}
@@ -385,7 +385,7 @@ const NewUserDashboard = props => {
                                 <TextField
                                     required
                                     fullWidth
-                                    margin='dense'
+                                    margin='normal'
                                     variant='outlined'
                                     name='totalProfits'
                                     onChange={onChange}
@@ -421,7 +421,7 @@ const NewUserDashboard = props => {
                                     fullWidth
                                     name='labels'
                                     label='Labels'
-                                    margin='dense'
+                                    margin='normal'
                                     variant='outlined'
                                     error={hasError('labels')}
                                     onChange={onChangeTradeFocus}
@@ -440,7 +440,7 @@ const NewUserDashboard = props => {
                                     fullWidth
                                     name='data'
                                     label='Data'
-                                    margin='dense'
+                                    margin='normal'
                                     variant='outlined'
                                     error={hasError('data')}
                                     onChange={onChangeTradeFocus}
@@ -457,7 +457,7 @@ const NewUserDashboard = props => {
                                 <TextField
                                     required
                                     fullWidth
-                                    margin='dense'
+                                    margin='normal'
                                     variant='outlined'
                                     name='backgroundColor'
                                     label='Background Color'
@@ -501,7 +501,7 @@ const NewUserDashboard = props => {
                                             key={i}
                                             disabled
                                             fullWidth
-                                            margin='dense'
+                                            margin='normal'
                                             value={weekday}
                                             variant='outlined'
                                             label={i + 1 + ' Day of Week'} />
@@ -526,7 +526,7 @@ const NewUserDashboard = props => {
                                             key={i}
                                             required
                                             fullWidth
-                                            margin='dense'
+                                            margin='normal'
                                             value={weekday}
                                             variant='outlined'
                                             name={i.toString()}
@@ -553,7 +553,7 @@ const NewUserDashboard = props => {
                                             key={i}
                                             required
                                             fullWidth
-                                            margin='dense'
+                                            margin='normal'
                                             value={weekday}
                                             variant='outlined'
                                             name={i.toString()}

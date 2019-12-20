@@ -149,6 +149,7 @@ const Offers = () => {
 									<TextField
 										fullWidth
 										name='email'
+										margin='normal'
 										onChange={onChange}
 										label='Email Address'
 										error={hasError('email')}

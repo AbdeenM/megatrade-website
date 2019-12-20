@@ -476,7 +476,7 @@ const SignalsTable = props => {
 						disabled
 						fullWidth
 						name='id'
-						margin='dense'
+						margin='normal'
 						label='Signal ID'
 						variant='outlined'
 						value={signalsState.values.signalId} />
@@ -485,7 +485,7 @@ const SignalsTable = props => {
 						required
 						fullWidth
 						name='name'
-						margin='dense'
+						margin='normal'
 						variant='outlined'
 						label='Signal Name'
 						onChange={onChangeText}
@@ -529,7 +529,7 @@ const SignalsTable = props => {
 					<TextField
 						required
 						fullWidth
-						margin='dense'
+						margin='normal'
 						name='stopLoss'
 						label='Stop Loss'
 						variant='outlined'
@@ -542,7 +542,7 @@ const SignalsTable = props => {
 
 					<TextField
 						fullWidth
-						margin='dense'
+						margin='normal'
 						name='entryPrice'
 						variant='outlined'
 						label='Entry Price'
@@ -585,7 +585,7 @@ const SignalsTable = props => {
 						required
 						fullWidth
 						name='name'
-						margin='dense'
+						margin='normal'
 						variant='outlined'
 						label='Signal Name'
 						onChange={onChangeText}
@@ -629,7 +629,7 @@ const SignalsTable = props => {
 					<TextField
 						required
 						fullWidth
-						margin='dense'
+						margin='normal'
 						name='stopLoss'
 						label='Stop Loss'
 						variant='outlined'
@@ -642,7 +642,7 @@ const SignalsTable = props => {
 
 					<TextField
 						fullWidth
-						margin='dense'
+						margin='normal'
 						name='entryPrice'
 						variant='outlined'
 						label='Entry Price'

@@ -185,7 +185,7 @@ const AccountDetails = props => {
 							<TextField
 								required
 								fullWidth
-								margin='dense'
+								margin='normal'
 								name='firstName'
 								label='First name'
 								variant='outlined'
@@ -204,7 +204,7 @@ const AccountDetails = props => {
 							<TextField
 								required
 								fullWidth
-								margin='dense'
+								margin='normal'
 								name='lastName'
 								label='Last name'
 								variant='outlined'
@@ -224,7 +224,7 @@ const AccountDetails = props => {
 								required
 								fullWidth
 								name='email'
-								margin='dense'
+								margin='normal'
 								variant='outlined'
 								label='Email Address'
 								onChange={onChange}
@@ -242,7 +242,7 @@ const AccountDetails = props => {
 							<TextField
 								fullWidth
 								name='number'
-								margin='dense'
+								margin='normal'
 								variant='outlined'
 								label='Phone Number'
 								onChange={onChange}
@@ -261,7 +261,7 @@ const AccountDetails = props => {
 								fullWidth
 								name='city'
 								label='City'
-								margin='dense'
+								margin='normal'
 								variant='outlined'
 								onChange={onChange}
 								error={hasError('city')}
@@ -278,7 +278,7 @@ const AccountDetails = props => {
 							<TextField
 								fullWidth
 								name='country'
-								margin='dense'
+								margin='normal'
 								label='Country'
 								variant='outlined'
 								onChange={onChange}

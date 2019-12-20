@@ -353,6 +353,7 @@ const SignIn = props => {
 									fullWidth
 									type='text'
 									name='email'
+									margin='normal'
 									variant='outlined'
 									onChange={onChange}
 									label='Email address'
@@ -366,6 +367,7 @@ const SignIn = props => {
 								<TextField
 									fullWidth
 									name='password'
+									margin='normal'
 									label='Password'
 									variant='outlined'
 									onChange={onChange}

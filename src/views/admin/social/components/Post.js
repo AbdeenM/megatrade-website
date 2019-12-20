@@ -165,7 +165,7 @@ const Post = props => {
                         multiline
                         name='post'
                         label='Post'
-                        margin='dense'
+                        margin='normal'
                         variant='outlined'
                         onChange={onChange}
                         error={hasError('post')}
