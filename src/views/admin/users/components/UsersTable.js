@@ -17,9 +17,9 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress } from '@material-ui/core'
 
-import Palette from '../../../../theme/Palette'
-import { AdminApi } from '../../../../config/Api'
-import getInitials from '../../../../helpers/getInitials'
+import Palette from 'theme/Palette'
+import { AdminApi } from 'config/Api'
+import getInitials from 'helpers/getInitials'
 
 const adminApi = new AdminApi()
 

@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
-import { AdminApi } from '../../../../config/Api'
+import { AdminApi } from 'config/Api'
 import SubscriptionsCard from './components/SubscriptionsCard'
 
 const adminApi = new AdminApi()

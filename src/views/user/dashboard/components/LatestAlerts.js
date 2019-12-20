@@ -13,7 +13,7 @@ import { Bar } from 'react-chartjs-2'
 import { makeStyles } from '@material-ui/styles'
 import { Card, CardHeader, CardContent, Divider, Button } from '@material-ui/core'
 
-import Palette from '../../../../theme/Palette'
+import Palette from 'theme/Palette'
 
 const useStyles = makeStyles(() => ({
 	root: {},

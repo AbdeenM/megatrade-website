@@ -23,7 +23,7 @@ import DashboardUserIcon from '@material-ui/icons/DeveloperBoard'
 
 import Profile from './components/Profile'
 import SidebarNav from './components/SidebarNav'
-import { AdminApi } from '../../../../config/Api'
+import { AdminApi } from 'config/Api'
 
 const adminApi = new AdminApi()
 

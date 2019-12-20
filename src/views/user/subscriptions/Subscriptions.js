@@ -12,7 +12,7 @@ import { PayPalButton } from 'react-paypal-button-v2'
 import { Grid, Dialog, DialogTitle, DialogContent, DialogActions, Button, CircularProgress } from '@material-ui/core'
 
 import SubscriptionsCard from './components/SubscriptionsCard'
-import { UserApi, MiscellaneousApi } from '../../../config/Api'
+import { UserApi, MiscellaneousApi } from 'config/Api'
 
 const userApi = new UserApi()
 const miscellaneousApi = new MiscellaneousApi()

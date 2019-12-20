@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import { Card, Grid, Button, Divider, TextField, CardHeader, CardActions, CardContent, Typography, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
-import { AdminApi } from '../../../../config/Api'
+import { AdminApi } from 'config/Api'
 
 const adminApi = new AdminApi()
 

@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState } from 'react'
 import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
-import { UserApi } from '../../../config/Api'
+import { UserApi } from 'config/Api'
 import SignalsTable from './components/SignalsTable'
 
 const userApi = new UserApi()

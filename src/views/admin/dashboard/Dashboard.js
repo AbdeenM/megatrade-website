@@ -16,7 +16,7 @@ import TotalSignals from './components/TotalSignals'
 import TotalFreeSignals from './components/TotalFreeSignals'
 import TotalPayingUsers from './components/TotalPayingUsers'
 
-import { AdminApi } from '../../../config/Api'
+import { AdminApi } from 'config/Api'
 
 const adminApi = new AdminApi()
 

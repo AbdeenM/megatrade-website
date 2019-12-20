@@ -18,7 +18,7 @@ import LatestAlerts from './components/LatestAlerts'
 import SignalAlerts from './components/SignalAlerts'
 import TotalProfits from './components/TotalProfits'
 
-import { UserApi } from '../../../config/Api'
+import { UserApi } from 'config/Api'
 
 const userApi = new UserApi()
 

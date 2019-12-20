@@ -15,7 +15,7 @@ import { withRouter, Redirect } from 'react-router-dom'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { Grid, Button, TextField, Typography, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
-import { AdminApi } from '../../../config/Api'
+import { AdminApi } from 'config/Api'
 
 const adminApi = new AdminApi()
 

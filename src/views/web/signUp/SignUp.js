@@ -16,7 +16,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
 import { Grid, Link, Button, Checkbox, TextField, IconButton, Typography, FormHelperText, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
-import { UserApi } from '../../../config/Api'
+import { UserApi } from 'config/Api'
 
 const userApi = new UserApi()
 

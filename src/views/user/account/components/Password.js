@@ -14,7 +14,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { Card, Button, Divider, TextField, CardHeader, CardContent, CardActions, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
-import { UserApi } from '../../../../config/Api'
+import { UserApi } from 'config/Api'
 
 const userApi = new UserApi()
 

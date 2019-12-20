@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import { Card, Button, Divider, TextField, CardHeader, CardContent, CardActions, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
-import { MiscellaneousApi } from '../../../../config/Api'
+import { MiscellaneousApi } from 'config/Api'
 
 const miscellaneousApi = new MiscellaneousApi()
 

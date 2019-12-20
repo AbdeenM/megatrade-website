@@ -14,7 +14,7 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { Card, CardActions, CardContent, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, Button, TextField, IconButton, CardHeader, Divider } from '@material-ui/core'
 
-import Palette from '../../../../theme/Palette'
+import Palette from 'theme/Palette'
 
 const useStyles = makeStyles(theme => ({
     root: {},

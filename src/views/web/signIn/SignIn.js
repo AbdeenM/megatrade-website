@@ -19,9 +19,9 @@ import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props
 import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom'
 import { Grid, Link, Button, TextField, IconButton, Typography, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
-import { UserApi } from '../../../config/Api'
+import { UserApi } from 'config/Api'
 import GoogleIcon from './components/GoogleIcon'
-import Constants from '../../../config/Constants'
+import Constants from 'config/Constants'
 import FacebookIcon from './components/FacebookIcon'
 
 const userApi = new UserApi()

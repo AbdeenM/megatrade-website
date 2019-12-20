@@ -13,7 +13,7 @@ import React, { useState, useEffect } from 'react'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { Card, CardContent, Table, TableBody, TableCell, TableHead, TableRow, CardHeader, Divider } from '@material-ui/core'
 
-import Palette from '../../../../theme/Palette'
+import Palette from 'theme/Palette'
 
 const useStyles = makeStyles(theme => ({
     root: {},

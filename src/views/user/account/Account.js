@@ -16,7 +16,7 @@ import Password from '../account/components/Password'
 import AccountDetails from './components/AccountDetails'
 import AccountProfile from './components/AccountProfile'
 
-import { UserApi } from '../../../config/Api'
+import { UserApi } from 'config/Api'
 
 const userApi = new UserApi()
 

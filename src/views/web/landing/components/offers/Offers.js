@@ -11,7 +11,7 @@ import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Typography, TextField, Button, Container } from '@material-ui/core'
 
-import { UserApi } from '../../../../../config/Api'
+import { UserApi } from 'config/Api'
 
 const userApi = new UserApi()
 

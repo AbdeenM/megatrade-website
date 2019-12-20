@@ -14,7 +14,7 @@ import MoneyIcon from '@material-ui/icons/AttachMoney'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
 import { Card, Grid, Divider, Typography, CardContent, CardActions, Button, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
-import { AdminApi } from '../../../../../config/Api'
+import { AdminApi } from 'config/Api'
 
 const adminApi = new AdminApi()
 

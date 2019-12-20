@@ -19,7 +19,7 @@ import MarketIcon from '@material-ui/icons/MonetizationOn'
 
 import Profile from './components/Profile'
 import SidebarNav from './components/SidebarNav'
-import { UserApi } from '../../../../config/Api'
+import { UserApi } from 'config/Api'
 import UpgradePlan from './components/UpgradePlan'
 
 const userApi = new UserApi()
