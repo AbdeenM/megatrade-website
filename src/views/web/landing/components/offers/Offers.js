@@ -9,7 +9,7 @@ import Validate from 'validate.js'
 import { useSnackbar } from 'notistack'
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Grid, Hidden, Typography, TextField, Button, Container } from '@material-ui/core'
+import { Grid, Typography, TextField, Button, Container } from '@material-ui/core'
 
 import { UserApi } from '../../../../../config/Api'
 
@@ -26,17 +26,15 @@ const schema = {
 }
 
 const useStyles = makeStyles(theme => ({
-	offerContainer: {
+	root: {
 		display: 'flex',
-		marginBottom: 0,
-		marginTop: theme.spacing(10)
+		overflow: 'hidden',
+		backgroundColor: theme.palette.secondary.white
 	},
-	questionContainer: {
+	container: {
 		display: 'flex',
-		alignItems: 'center',
-		flexDirection: 'column',
-		marginTop: theme.spacing(9),
-		marginBottom: theme.spacing(9)
+		marginTop: theme.spacing(10),
+		marginBottom: theme.spacing(10)
 	},
 	cardWrapper: {
 		zIndex: 1
@@ -47,41 +45,12 @@ const useStyles = makeStyles(theme => ({
 		padding: theme.spacing(8, 3),
 		backgroundColor: theme.palette.primary.light
 	},
-	cardContent: {
-		maxWidth: 400
-	},
-	textField: {
-		width: '100%',
-		marginTop: theme.spacing(3),
-		marginBottom: theme.spacing(2)
-	},
 	spacing: {
 		marginTop: theme.spacing(3),
 		marginBottom: theme.spacing(3)
 	},
 	button: {
 		width: '100%'
-	},
-	imagesWrapper: {
-		position: 'relative'
-	},
-	image: {
-		right: 0,
-		top: -100,
-		left: -80,
-		bottom: 0,
-		maxWidth: 600,
-		position: 'absolute'
-	},
-	label: {
-		borderRadius: 0,
-		height: 'auto',
-		padding: theme.spacing(2, 5),
-		border: '4px solid currentColor'
-	},
-	link: {
-		marginTop: theme.spacing(3),
-		marginBottom: theme.spacing(3)
 	}
 }))
 
@@ -153,20 +122,18 @@ const Offers = () => {
 		userState.touched[field] && userState.errors[field] ? true : false
 
 	return (
-		<div>
+		<section className={classes.root}>
 			<Container
 				component='section'
-				className={classes.offerContainer}>
+				className={classes.container}>
 				<Grid container>
 					<Grid
 						item
-						md={6}
+						md={12}
 						xs={12}
 						className={classes.cardWrapper}>
 						<div className={classes.card}>
-							<form
-								onSubmit={onSubmit}
-								className={classes.cardContent}>
+							<form onSubmit={onSubmit}>
 								<Typography
 									gutterBottom
 									variant='h2'
@@ -203,40 +170,9 @@ const Offers = () => {
 							</form>
 						</div>
 					</Grid>
-
-					<Grid
-						item
-						md={6}
-						xs={12}
-						className={classes.imagesWrapper}>
-						<Hidden smDown>
-							<img
-								alt='trading offers'
-								className={classes.image}
-								src='/images/offers-background.png' />
-						</Hidden>
-					</Grid>
 				</Grid>
 			</Container>
-
-			<Container
-				component='section'
-				className={classes.questionContainer}>
-				<Button className={classes.label}>
-					<Typography
-						variant='h4'
-						component='span'>
-						Got any questions? Need help?
-        			</Typography>
-				</Button>
-
-				<Typography
-					variant='subtitle1'
-					className={classes.link}>
-					We are here to help. Get in touch!
-				</Typography>
-			</Container>
-		</div>
+		</section>
 	)
 }
 

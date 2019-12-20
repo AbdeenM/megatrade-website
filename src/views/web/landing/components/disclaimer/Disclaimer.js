@@ -12,10 +12,10 @@ import Container from '@material-ui/core/Container'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles(theme => ({
-    disclaimerContainer: {
+    container: {
         display: 'flex',
-        marginBottom: 0,
-        marginTop: theme.spacing(10)
+        marginTop: theme.spacing(10),
+        marginBottom: theme.spacing(10)
     },
     cardWrapper: {
         zIndex: 1
@@ -28,7 +28,7 @@ const Disclaimer = () => {
     return (
         <Container
             component='disclaimer'
-            className={classes.disclaimerContainer}>
+            className={classes.container}>
             <Grid container>
                 <Grid
                     item

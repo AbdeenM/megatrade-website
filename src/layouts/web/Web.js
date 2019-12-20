@@ -16,61 +16,58 @@ import Topbar from './components/Topbar'
 import Sidebar from './components/Sidebar'
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        height: '100%',
-        paddingTop: 56,
-        [theme.breakpoints.up('sm')]: {
-            paddingTop: 64
-        }
-    },
-    content: {
-        height: '100%'
-    }
+	root: {
+		height: '100%',
+		paddingTop: 56,
+		[theme.breakpoints.up('sm')]: {
+			paddingTop: 64
+		}
+	},
+	content: {
+		height: '100%'
+	}
 }))
 
 const Main = props => {
-    const { children } = props
+	const { children } = props
 
-    const classes = useStyles()
-    const theme = useTheme()
-    const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), {
-        defaultMatches: true
-    })
+	const classes = useStyles()
+	const theme = useTheme()
+	const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), {
+		defaultMatches: true
+	})
 
-    const [openSidebar, setOpenSidebar] = useState(false)
+	const [openSidebar, setOpenSidebar] = useState(false)
 
-    const onSidebarOpen = () => {
-        setOpenSidebar(true)
-    }
+	const onSidebarOpen = () => {
+		setOpenSidebar(true)
+	}
 
-    const onSidebarClose = () => {
-        setOpenSidebar(false)
-    }
+	const onSidebarClose = () => {
+		setOpenSidebar(false)
+	}
 
-    const shouldOpenSidebar = isDesktop ? false : openSidebar
+	const shouldOpenSidebar = isDesktop ? false : openSidebar
 
-    return (
-        <div
-            className={clsx({
-                [classes.root]: true
-            })}>
-            <Topbar onSidebarOpen={onSidebarOpen} />
+	return (
+		<div className={clsx({ [classes.root]: true })}>
+			<Topbar onSidebarOpen={onSidebarOpen} />
 
-            <Sidebar
-                open={shouldOpenSidebar}
-                onClose={onSidebarClose}
-                variant={isDesktop ? 'persistent' : 'temporary'} />
+			<Sidebar
+				open={shouldOpenSidebar}
+				onClose={onSidebarClose}
+				variant={isDesktop ? 'persistent' : 'temporary'} />
 
-            <main className={classes.content}>
-                {children}
-                <Footer />
-            </main>
-        </div>
-    )
+			<main className={classes.content}>
+				{children}
+				<Footer />
+			</main>
+		</div>
+	)
 }
 
 Main.propTypes = {
-    children: PropTypes.node
+	children: PropTypes.node
 }
 
 export default Main

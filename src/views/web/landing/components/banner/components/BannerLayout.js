@@ -27,8 +27,8 @@ const useStyles = makeStyles(theme => ({
 		display: 'flex',
 		alignItems: 'center',
 		flexDirection: 'column',
-		marginTop: theme.spacing(3),
-		marginBottom: theme.spacing(14)
+		marginTop: theme.spacing(10),
+		marginBottom: theme.spacing(10)
 	},
 	backdrop: {
 		top: 0,

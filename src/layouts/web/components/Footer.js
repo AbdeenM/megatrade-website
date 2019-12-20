@@ -12,27 +12,27 @@ import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        padding: theme.spacing(4)
-    }
+	root: {
+		padding: theme.spacing(4)
+	}
 }))
 
 const Footer = props => {
-    const { className, ...rest } = props
+	const { className, ...rest } = props
 
-    const classes = useStyles()
+	const classes = useStyles()
 
-    return (
-        <div
-            {...rest}
-            className={clsx(classes.root, className)}>
-            <Typography variant='caption'>© 2019 – MegaTrade, All rights reserved.</Typography>
-        </div>
-    )
+	return (
+		<div
+			{...rest}
+			className={clsx(classes.root, className)}>
+			<Typography variant='caption'>© 2019 – MegaTrade, All rights reserved.</Typography>
+		</div>
+	)
 }
 
 Footer.propTypes = {
-    className: PropTypes.string
+	className: PropTypes.string
 }
 
 export default Footer

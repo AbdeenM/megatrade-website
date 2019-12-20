@@ -12,6 +12,7 @@ import { withRouter } from 'react-router-dom'
 import Banner from './components/banner/Banner'
 import Offers from './components/offers/Offers'
 import Footer from './components/footer/Footer'
+import Pricing from './components/pricing/Pricing'
 import Features from './components/features/Features'
 import Disclaimer from './components/disclaimer/Disclaimer'
 
@@ -21,6 +22,8 @@ const Landing = () => {
 			<Banner />
 
 			<Features />
+
+			<Pricing />
 
 			<Offers />
 

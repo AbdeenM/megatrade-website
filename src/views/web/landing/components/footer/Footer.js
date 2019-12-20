@@ -19,8 +19,8 @@ const useStyles = makeStyles(theme => ({
 	},
 	container: {
 		display: 'flex',
-		marginTop: theme.spacing(8),
-		marginBottom: theme.spacing(8)
+		marginTop: theme.spacing(10),
+		marginBottom: theme.spacing(10)
 	},
 	iconsWrapper: {
 		height: 120,

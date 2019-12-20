@@ -16,7 +16,7 @@ class UserApi {
         this.path = '/users'
     }
 
-    register = async (args) => {
+    register = async args => {
         try {
             const { data } = await axios.post(`${this.path}/register`, args)
             return data
@@ -25,7 +25,7 @@ class UserApi {
         }
     }
 
-    login = async (args) => {
+    login = async args => {
         try {
             const { data } = await axios.post(`${this.path}/login`, args)
             return data
@@ -34,7 +34,7 @@ class UserApi {
         }
     }
 
-    socialLogin = async (args) => {
+    socialLogin = async args => {
         try {
             const { data } = await axios.post(`${this.path}/socialLogin`, args)
             return data
@@ -43,7 +43,7 @@ class UserApi {
         }
     }
 
-    fetchAccount = async (args) => {
+    fetchAccount = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchAccount`, args)
             return data
@@ -52,7 +52,7 @@ class UserApi {
         }
     }
 
-    updateAccount = async (args) => {
+    updateAccount = async args => {
         try {
             const { data } = await axios.post(`${this.path}/updateAccount`, args)
             return data
@@ -61,7 +61,7 @@ class UserApi {
         }
     }
 
-    fetchStatistics = async (args) => {
+    fetchStatistics = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchStatistics`, args)
             return data
@@ -70,7 +70,7 @@ class UserApi {
         }
     }
 
-    fetchSubscriptions = async (args) => {
+    fetchSubscriptions = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchSubscriptions`, args)
             return data
@@ -79,7 +79,7 @@ class UserApi {
         }
     }
 
-    createSubscription = async (args) => {
+    createSubscription = async args => {
         try {
             const { data } = await axios.post(`${this.path}/createSubscription`, args)
             return data
@@ -88,7 +88,7 @@ class UserApi {
         }
     }
 
-    cancelSubscription = async (args) => {
+    cancelSubscription = async args => {
         try {
             const { data } = await axios.post(`${this.path}/cancelSubscription`, args)
             return data
@@ -97,7 +97,7 @@ class UserApi {
         }
     }
 
-    fetchSignals = async (args) => {
+    fetchSignals = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchSignals`, args)
             return data
@@ -106,7 +106,7 @@ class UserApi {
         }
     }
 
-    offersRegister = async (args) => {
+    offersRegister = async args => {
         try {
             const { data } = await axios.post(`${this.path}/offersRegister`, args)
             return data
@@ -121,7 +121,7 @@ class AdminApi {
         this.path = '/admin'
     }
 
-    register = async (args) => {
+    register = async args => {
         try {
             const { data } = await axios.post(`${this.path}/register`, args)
             return data
@@ -130,7 +130,7 @@ class AdminApi {
         }
     }
 
-    login = async (args) => {
+    login = async args => {
         try {
             const { data } = await axios.post(`${this.path}/login`, args)
             return data
@@ -139,7 +139,7 @@ class AdminApi {
         }
     }
 
-    fetchAccount = async (args) => {
+    fetchAccount = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchAccount`, args)
             return data
@@ -148,7 +148,7 @@ class AdminApi {
         }
     }
 
-    updateAccount = async (args) => {
+    updateAccount = async args => {
         try {
             const { data } = await axios.post(`${this.path}/updateAccount`, args)
             return data
@@ -157,7 +157,7 @@ class AdminApi {
         }
     }
 
-    fetchUserDashboard = async (args) => {
+    fetchUserDashboard = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchUserDashboard`, args)
             return data
@@ -166,7 +166,7 @@ class AdminApi {
         }
     }
 
-    createUserDashboard = async (args) => {
+    createUserDashboard = async args => {
         try {
             const { data } = await axios.post(`${this.path}/createUserDashboard`, args)
             return data
@@ -175,7 +175,7 @@ class AdminApi {
         }
     }
 
-    fetchSubscriptions = async (args) => {
+    fetchSubscriptions = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchSubscriptions`, args)
             return data
@@ -184,7 +184,7 @@ class AdminApi {
         }
     }
 
-    createSubscriptions = async (args) => {
+    createSubscriptions = async args => {
         try {
             const { data } = await axios.post(`${this.path}/createSubscriptions`, args)
             return data
@@ -193,7 +193,7 @@ class AdminApi {
         }
     }
 
-    removeSubscriptions = async (args) => {
+    removeSubscriptions = async args => {
         try {
             const { data } = await axios.post(`${this.path}/removeSubscriptions`, args)
             return data
@@ -202,7 +202,7 @@ class AdminApi {
         }
     }
 
-    fetchUsersList = async (args) => {
+    fetchUsersList = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchUsersList`, args)
             return data
@@ -211,7 +211,7 @@ class AdminApi {
         }
     }
 
-    deleteUsers = async (args) => {
+    deleteUsers = async args => {
         try {
             const { data } = await axios.post(`${this.path}/deleteUsers`, args)
             return data
@@ -220,7 +220,7 @@ class AdminApi {
         }
     }
 
-    editUser = async (args) => {
+    editUser = async args => {
         try {
             const { data } = await axios.post(`${this.path}/editUser`, args)
             return data
@@ -229,7 +229,7 @@ class AdminApi {
         }
     }
 
-    createUser = async (args) => {
+    createUser = async args => {
         try {
             const { data } = await axios.post(`${this.path}/createUser`, args)
             return data
@@ -238,7 +238,7 @@ class AdminApi {
         }
     }
 
-    fetchSignals = async (args) => {
+    fetchSignals = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchSignals`, args)
             return data
@@ -247,7 +247,7 @@ class AdminApi {
         }
     }
 
-    fetchFreeSignals = async (args) => {
+    fetchFreeSignals = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchFreeSignals`, args)
             return data
@@ -256,7 +256,7 @@ class AdminApi {
         }
     }
 
-    deleteSignals = async (args) => {
+    deleteSignals = async args => {
         try {
             const { data } = await axios.post(`${this.path}/deleteSignals`, args)
             return data
@@ -265,7 +265,7 @@ class AdminApi {
         }
     }
 
-    editSignal = async (args) => {
+    editSignal = async args => {
         try {
             const { data } = await axios.post(`${this.path}/editSignal`, args)
             return data
@@ -274,7 +274,7 @@ class AdminApi {
         }
     }
 
-    createSignal = async (args) => {
+    createSignal = async args => {
         try {
             const { data } = await axios.post(`${this.path}/createSignal`, args)
             return data
@@ -283,7 +283,7 @@ class AdminApi {
         }
     }
 
-    deleteFreeSignals = async (args) => {
+    deleteFreeSignals = async args => {
         try {
             const { data } = await axios.post(`${this.path}/deleteFreeSignals`, args)
             return data
@@ -292,7 +292,7 @@ class AdminApi {
         }
     }
 
-    editFreeSignal = async (args) => {
+    editFreeSignal = async args => {
         try {
             const { data } = await axios.post(`${this.path}/editFreeSignal`, args)
             return data
@@ -301,7 +301,7 @@ class AdminApi {
         }
     }
 
-    createFreeSignal = async (args) => {
+    createFreeSignal = async args => {
         try {
             const { data } = await axios.post(`${this.path}/createFreeSignal`, args)
             return data
@@ -310,7 +310,7 @@ class AdminApi {
         }
     }
 
-    fetchStatistics = async (args) => {
+    fetchStatistics = async args => {
         try {
             const { data } = await axios.post(`${this.path}/fetchStatistics`, args)
             return data
@@ -325,21 +325,7 @@ class MiscellaneousApi {
         this.path = '/miscellaneous'
     }
 
-    paypalGetSubscription = async (id) => {
-        try {
-            const data = await axios.get(`https://api.sandbox.paypal.com/v1/billing/subscriptions/${id}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer A21AAFale8HrU4TiJ06HdfhYe6G6f22EkEep6NwC4W5LLstlapewsDSbQ7ID2oJhsbD1Y1hKXPad8xak0QO2DZKhkEzwTm2gw'
-                }
-            })
-            return data
-        } catch (error) {
-            throw error
-        }
-    }
-
-    paypalCancelSubscription = async (id) => {
+    paypalCancelSubscription = async id => {
         try {
             const data = await axios.post(`https://api.sandbox.paypal.com/v1/billing/subscriptions/${id}/cancel`, {
                 reason: 'Want to get Adventurous'

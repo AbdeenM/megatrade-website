@@ -20,8 +20,8 @@ const useStyles = makeStyles(theme => ({
 	container: {
 		display: 'flex',
 		position: 'relative',
-		marginTop: theme.spacing(15),
-		marginBottom: theme.spacing(30)
+		marginTop: theme.spacing(10),
+		marginBottom: theme.spacing(10)
 	},
 	item: {
 		display: 'flex',
@@ -54,16 +54,23 @@ const Features = () => {
 					className={classes.curvyLines}
 					src='/images/features-curvylines.png' />
 
-				<Grid container spacing={5}>
-					<Grid item xs={12} md={4}>
+				<Grid
+					container
+					spacing={5}>
+					<Grid
+						item
+						md={4}
+						xs={12}>
 						<div className={classes.item}>
 							<img
 								alt='signals'
 								className={classes.image}
 								src='/images/features-signal.svg' />
 
-							<Typography variant='h4' className={classes.title}>
-								Trading Signals
+							<Typography
+								variant='h4'
+								className={classes.title}>
+								TRADING SIGNALS
 			              	</Typography>
 
 							<Typography variant='h5'>
@@ -72,14 +79,19 @@ const Features = () => {
 						</div>
 					</Grid>
 
-					<Grid item xs={12} md={4}>
+					<Grid
+						item
+						md={4}
+						xs={12}>
 						<div className={classes.item}>
 							<img
 								alt='news'
 								className={classes.image}
 								src='/images/features-news.svg' />
 
-							<Typography variant='h4' className={classes.title}>
+							<Typography
+								variant='h4'
+								className={classes.title}>
 								TRADING NEWS
 			              	</Typography>
 
@@ -89,14 +101,19 @@ const Features = () => {
 						</div>
 					</Grid>
 
-					<Grid item xs={12} md={4}>
+					<Grid
+						item
+						md={4}
+						xs={12}>
 						<div className={classes.item}>
 							<img
 								alt='academy'
 								className={classes.image}
 								src='/images/features-academy.svg' />
 
-							<Typography variant='h4' className={classes.title}>
+							<Typography
+								variant='h4'
+								className={classes.title}>
 								TRADING ACADEMY
               				</Typography>
 
@@ -106,14 +123,19 @@ const Features = () => {
 						</div>
 					</Grid>
 
-					<Grid item xs={12} md={4}>
+					<Grid
+						item
+						md={4}
+						xs={12}>
 						<div className={classes.item}>
 							<img
 								alt='brokers'
 								className={classes.image}
 								src='/images/features-broker.svg' />
 
-							<Typography variant='h4' className={classes.title}>
+							<Typography
+								variant='h4'
+								className={classes.title}>
 								BROKERS
               				</Typography>
 
@@ -123,14 +145,19 @@ const Features = () => {
 						</div>
 					</Grid>
 
-					<Grid item xs={12} md={4}>
+					<Grid
+						item
+						md={4}
+						xs={12}>
 						<div className={classes.item}>
 							<img
 								alt='support'
 								className={classes.image}
 								src='/images/features-support.svg' />
 
-							<Typography variant='h4' className={classes.title}>
+							<Typography
+								variant='h4'
+								className={classes.title}>
 								360 CUSTOMER SUPPORT
               				</Typography>
 
