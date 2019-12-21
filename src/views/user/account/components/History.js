@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const SignalsTable = props => {
+const History = props => {
     const { className, subscriptions, ...rest } = props
 
     const classes = useStyles()
@@ -110,9 +110,9 @@ const SignalsTable = props => {
     )
 }
 
-SignalsTable.propTypes = {
+History.propTypes = {
     className: PropTypes.string,
-    signals: PropTypes.array.isRequired
+    subscriptions: PropTypes.array.isRequired
 }
 
-export default SignalsTable
+export default History

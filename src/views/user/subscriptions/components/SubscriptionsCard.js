@@ -6,12 +6,12 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
-import React from 'react'
 import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import MoneyIcon from '@material-ui/icons/AttachMoney'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
-import { Card, Grid, Divider, Typography, CardContent, CardActions, Button } from '@material-ui/core'
+import { Card, Grid, Divider, Typography, CardContent, CardActions, Button, Dialog, DialogTitle, DialogActions } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -43,85 +43,110 @@ const SubscriptionsCard = props => {
 
 	const classes = useStyles()
 
+	const [showCancelDialog, setCancelDialog] = useState(false)
+
 	return (
-		<Card
-			{...rest}
-			className={clsx(classes.root, className)}>
-			<CardContent>
-				<div className={classes.imageContainer}>
-					<img
-						alt='subscription'
-						src={subscription.image}
-						className={classes.image} />
-				</div>
+		<div>
+			<Card
+				{...rest}
+				className={clsx(classes.root, className)}>
+				<CardContent>
+					<div className={classes.imageContainer}>
+						<img
+							alt='subscription'
+							src={subscription.image}
+							className={classes.image} />
+					</div>
 
-				<Typography
-					variant='h2'
-					gutterBottom
-					align='center'>
-					{subscription.title}
-				</Typography>
+					<Typography
+						variant='h2'
+						gutterBottom
+						align='center'>
+						{subscription.title}
+					</Typography>
 
-				<Typography
-					align='center'
-					variant='body1'>
-					{subscription.description}
-				</Typography>
-			</CardContent>
+					<Typography
+						align='center'
+						variant='body1'>
+						{subscription.description}
+					</Typography>
+				</CardContent>
 
-			<Divider />
+				<Divider />
 
-			<CardActions>
-				<Grid
-					container
-					justify='space-between'>
+				<CardActions>
 					<Grid
-						item
-						className={classes.statsItem}>
-						<MoneyIcon className={classes.statsIcon} />
+						container
+						justify='space-between'>
+						<Grid
+							item
+							className={classes.statsItem}>
+							<MoneyIcon className={classes.statsIcon} />
 
-						<Typography
-							variant='body1'
-							display='inline'>
-							{subscription.price}
-						</Typography>
-					</Grid>
+							<Typography
+								variant='body1'
+								display='inline'>
+								{subscription.price}
+							</Typography>
+						</Grid>
 
-					<Grid
-						item
-						className={classes.statsItem}>
-						{
-							props.membership === subscription.title
-								? <Button
-									color='secondary'
-									variant='contained'
-									onClick={onCancelSubscription}
-									disabled={props.membership === 'Free Membership'}>
-									{props.membership === 'Free Membership' ? 'CURRENT MEMBERSHIP' : 'CANCEL MEMBERSHIP'}
+						<Grid
+							item
+							className={classes.statsItem}>
+							{
+								props.membership === subscription.title
+									? <Button
+										color='secondary'
+										variant='contained'
+										onClick={() => setCancelDialog(true)}
+										disabled={props.membership === 'Free Membership'}>
+										{props.membership === 'Free Membership' ? 'CURRENT MEMBERSHIP' : 'CANCEL MEMBERSHIP'}
+									</Button>
+									: <Button
+										color='primary'
+										variant='contained'
+										onClick={onGetMembership}>
+										GET MEMBERSHIP
 								</Button>
-								: <Button
-									color='primary'
-									variant='contained'
-									onClick={onGetMembership}>
-									GET MEMBERSHIP
-								</Button>
-						}
-					</Grid>
+							}
+						</Grid>
 
-					<Grid
-						item
-						className={classes.statsItem}>
-						<AccessTimeIcon className={classes.statsIcon} />
+						<Grid
+							item
+							className={classes.statsItem}>
+							<AccessTimeIcon className={classes.statsIcon} />
 
-						<Typography
-							variant='body2'
-							display='inline'>
-							{subscription.validity}
-						</Typography>
+							<Typography
+								variant='body2'
+								display='inline'>
+								{subscription.validity}
+							</Typography>
+						</Grid>
 					</Grid>
-				</Grid>
-			</CardActions>
-		</Card>
+				</CardActions>
+			</Card>
+
+			<Dialog
+				open={showCancelDialog}
+				onClose={() => setCancelDialog(false)}>
+				<DialogTitle>Are you sure you want cancel your current membership?</DialogTitle>
+
+				<DialogActions>
+					<Button
+						color='secondary'
+						onClick={() => setCancelDialog(false)}>
+						NO
+					</Button>
+
+					<Button
+						color='primary'
+						variant='contained'
+						onClick={onCancelSubscription}>
+						YES
+					</Button>
+				</DialogActions>
+			</Dialog>
+		</div>
 	)
 }
 

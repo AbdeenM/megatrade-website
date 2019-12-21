@@ -51,8 +51,8 @@ const Routes = () => {
 
 			<RouteWithLayout
 				exact
-				path='/admin'
 				layout={WebLayout}
+				path='/admin/sign-in'
 				component={LoginAdmin} />
 
 			<RouteWithLayout
@@ -120,6 +120,10 @@ const Routes = () => {
 				layout={MainLayout}
 				path='/subscriptions'
 				component={SubscriptionsUser} />
+
+			<Redirect
+				from='/admin'
+				to='admin/dashboard' />
 
 			<AuthAdminRouteWithLayout
 				exact

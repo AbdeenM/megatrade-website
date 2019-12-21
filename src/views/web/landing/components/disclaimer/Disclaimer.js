@@ -26,9 +26,7 @@ const Disclaimer = () => {
     const classes = useStyles()
 
     return (
-        <Container
-            component='disclaimer'
-            className={classes.container}>
+        <Container className={classes.container}>
             <Grid container>
                 <Grid
                     item

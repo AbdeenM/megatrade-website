@@ -112,10 +112,10 @@ const Market = () => {
 					md={12}>
 					<TradingViewWidget
 						locale='en'
-						width='100%'
-						height='900'
+						width='auto'
+						height={600}
 						interval='D'
-						theme='light'
+						theme='Light'
 						timezone='Etc/UTC'
 						toolbar_bg='#f1f3f6'
 						symbol='FX_IDC:USDEUR'

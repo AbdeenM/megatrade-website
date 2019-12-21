@@ -42,9 +42,9 @@ export const dataTickers = {
 }
 
 export const dataCalender = {
+    'height': 600,
     'locale': 'en',
     'width': '100%',
-    'height': '900',
     'colorTheme': 'light',
     'isTransparent': false,
     'importanceFilter': '-1,0,1',
@@ -53,9 +53,9 @@ export const dataCalender = {
 
 export const dataAnalysis = {
     'style': '1',
+    'height': 600,
     'locale': 'en',
     'width': '980',
-    'height': '610',
     'interval': 'D',
     'theme': 'Light',
     'timezone': 'Etc/UTC',
@@ -67,9 +67,9 @@ export const dataAnalysis = {
 }
 
 export const dataOverview = {
+    'height': 600,
     'locale': 'en',
     'width': '100%',
-    'height': '900',
     'showChart': true,
     'dateRange': '12m',
     'largeChartUrl': '',
@@ -262,9 +262,9 @@ export const dataOverview = {
 }
 
 export const dataHeatMap = {
+    'height': 600,
     'locale': 'en',
     'width': '100%',
-    'height': '900',
     'currencies': [
         'EUR',
         'USD',
@@ -279,9 +279,9 @@ export const dataHeatMap = {
 }
 
 export const dataForexRates = {
+    'height': 600,
     'locale': 'en',
     'width': '100%',
-    'height': '900',
     'currencies': [
         'EUR',
         'USD',
@@ -296,9 +296,9 @@ export const dataForexRates = {
 }
 
 export const dataScreener = {
+    'height': 600,
     'locale': 'en',
     'width': '100%',
-    'height': '900',
     'colorTheme': 'light',
     'displayCurrency': 'USD',
     'defaultColumn': 'overview',

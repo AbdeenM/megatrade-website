@@ -25,7 +25,7 @@ const AuthAdminRouteWithLayout = props => {
                         </Layout>
                         : <Redirect
                             to={{
-                                pathname: '/admin',
+                                pathname: '/admin/sign-in',
                                 state: { from: matchProps.location }
                             }} />
             } />

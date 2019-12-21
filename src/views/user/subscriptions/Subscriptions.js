@@ -11,11 +11,10 @@ import React, { useState, useEffect } from 'react'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { Grid, Dialog, DialogTitle, DialogContent, DialogActions, Button, CircularProgress } from '@material-ui/core'
 
+import { UserApi } from 'config/Api'
 import SubscriptionsCard from './components/SubscriptionsCard'
-import { UserApi, MiscellaneousApi } from 'config/Api'
 
 const userApi = new UserApi()
-const miscellaneousApi = new MiscellaneousApi()
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -47,7 +46,6 @@ const SubscriptionsList = () => {
 	const [subscriptionsState, setSubscriptionsState] = useState([])
 	const [showPaymentDialog, setShowPaymentDialog] = useState(false)
 	const [userMembershipState, setUserMembershipState] = useState('')
-	const [userSubscriptionIdState, setUserSubscriptionIdState] = useState('')
 	const [membershipSelectedState, setMembershipSelectedState] = useState({
 		price: '',
 		planId: ''
@@ -64,12 +62,11 @@ const SubscriptionsList = () => {
 
 		setSubscriptionsState(fetchSubscriptionsResult.data.subscriptions)
 		setUserMembershipState(fetchSubscriptionsResult.data.userMembership)
-		setUserSubscriptionIdState(fetchSubscriptionsResult.data.userSubscriptionId)
 
 		setIsLoading(false)
 	}
 
-	const onGetMembership = membership => {
+	const onGetMembership = async membership => {
 		if (membership.title === 'Free Membership') {
 			setShowFreeDialog(true)
 		} else {
@@ -101,6 +98,7 @@ const SubscriptionsList = () => {
 				enqueueSnackbar(createSubscriptionResult.message, { variant: 'error' })
 			} else {
 				setIsLoading(false)
+				setShowPaymentDialog(false)
 				enqueueSnackbar(createSubscriptionResult.message, { variant: 'success' })
 				window.location.reload()
 			}
@@ -108,9 +106,6 @@ const SubscriptionsList = () => {
 	}
 
 	const onCancelSubscription = async () => {
-		await miscellaneousApi.paypalCancelSubscription(userSubscriptionIdState)
-		enqueueSnackbar('Your paypal subscription has been cancelled successfully', { variant: 'success' })
-
 		setIsLoading(true)
 		const cancelSubscriptionResult = await userApi.cancelSubscription({ userId })
 		if (cancelSubscriptionResult.error) {
@@ -118,6 +113,7 @@ const SubscriptionsList = () => {
 			enqueueSnackbar(cancelSubscriptionResult.message, { variant: 'error' })
 		} else {
 			setIsLoading(false)
+			setShowPaymentDialog(false)
 			enqueueSnackbar(cancelSubscriptionResult.message, { variant: 'success' })
 			window.location.reload()
 		}

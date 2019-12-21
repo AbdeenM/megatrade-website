@@ -7,7 +7,6 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import Banner from './components/banner/Banner'
 import Offers from './components/offers/Offers'
@@ -18,7 +17,7 @@ import Disclaimer from './components/disclaimer/Disclaimer'
 
 const Landing = () => {
 	return (
-		<React.Fragment>
+		<section>
 			<Banner />
 
 			<Features />
@@ -30,7 +29,7 @@ const Landing = () => {
 			<Disclaimer />
 
 			<Footer />
-		</React.Fragment>
+		</section>
 	)
 }
 
@@ -38,4 +37,4 @@ Landing.propTypes = {
 	history: PropTypes.object
 }
 
-export default withRouter(Landing)
+export default Landing
