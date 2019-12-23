@@ -123,7 +123,7 @@ const Routes = () => {
 
 			<Redirect
 				from='/admin'
-				to='admin/dashboard' />
+				to='/admin/dashboard' />
 
 			<AuthAdminRouteWithLayout
 				exact
