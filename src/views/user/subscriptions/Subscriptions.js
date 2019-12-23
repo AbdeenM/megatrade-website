@@ -46,10 +46,7 @@ const SubscriptionsList = () => {
 	const [subscriptionsState, setSubscriptionsState] = useState([])
 	const [showPaymentDialog, setShowPaymentDialog] = useState(false)
 	const [userMembershipState, setUserMembershipState] = useState('')
-	const [membershipSelectedState, setMembershipSelectedState] = useState({
-		price: '',
-		planId: ''
-	})
+	const [subscriptionIdState, setSubscriptionIdState] = useState('')
 
 	useEffect(() => { fetchSubscriptions() }, [])
 
@@ -70,7 +67,7 @@ const SubscriptionsList = () => {
 		if (membership.title === 'Free Membership') {
 			setShowFreeDialog(true)
 		} else {
-			setMembershipSelectedState({
+			setSubscriptionIdState({
 				price: membership.price,
 				planId: membership.planId
 			})
@@ -163,7 +160,7 @@ const SubscriptionsList = () => {
 						onApprove={(data, actions) => onSuccessPayment(data, actions)}
 						onError={(error) => enqueueSnackbar(error, { variant: 'error' })}
 						catchError={(error) => enqueueSnackbar(error, { variant: 'error' })}
-						createSubscription={(data, actions) => actions.subscription.create({ plan_id: 'P-2YS05128CX819345GLYAMV2I' })}
+						createSubscription={(data, actions) => actions.subscription.create({ plan_id: subscriptionIdState })}
 						onCancel={() => enqueueSnackbar('Your payment attempt to the memebership has been cancelled', { variant: 'info' })}
 						options={{ vault: true, clientId: 'AbdyiURLOyYae9UpkDC0VETP2_tEe9LdoIaHCfKMq67pPMrGYmd0qEsEe4kiMqYsabAACETo9bJWWWhJ' }} />
 				</DialogContent>
