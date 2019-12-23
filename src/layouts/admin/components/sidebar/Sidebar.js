@@ -85,7 +85,7 @@ const Sidebar = props => {
 	const admin = [
 		{
 			title: 'Dashboard',
-			href: '/admin/dashboard',
+			href: '/admin',
 			icon: <DashboardIcon />
 		},
 		{
