@@ -163,9 +163,9 @@ const SubscriptionsList = () => {
 						onApprove={(data, actions) => onSuccessPayment(data, actions)}
 						onError={(error) => enqueueSnackbar(error, { variant: 'error' })}
 						catchError={(error) => enqueueSnackbar(error, { variant: 'error' })}
-						createSubscription={(data, actions) => actions.subscription.create({ plan_id: membershipSelectedState.planId })}
+						createSubscription={(data, actions) => actions.subscription.create({ plan_id: 'P-2YS05128CX819345GLYAMV2I' })}
 						onCancel={() => enqueueSnackbar('Your payment attempt to the memebership has been cancelled', { variant: 'info' })}
-						options={{ vault: true, clientId: 'AUqdMKQ9m1Mg5jz05jo1DL-j8vVPrzXOH7G_LgirWrADGRRJHgq__AMqLNpWhVBnZtGhJRUuf_mSQsoB' }} />
+						options={{ vault: true, clientId: 'AbdyiURLOyYae9UpkDC0VETP2_tEe9LdoIaHCfKMq67pPMrGYmd0qEsEe4kiMqYsabAACETo9bJWWWhJ' }} />
 				</DialogContent>
 			</Dialog>
 

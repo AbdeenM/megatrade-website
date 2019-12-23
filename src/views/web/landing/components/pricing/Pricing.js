@@ -33,12 +33,14 @@ const useStyles = makeStyles(theme => ({
 const tiers = [
 	{
 		price: '0',
+		period: '/mo',
 		title: 'Free Membership',
 		buttonText: 'Get Started',
 		buttonVariant: 'contained',
 		description: 'Have a free membership for a life time with limited trading signals'
 	},
 	{
+		period: '/wk',
 		price: '14.99',
 		title: 'Basic Membership',
 		buttonText: 'Get Started',
@@ -46,6 +48,7 @@ const tiers = [
 		description: 'Have a basic membership for a week with unlimited trading signals'
 	},
 	{
+		period: '/mo',
 		price: '39.99',
 		subheader: 'Most popular',
 		buttonText: 'Get Started',
@@ -54,6 +57,7 @@ const tiers = [
 		description: 'Have a bronze membership for a month with unlimited trading signals'
 	},
 	{
+		period: '/3 mo',
 		price: '99.99',
 		title: 'Silver Membership',
 		buttonText: 'Get Started',
@@ -61,6 +65,7 @@ const tiers = [
 		description: 'Have a silver membership for 3 month with unlimited trading signals'
 	},
 	{
+		period: '/6 mo',
 		price: '169.99',
 		title: 'Gold Membership',
 		buttonText: 'Get Started',
@@ -68,6 +73,7 @@ const tiers = [
 		description: 'Have a gold membership for 6 month with unlimited trading signals'
 	},
 	{
+		period: '/yr',
 		price: '299.99',
 		buttonText: 'Get Started',
 		buttonVariant: 'contained',
@@ -136,8 +142,8 @@ const Pricing = () => {
 											<Typography
 												variant='h6'
 												color='textSecondary'>
-												/mo
-                    						</Typography>
+												{tier.period}
+											</Typography>
 										</div>
 
 										<Typography
