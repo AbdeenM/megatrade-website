@@ -121,14 +121,10 @@ const Routes = () => {
 				path='/subscriptions'
 				component={SubscriptionsUser} />
 
-			<Redirect
-				from='/admin'
-				to='/admin/dashboard' />
-
 			<AuthAdminRouteWithLayout
 				exact
+				path='/admin'
 				layout={AdminLayout}
-				path='/admin/dashboard'
 				component={DashboardAdmin} />
 
 			<AuthAdminRouteWithLayout

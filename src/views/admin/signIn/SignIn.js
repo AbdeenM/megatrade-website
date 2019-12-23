@@ -134,7 +134,7 @@ const SignIn = () => {
         formState.touched[field] && formState.errors[field] ? true : false
 
     if (isLogged || adminId)
-        return <Redirect to='/admin/dashboard' />
+        return <Redirect to='/admin' />
 
     if (isLoading)
         return (
