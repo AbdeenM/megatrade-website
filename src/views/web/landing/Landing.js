@@ -14,11 +14,12 @@ import Footer from './components/footer/Footer'
 import Pricing from './components/pricing/Pricing'
 import Features from './components/features/Features'
 import Disclaimer from './components/disclaimer/Disclaimer'
+import BannerVideo from './components/bannerVideo/BannerVideo'
 
 const Landing = () => {
 	return (
 		<section>
-			<Banner />
+			<BannerVideo />
 
 			<Features />
 

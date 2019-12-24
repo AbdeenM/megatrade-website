@@ -11,11 +11,11 @@ import Validate from 'validate.js'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
-import React, { useState, useEffect } from 'react'
 import Visibility from '@material-ui/icons/Visibility'
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import React, { useState, useEffect, useRef } from 'react'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress } from '@material-ui/core'
+import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress, Menu, MenuItem } from '@material-ui/core'
 
 import Palette from 'theme/Palette'
 import { AdminApi } from 'config/Api'
@@ -24,12 +24,6 @@ import getInitials from 'helpers/getInitials'
 const adminApi = new AdminApi()
 
 const schema = {
-	membership: {
-		presence: { allowEmpty: false, message: 'is required' },
-		length: {
-			maximum: 32
-		}
-	},
 	firstName: {
 		presence: { allowEmpty: false, message: 'is required' },
 		length: {
@@ -125,16 +119,30 @@ const useStyles = makeStyles(theme => ({
 	},
 	checkboxes: {
 		marginTop: theme.spacing(5)
+	},
+	rowStatus: {
+		display: 'flex',
+		marginTop: theme.spacing(3),
+		marginBottom: theme.spacing(3)
+	},
+	rowSignalStatus: {
+		marginLeft: 'auto'
+	},
+	membership: {
+		marginTop: theme.spacing(1),
+		marginBottom: theme.spacing(1)
 	}
 }))
 
 const UsersTable = props => {
-	const { className, users, ...rest } = props
+	const { className, users, subscriptions, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
 	const adminId = localStorage.getItem('adminId')
+
+	const anchorRef = useRef(null)
 
 	const [page, setPage] = useState(0)
 	const [allUsers, setAllUsers] = useState([])
@@ -143,6 +151,7 @@ const UsersTable = props => {
 	const [searchState, setSearchState] = useState('')
 	const [listedUsers, setListedUsers] = useState([])
 	const [selectedUsers, setSelectedUsers] = useState([])
+	const [showMembershipMenu, setShowMembershipMenu] = useState(false)
 	const [showEditUserDialog, setShowEditUserDialog] = useState(false)
 	const [showCreateUserDialog, setShowCreateUserDialog] = useState(false)
 	const [userProfileState, setUserProfileState] = useState({
@@ -151,17 +160,17 @@ const UsersTable = props => {
 			city: '',
 			email: '',
 			avatar: {
-				isBase64: false,
-				image: ''
+				image: '',
+				isBase64: false
 			},
 			number: '',
 			status: '',
 			userId: '',
 			country: '',
-			membership: '',
 			lastName: '',
 			password: '',
 			firstName: '',
+			membership: 'Free Membership',
 			notifications: {
 				alerts: {
 					email: false,
@@ -226,6 +235,22 @@ const UsersTable = props => {
 			},
 			isChanged: true
 		}))
+	}
+
+	const onSelectMembership = membership => {
+		setUserProfileState(userProfileState => ({
+			...userProfileState,
+			errors: {},
+			values: {
+				...userProfileState.values,
+				membership
+			},
+			touched: {},
+			isValid: false,
+			isChanged: true
+		}))
+
+		setShowMembershipMenu(false)
 	}
 
 	const onChangeSearch = event => {
@@ -380,9 +405,9 @@ const UsersTable = props => {
 				number: userDetails.number,
 				status: userDetails.status,
 				country: userDetails.country,
-				membership: userDetails.membership,
 				lastName: userDetails.lastName,
 				firstName: userDetails.firstName,
+				membership: userDetails.membership,
 				notifications: {
 					alerts: {
 						email: userDetails.notifications.alerts.email,
@@ -423,10 +448,10 @@ const UsersTable = props => {
 			status: userProfileState.values.status,
 			userId: userProfileState.values.userId,
 			country: userProfileState.values.country,
-			membership: userProfileState.values.membership,
 			lastName: userProfileState.values.lastName,
 			password: userProfileState.values.password,
 			firstName: userProfileState.values.firstName,
+			membership: userProfileState.values.membership,
 			notifications: {
 				alerts: {
 					email: userProfileState.values.notifications.alerts.email,
@@ -476,7 +501,7 @@ const UsersTable = props => {
 				lastName: '',
 				password: '',
 				firstName: '',
-				membership: '',
+				membership: 'Free Membership',
 				notifications: {
 					alerts: {
 						email: false,
@@ -515,10 +540,10 @@ const UsersTable = props => {
 			avatar: userProfileState.values.avatar,
 			number: userProfileState.values.number,
 			country: userProfileState.values.country,
-			membership: userProfileState.values.membership,
 			lastName: userProfileState.values.lastName,
 			password: userProfileState.values.password,
 			firstName: userProfileState.values.firstName,
+			membership: userProfileState.values.membership,
 			notifications: {
 				alerts: {
 					email: userProfileState.values.notifications.alerts.email,
@@ -740,20 +765,43 @@ const UsersTable = props => {
 					<TextField
 						disabled
 						fullWidth
-						margin='normal'
-						name='membership'
-						label='Membership'
-						variant='outlined'
-						value={userProfileState.values.membership} />
-
-					<TextField
-						disabled
-						fullWidth
 						name='status'
 						margin='normal'
 						variant='outlined'
 						label='Profile Status'
 						value={userProfileState.values.status + ' %'} />
+
+					<div className={classes.rowStatus}>
+						<Typography
+							variant='body1'
+							className={classes.membership}>
+							MEMBERSHIP
+						</Typography>
+
+						<Button
+							ref={anchorRef}
+							aria-haspopup='true'
+							aria-controls='simple-menu'
+							className={classes.rowSignalStatus}
+							onClick={() => setShowMembershipMenu(!showMembershipMenu)}>
+							{userProfileState.values.membership}
+						</Button>
+					</div>
+
+					<Menu
+						keepMounted
+						id='simple-menu'
+						open={showMembershipMenu}
+						anchorEl={anchorRef.current}
+						onClose={() => setShowMembershipMenu(false)}>
+						{
+							subscriptions.map((subscription, i) => (
+								<MenuItem
+									key={i}
+									onClick={() => onSelectMembership(subscription.title)}>{subscription.title}</MenuItem>
+							))
+						}
+					</Menu>
 
 					<TextField
 						required
@@ -1050,19 +1098,37 @@ const UsersTable = props => {
 							src={userProfileState.values.avatar.image || '/images/profile-avatar.png'} />
 					</div>
 
-					<TextField
-						required
-						fullWidth
-						name='membership'
-						margin='normal'
-						label='Membership'
-						variant='outlined'
-						onChange={onChangeText}
-						error={hasError('membership')}
-						value={userProfileState.values.membership}
-						helperText={
-							hasError('membership') ? userProfileState.errors.firstName[0] : null
-						} />
+					<div className={classes.rowStatus}>
+						<Typography
+							variant='body1'
+							className={classes.membership}>
+							MEMBERSHIP
+						</Typography>
+
+						<Button
+							ref={anchorRef}
+							aria-haspopup='true'
+							aria-controls='simple-menu'
+							className={classes.rowSignalStatus}
+							onClick={() => setShowMembershipMenu(!showMembershipMenu)}>
+							{userProfileState.values.membership}
+						</Button>
+					</div>
+
+					<Menu
+						keepMounted
+						id='simple-menu'
+						open={showMembershipMenu}
+						anchorEl={anchorRef.current}
+						onClose={() => setShowMembershipMenu(false)}>
+						{
+							subscriptions.map((subscription, i) => (
+								<MenuItem
+									key={i}
+									onClick={() => onSelectMembership(subscription.title)}>{subscription.title}</MenuItem>
+							))
+						}
+					</Menu>
 
 					<TextField
 						required
@@ -1336,7 +1402,7 @@ const UsersTable = props => {
 						color='primary'
 						variant='contained'
 						onClick={onCreateUser}
-						disabled={!userProfileState.isChanged || hasError('membership') || hasError('firstName') || hasError('lastName') || hasError('email') || hasError('number') || hasError('city') || hasError('country') || userProfileState.values.membership.length < 1 || userProfileState.values.firstName.length < 1 || userProfileState.values.lastName.length < 1 || userProfileState.values.email.length < 1 || userProfileState.values.password.length < 1}>
+						disabled={!userProfileState.isChanged || hasError('firstName') || hasError('lastName') || hasError('email') || hasError('number') || hasError('city') || hasError('country') || userProfileState.values.membership.length < 1 || userProfileState.values.firstName.length < 1 || userProfileState.values.lastName.length < 1 || userProfileState.values.email.length < 1 || userProfileState.values.password.length < 1}>
 						CREATE USER
          			 </Button>
 				</DialogActions>

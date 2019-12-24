@@ -505,9 +505,9 @@ const SignalsTable = props => {
 						<Button
 							ref={anchorRef}
 							aria-haspopup='true'
+							aria-controls='simple-menu'
 							className={classes.rowSignalStatus}
-							onClick={() => setShowStatusMenu(!showStatusMenu)}
-							aria-controls='simple-menu'>
+							onClick={() => setShowStatusMenu(!showStatusMenu)}>
 							{signalsState.values.status}
 						</Button>
 					</div>
@@ -605,9 +605,9 @@ const SignalsTable = props => {
 						<Button
 							ref={anchorRef}
 							aria-haspopup='true'
+							aria-controls='simple-menu'
 							className={classes.rowSignalStatus}
-							onClick={() => setShowStatusMenu(!showStatusMenu)}
-							aria-controls='simple-menu'>
+							onClick={() => setShowStatusMenu(!showStatusMenu)}>
 							{signalsState.values.status}
 						</Button>
 					</div>

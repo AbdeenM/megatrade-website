@@ -29,8 +29,12 @@ const Users = () => {
 
 	const [isLoading, setIsLoading] = useState(true)
 	const [usersListState, setUsersListState] = useState([])
+	const [subscriptionsState, setSubscriptionsState] = useState([])
 
-	useEffect(() => { fetchUsersList() }, [])
+	useEffect(() => {
+		fetchUsersList()
+		fetchSubscriptions()
+	}, [])
 
 	const fetchUsersList = async () => {
 		const fetchUsersListResult = await adminApi.fetchUsersList({ adminId })
@@ -41,6 +45,15 @@ const Users = () => {
 
 		setUsersListState(fetchUsersListResult.data)
 		setIsLoading(false)
+	}
+
+	const fetchSubscriptions = async () => {
+		const fetchSubscriptionsResult = await adminApi.fetchSubscriptions({ adminId })
+		if (fetchSubscriptionsResult.error) {
+			return enqueueSnackbar(fetchSubscriptionsResult.message, { variant: 'error' })
+		}
+
+		setSubscriptionsState(fetchSubscriptionsResult.data)
 	}
 
 	if (isLoading)
@@ -63,7 +76,9 @@ const Users = () => {
 					xl={12}
 					md={12}
 					xs={12}>
-					<UsersTable users={usersListState} />
+					<UsersTable
+						users={usersListState}
+						subscriptions={subscriptionsState} />
 				</Grid>
 			</Grid>
 		</div>
