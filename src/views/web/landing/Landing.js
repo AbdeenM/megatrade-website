@@ -8,6 +8,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import FAQ from './components/faq/FAQ'
 import Banner from './components/banner/Banner'
 import Offers from './components/offers/Offers'
 import Footer from './components/footer/Footer'
@@ -23,6 +24,8 @@ const Landing = () => {
 			<Features />
 
 			<Pricing />
+
+			<FAQ />
 
 			<Offers />
 

@@ -6,11 +6,8 @@
  ************************************************************************** */
 
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
-import Link from '@material-ui/core/Link'
-import Container from '@material-ui/core/Container'
 import { makeStyles } from '@material-ui/core/styles'
-import { TextField, Typography } from '@material-ui/core'
+import { TextField, Typography, Container, Grid, Link } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {

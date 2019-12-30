@@ -8,16 +8,30 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link as RouterLink } from 'react-router-dom'
-import { Typography, Button } from '@material-ui/core'
+import { Typography, Button, Hidden, Container } from '@material-ui/core'
 
 import BannerVideo from './components/BannerVideo'
-import BannerLayout from './components/BannerLayout'
 
 const useStyles = makeStyles(theme => ({
-	background: {
-		backgroundColor: '#7fc7d9', // Average color of the background image.
+	root: {
+		display: 'flex',
+		alignItems: 'center',
+		backgroundSize: 'cover',
+		backgroundColor: '#7fc7d9',
 		backgroundPosition: 'center',
-		backgroundImage: `url(/images/banner-background.png)`
+		justifyContent: 'space-around',
+		color: theme.palette.common.white,
+		backgroundImage: 'url(/images/banner-background.png)',
+		[theme.breakpoints.up('sm')]: {
+			height: '80vh',
+			minHeight: 500,
+			maxHeight: 1300
+		}
+	},
+	container: {
+		display: 'flex',
+		alignItems: 'center',
+		flexDirection: 'column'
 	},
 	button: {
 		minWidth: 200
@@ -26,7 +40,7 @@ const useStyles = makeStyles(theme => ({
 		marginTop: theme.spacing(4),
 		marginBottom: theme.spacing(4),
 		[theme.breakpoints.up('sm')]: {
-			marginTop: theme.spacing(10)
+			marginTop: theme.spacing(5)
 		}
 	},
 	more: {
@@ -38,45 +52,46 @@ const Banner = () => {
 	const classes = useStyles()
 
 	return (
-		<BannerLayout backgroundClassName={classes.background}>
-			<img
-				alt='increase priority'
-				style={{ display: 'none' }}
-				src='/images/banner-background.png' />
+		<div className={classes.root}>
+			<Hidden mdDown>
+				<BannerVideo />
+			</Hidden>
 
-			<Typography
-				variant='h1'
-				align='center'
-				color='inherit'
-				marked='center'>
-				World Class Trading Signals
-      		</Typography>
+			<Container className={classes.container}>
+				<Typography
+					variant='h1'
+					align='center'
+					color='inherit'
+					marked='center'>
+					World Class Trading Signals
+      			</Typography>
 
-			<Typography
-				variant='h4'
-				align='center'
-				color='inherit'
-				className={classes.h4}>
-				99% Successful signal trades. We provide all you need to make the right trades.
-      		</Typography>
+				<Typography
+					variant='h4'
+					align='center'
+					color='inherit'
+					className={classes.h4}>
+					99% Successful signal trades. We provide all you need to make the right trades.
+      			</Typography>
 
-			<Button
-				size='large'
-				color='secondary'
-				variant='contained'
-				component={RouterLink}
-				to='/subscription-plans'
-				className={classes.button}>
-				Subscribe Now!
-      		</Button>
+				<Button
+					size='large'
+					to='/sign-in'
+					color='secondary'
+					variant='contained'
+					component={RouterLink}
+					className={classes.button}>
+					Subscribe Now!
+				</Button>
 
-			<Typography
-				color='inherit'
-				variant='caption'
-				className={classes.more}>
-				Discover the experience
-      		</Typography>
-		</BannerLayout>
+				<Typography
+					align='center'
+					color='inherit'
+					className={classes.more}>
+					To get your unlimited trading signals
+				</Typography>
+			</Container>
+		</div>
 	)
 }
 
