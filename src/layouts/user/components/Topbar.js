@@ -9,9 +9,8 @@ import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import MenuIcon from '@material-ui/icons/Menu'
-import InputIcon from '@material-ui/icons/Input'
 import { makeStyles } from '@material-ui/styles'
-import { Link as RouterLink, Redirect } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined'
 import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core'
 
@@ -33,15 +32,6 @@ const Topbar = props => {
 	const classes = useStyles()
 
 	const [notifications] = useState([])
-	const [isLogged, setLogged] = useState(true)
-
-	const onSignOut = () => {
-		localStorage.setItem('userId', '')
-		setLogged(false)
-	}
-
-	if (!isLogged)
-		return <Redirect to='/' />
 
 	return (
 		<AppBar
@@ -64,13 +54,6 @@ const Topbar = props => {
 							badgeContent={notifications.length}>
 							<NotificationsIcon />
 						</Badge>
-					</IconButton>
-
-					<IconButton
-						color='inherit'
-						onClick={onSignOut}
-						className={classes.signOutButton}>
-						<InputIcon />
 					</IconButton>
 				</Hidden>
 

@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Link as RouterLink } from 'react-router-dom'
 import { Typography, Button } from '@material-ui/core'
 
+import BannerVideo from './components/BannerVideo'
 import BannerLayout from './components/BannerLayout'
 
 const useStyles = makeStyles(theme => ({

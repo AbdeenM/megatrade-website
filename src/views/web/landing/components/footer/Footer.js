@@ -95,7 +95,7 @@ const Footer = () => {
 									target='_blank'
 									className={classes.icon}
 									rel='noopener noreferrer'
-									href='https://twitter.com/MegaTradeWorld'>
+									href='https://twitter.com/Mega TradeWorld'>
 									<img
 										alt='twitter'
 										src='/images/footer-twitter.png' />

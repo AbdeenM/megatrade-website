@@ -29,3 +29,25 @@ a {
 #root {
   height: 100%;
 }
+
+.rcw-conversation-container > .rcw-header {
+  background-color:#549FFC;
+}
+
+.rcw-launcher {
+  background-color:#549FFC;
+}
+
+.rcw-message > .rcw-client {
+  background-color: #549FFC;
+  color: white;
+}
+
+.rcw-message > .rcw-response {
+  background-color: #f4f6f8;
+  color: black;
+}
+
+.rcw-send-icon {
+  color: #549FFC;
+}

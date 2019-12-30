@@ -8,14 +8,17 @@
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
+import { Redirect } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
+import LogoutIcon from '@material-ui/icons/Input'
 import React, { useState, useEffect } from 'react'
 import EducationIcon from '@material-ui/icons/Book'
-import { Divider, Drawer } from '@material-ui/core'
+import SupportIcon from '@material-ui/icons/LiveHelp'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
 import MarketIcon from '@material-ui/icons/MonetizationOn'
+import { Divider, Drawer, Button, ListItem, colors } from '@material-ui/core'
 
 import Profile from './components/Profile'
 import SidebarNav from './components/SidebarNav'
@@ -44,6 +47,28 @@ const useStyles = makeStyles(theme => ({
 	},
 	nav: {
 		marginBottom: theme.spacing(2)
+	},
+	item: {
+		paddingTop: 0,
+		display: 'flex',
+		paddingBottom: 0
+	},
+	button: {
+		width: '100%',
+		letterSpacing: 0,
+		padding: '10px 8px',
+		textTransform: 'none',
+		color: colors.blueGrey[800],
+		justifyContent: 'flex-start',
+		fontWeight: theme.typography.fontWeightMedium
+	},
+	icon: {
+		width: 24,
+		height: 24,
+		display: 'flex',
+		alignItems: 'center',
+		color: theme.palette.icon,
+		marginRight: theme.spacing(1)
 	}
 }))
 
@@ -55,6 +80,7 @@ const Sidebar = props => {
 
 	const userId = localStorage.getItem('userId')
 
+	const [isLogged, setLogged] = useState(true)
 	const [profileState, setProfileState] = useState({
 		avatar: '',
 		lastName: '',
@@ -78,6 +104,11 @@ const Sidebar = props => {
 		})
 	}
 
+	const onSignOut = () => {
+		localStorage.setItem('userId', '')
+		setLogged(false)
+	}
+
 	const pages = [
 		{
 			title: 'Dashboard',
@@ -89,11 +120,11 @@ const Sidebar = props => {
 			title: 'Real-Time Market',
 			icon: <MarketIcon />
 		},
-		{
-			title: 'Education',
-			href: '/education',
-			icon: <EducationIcon />
-		},
+		// {
+		// 	title: 'Education',
+		// 	href: '/education',
+		// 	icon: <EducationIcon />
+		// },
 		{
 			title: 'Account',
 			href: '/account',
@@ -103,8 +134,16 @@ const Sidebar = props => {
 			title: 'Subscriptions',
 			href: '/subscriptions',
 			icon: <SubscriptionIcon />
+		},
+		{
+			title: 'Support',
+			href: '/support',
+			icon: <SupportIcon />
 		}
 	]
+
+	if (!isLogged)
+		return <Redirect to='/' />
 
 	return (
 		<Drawer
@@ -123,6 +162,19 @@ const Sidebar = props => {
 				<SidebarNav
 					pages={pages}
 					className={classes.nav} />
+
+				<ListItem
+					disableGutters
+					className={classes.item}>
+					<Button
+						onClick={onSignOut}
+						className={classes.button}>
+						<div className={classes.icon}>
+							<LogoutIcon />
+						</div>
+						Log Out
+					</Button>
+				</ListItem>
 
 				{
 					profileState.membership === 'Free Membership'

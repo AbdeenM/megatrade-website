@@ -5,34 +5,28 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import clsx from 'clsx'
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import { Typography, Grid } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
-	root: {
-		padding: theme.spacing(4)
-	}
+    root: {
+        padding: theme.spacing(3)
+    }
 }))
 
-const Footer = props => {
-	const { className, ...rest } = props
+const Support = () => {
+    const classes = useStyles()
 
-	const classes = useStyles()
-
-	return (
-		<div
-			{...rest}
-			className={clsx(classes.root, className)}>
-			<Typography variant='caption'>© 2019 – Mega Trade, All rights reserved.</Typography>
-		</div>
-	)
+    return (
+        <div className={classes.root}>
+            <Grid
+                container
+                spacing={4}
+                justify='center'>
+            </Grid>
+        </div>
+    )
 }
 
-Footer.propTypes = {
-	className: PropTypes.string
-}
-
-export default Footer
+export default Support

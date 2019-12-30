@@ -24,6 +24,7 @@ import NotFound from './views/web/notFound/NotFound'
 
 import MarketUser from './views/user/market/Market'
 import AccountUser from './views/user/account/Account'
+import SupportUser from './views/user/support/Support'
 import DashboardUser from './views/user/dashboard/Dashboard'
 import EducationUser from './views/user/education/Education'
 import ViewSignalsUser from './views/user/viewSignals/ViewSignals'
@@ -35,6 +36,7 @@ import SocialAdmin from './views/admin/social/Social'
 import MarketAdmin from './views/admin/market/Market'
 import AccountAdmin from './views/admin/account/Account'
 import SignalsAdmin from './views/admin/signals/Signals'
+import SupportAdmin from './views/admin/support/Support'
 import DashboardAdmin from './views/admin/dashboard/Dashboard'
 import EducationAdmin from './views/admin/education/Education'
 import SubscriptionsAdmin from './views/admin/subscriptions/Subscriptions'
@@ -91,11 +93,11 @@ const Routes = () => {
 				layout={MainLayout}
 				component={DashboardUser} />
 
-			<AuthRouteWithLayout
+			{/* <AuthRouteWithLayout
 				exact
 				path='/education'
 				layout={MainLayout}
-				component={EducationUser} />
+				component={EducationUser} /> */}
 
 			<AuthRouteWithLayout
 				exact
@@ -121,10 +123,21 @@ const Routes = () => {
 				path='/subscriptions'
 				component={SubscriptionsUser} />
 
+			<AuthRouteWithLayout
+				exact
+				path='/support'
+				layout={MainLayout}
+				component={SupportUser} />
+
+			<Redirect
+				exact
+				from='/admin'
+				to='/admin/dashboard' />
+
 			<AuthAdminRouteWithLayout
 				exact
-				path='/admin'
 				layout={AdminLayout}
+				path='/admin/dashboard'
 				component={DashboardAdmin} />
 
 			<AuthAdminRouteWithLayout
@@ -154,8 +167,14 @@ const Routes = () => {
 			<AuthAdminRouteWithLayout
 				exact
 				layout={AdminLayout}
+				path='/admin/support'
+				component={SupportAdmin} />
+
+			{/* <AuthAdminRouteWithLayout
+				exact
+				layout={AdminLayout}
 				path='/admin/education'
-				component={EducationAdmin} />
+				component={EducationAdmin} /> */}
 
 			<AuthAdminRouteWithLayout
 				exact

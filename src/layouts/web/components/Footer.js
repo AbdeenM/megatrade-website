@@ -26,7 +26,7 @@ const Footer = props => {
 		<div
 			{...rest}
 			className={clsx(classes.root, className)}>
-			<Typography variant='caption'>© 2019 – MegaTrade, All rights reserved.</Typography>
+			<Typography variant='caption'>© 2019 – Mega Trade, All rights reserved.</Typography>
 		</div>
 	)
 }

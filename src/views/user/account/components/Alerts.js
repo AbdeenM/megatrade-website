@@ -216,7 +216,7 @@ const Alerts = props => {
 							<Typography
 								variant='h6'
 								gutterBottom>
-								MegaTrade Promotions
+								Mega Trade Promotions
               				</Typography>
 
 							<FormControlLabel

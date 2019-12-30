@@ -11,7 +11,7 @@ import React, { useState } from 'react'
 import MenuIcon from '@material-ui/icons/Menu'
 import InputIcon from '@material-ui/icons/Input'
 import { makeStyles } from '@material-ui/styles'
-import { Link as RouterLink, Redirect } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import { AppBar, Toolbar, Hidden, IconButton } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
@@ -31,16 +31,6 @@ const Topbar = props => {
 
 	const classes = useStyles()
 
-	const [isLogged, setLogged] = useState(true)
-
-	const onSignOut = () => {
-		localStorage.setItem('adminId', '')
-		setLogged(false)
-	}
-
-	if (!isLogged)
-		return <Redirect to='/' />
-
 	return (
 		<AppBar
 			{...rest}
@@ -53,15 +43,6 @@ const Topbar = props => {
 				</RouterLink>
 
 				<div className={classes.flexGrow} />
-
-				<Hidden mdDown>
-					<IconButton
-						color='inherit'
-						onClick={onSignOut}
-						className={classes.signOutButton}>
-						<InputIcon />
-					</IconButton>
-				</Hidden>
 
 				<Hidden lgUp>
 					<IconButton
