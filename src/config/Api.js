@@ -318,6 +318,24 @@ class AdminApi {
 			throw error
 		}
 	}
+
+	fetchLogs = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/fetchLogs`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	deleteLogs = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/deleteLogs`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
 }
 
 class MiscellaneousApi {

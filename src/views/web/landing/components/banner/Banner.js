@@ -52,10 +52,12 @@ const Banner = () => {
 	const classes = useStyles()
 
 	return (
-		<div className={classes.root}>
-			<Hidden mdDown>
-				<BannerVideo />
-			</Hidden>
+		<section className={classes.root}>
+			<Container className={classes.container}>
+				<Hidden mdDown>
+					<BannerVideo />
+				</Hidden>
+			</Container>
 
 			<Container className={classes.container}>
 				<Typography
@@ -91,7 +93,7 @@ const Banner = () => {
 					To get your unlimited trading signals
 				</Typography>
 			</Container>
-		</div>
+		</section>
 	)
 }
 

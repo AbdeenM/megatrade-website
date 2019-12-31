@@ -36,7 +36,7 @@ Validate.validators = {
 export default class App extends React.Component {
 	state = {
 		isFirstMessage: true,
-		botResponse: 'Thank you for visiting our website! One of our team members will get back to you shortly. In the mean time feel free to create a free account and checkout your personal dashboard.'
+		botResponse: 'Thank you for visiting our website! One of our team members will get back to you shortly. In the mean time feel free to create a free account and check out your personal dashboard.'
 	}
 
 	onUserMessage = message => {

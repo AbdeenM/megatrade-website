@@ -25,16 +25,16 @@ const Banner = () => {
 
 	useEffect(() => {
 		const script = document.createElement('iframe')
-		script.height = 607
-		script.width = 1080
-		script.frameBorder = '0'
+		script.frameBorder = 0
+		script.width = window.innerWidth / 2.3
+		script.height = window.innerHeight / 2
 		script.src = 'https://publish.animatron.io/9802025effe1f21c9ff7e411?c=0&w=1080&h=607&r=1&a=1'
 
 		video.current.appendChild(script)
 
 		setInterval(() => {
 			script.src = 'https://publish.animatron.io/9802025effe1f21c9ff7e411?c=0&w=1080&h=607&r=1&a=1'
-		}, 21500)
+		}, 22000)
 	})
 
 	return (

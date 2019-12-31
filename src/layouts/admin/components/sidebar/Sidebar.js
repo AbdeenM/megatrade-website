@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/styles'
 import LogoutIcon from '@material-ui/icons/Input'
 import React, { useState, useEffect } from 'react'
 import EducationIcon from '@material-ui/icons/Book'
+import LogsIcon from '@material-ui/icons/Assignment'
 import MediaIcon from '@material-ui/icons/PermMedia'
 import SupportIcon from '@material-ui/icons/LiveHelp'
 import DashboardIcon from '@material-ui/icons/Dashboard'
@@ -142,11 +143,11 @@ const Sidebar = props => {
 			href: '/admin/signals',
 			icon: <TradeSignalIcon />
 		},
-		// {
-		// 	title: 'Education',
-		// 	href: '/admin/education',
-		// 	icon: <EducationIcon />
-		// },
+		{
+			title: 'Education',
+			href: '/admin/education',
+			icon: <EducationIcon />
+		},
 		{
 			title: 'Subscriptions',
 			href: '/admin/subscriptions',
@@ -169,6 +170,14 @@ const Sidebar = props => {
 			title: 'Support',
 			href: '/admin/support',
 			icon: <SupportIcon />
+		}
+	]
+
+	const tech = [
+		{
+			title: 'Logs',
+			href: '/admin/logs',
+			icon: <LogsIcon />
 		}
 	]
 
@@ -217,6 +226,16 @@ const Sidebar = props => {
 
 				<SidebarNav
 					pages={marketing}
+					className={classes.nav} />
+
+				<Typography
+					variant='h5'
+					className={classes.title}>
+					Technology
+				</Typography>
+
+				<SidebarNav
+					pages={tech}
 					className={classes.nav} />
 
 				<ListItem

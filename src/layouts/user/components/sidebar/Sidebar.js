@@ -135,11 +135,11 @@ const Sidebar = props => {
 			href: '/subscriptions',
 			icon: <SubscriptionIcon />
 		},
-		{
-			title: 'Support',
-			href: '/support',
-			icon: <SupportIcon />
-		}
+		// {
+		// 	title: 'Support',
+		// 	href: '/support',
+		// 	icon: <SupportIcon />
+		// }
 	]
 
 	if (!isLogged)

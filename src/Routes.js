@@ -30,6 +30,7 @@ import EducationUser from './views/user/education/Education'
 import ViewSignalsUser from './views/user/viewSignals/ViewSignals'
 import SubscriptionsUser from './views/user/subscriptions/Subscriptions'
 
+import LogsAdmin from './views/admin/logs/Logs'
 import UsersAdmin from './views/admin/users/Users'
 import LoginAdmin from './views/admin/signIn/SignIn'
 import SocialAdmin from './views/admin/social/Social'
@@ -123,11 +124,11 @@ const Routes = () => {
 				path='/subscriptions'
 				component={SubscriptionsUser} />
 
-			<AuthRouteWithLayout
+			{/* <AuthRouteWithLayout
 				exact
 				path='/support'
 				layout={MainLayout}
-				component={SupportUser} />
+				component={SupportUser} /> */}
 
 			<Redirect
 				exact
@@ -170,11 +171,11 @@ const Routes = () => {
 				path='/admin/support'
 				component={SupportAdmin} />
 
-			{/* <AuthAdminRouteWithLayout
+			<AuthAdminRouteWithLayout
 				exact
 				layout={AdminLayout}
 				path='/admin/education'
-				component={EducationAdmin} /> */}
+				component={EducationAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
@@ -193,6 +194,12 @@ const Routes = () => {
 				path='/admin/users'
 				layout={AdminLayout}
 				component={UsersAdmin} />
+
+			<AuthAdminRouteWithLayout
+				exact
+				path='/admin/logs'
+				layout={AdminLayout}
+				component={LogsAdmin} />
 
 			<Redirect to='/not-found' />
 		</Switch>
