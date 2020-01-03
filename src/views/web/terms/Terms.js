@@ -42,7 +42,7 @@ const Terms = () => {
 					lg={6}
 					xs={12}>
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Welcome to megatrade.world
             			</Typography>
 					</div>
@@ -65,7 +65,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Cookies
             			</Typography>
 					</div>
@@ -92,7 +92,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							License
             			</Typography>
 					</div>
@@ -123,7 +123,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							User Comments
             			</Typography>
 					</div>
@@ -145,7 +145,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Reservation of Rights
             			</Typography>
 					</div>
@@ -159,7 +159,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Removal of links from our website
             			</Typography>
 					</div>
@@ -177,7 +177,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Content Liability
             			</Typography>
 					</div>
@@ -191,7 +191,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Disclaimer
             			</Typography>
 					</div>

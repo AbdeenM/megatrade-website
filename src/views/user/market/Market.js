@@ -5,9 +5,9 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { useRef, useEffect } from 'react'
+import { Grid, useTheme } from '@material-ui/core'
 import TradingViewWidget from 'react-tradingview-widget'
 
 import { dataTickers, dataForexRates, dataHeatMap, dataScreener, dataOverview, dataCalender } from './components/Settings'
@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 const Market = () => {
 	const classes = useStyles()
+	const theme = useTheme()
 
 	const heatMap = useRef(null)
 	const tickers = useRef(null)
@@ -115,7 +116,7 @@ const Market = () => {
 						width='auto'
 						height={600}
 						interval='D'
-						theme='Light'
+						theme={theme.palette.type}
 						timezone='Etc/UTC'
 						toolbar_bg='#f1f3f6'
 						symbol='FX_IDC:USDEUR'
@@ -139,6 +140,15 @@ const Market = () => {
 					lg={12}
 					xl={12}
 					md={12}>
+					<div ref={screener} />
+				</Grid>
+
+				<Grid
+					item
+					xs={12}
+					lg={12}
+					xl={12}
+					md={12}>
 					<div ref={heatMap} />
 				</Grid>
 
@@ -149,15 +159,6 @@ const Market = () => {
 					xl={12}
 					md={12}>
 					<div ref={forexRates} />
-				</Grid>
-
-				<Grid
-					item
-					xs={12}
-					lg={12}
-					xl={12}
-					md={12}>
-					<div ref={screener} />
 				</Grid>
 			</Grid>
 		</div>

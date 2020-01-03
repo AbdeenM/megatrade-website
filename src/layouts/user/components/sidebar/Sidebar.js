@@ -12,13 +12,13 @@ import { Redirect } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import LogoutIcon from '@material-ui/icons/Input'
 import React, { useState, useEffect } from 'react'
-import EducationIcon from '@material-ui/icons/Book'
-import SupportIcon from '@material-ui/icons/LiveHelp'
+//import EducationIcon from '@material-ui/icons/Book'
+//import SupportIcon from '@material-ui/icons/LiveHelp'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
 import MarketIcon from '@material-ui/icons/MonetizationOn'
-import { Divider, Drawer, Button, ListItem, colors } from '@material-ui/core'
+import { Divider, Drawer, Button, ListItem } from '@material-ui/core'
 
 import Profile from './components/Profile'
 import SidebarNav from './components/SidebarNav'
@@ -39,8 +39,7 @@ const useStyles = makeStyles(theme => ({
 		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
-		padding: theme.spacing(2),
-		backgroundColor: theme.palette.white
+		padding: theme.spacing(2)
 	},
 	divider: {
 		margin: theme.spacing(2, 0)
@@ -58,7 +57,7 @@ const useStyles = makeStyles(theme => ({
 		letterSpacing: 0,
 		padding: '10px 8px',
 		textTransform: 'none',
-		color: colors.blueGrey[800],
+		color: theme.palette.text.main,
 		justifyContent: 'flex-start',
 		fontWeight: theme.typography.fontWeightMedium
 	},

@@ -9,10 +9,9 @@ import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import MenuIcon from '@material-ui/icons/Menu'
-import InputIcon from '@material-ui/icons/Input'
 import { makeStyles } from '@material-ui/styles'
 import { Link as RouterLink } from 'react-router-dom'
-import { AppBar, Toolbar, Hidden, IconButton } from '@material-ui/core'
+import { AppBar, Toolbar, Hidden, IconButton, Grid, Switch, Typography, useMediaQuery, useTheme } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -26,10 +25,26 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
+let themeType = 'light'
+if (typeof Storage !== 'undefined')
+	themeType = localStorage.getItem('theme') || 'light'
+
 const Topbar = props => {
 	const { className, onSidebarOpen, history, ...rest } = props
 
+	const theme = useTheme()
 	const classes = useStyles()
+	const [isDark, setDark] = useState(themeType === 'dark')
+
+	const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
+
+	console.log('============================');
+	console.log(props);
+
+	const handleChangeMode = () => {
+		setDark(!isDark)
+		props.onToggleDark()
+	}
 
 	return (
 		<AppBar
@@ -51,6 +66,23 @@ const Topbar = props => {
 						<MenuIcon />
 					</IconButton>
 				</Hidden>
+
+				<nav className={classes.userMenu}>
+					{isDesktop && <Typography component='div'>
+						<Grid component='label' container alignItems='center' spacing={1}>
+							<Grid item>Light</Grid>
+							<Grid item>
+								<Switch
+									checked={isDark}
+									onChange={handleChangeMode}
+									value={isDark}
+									inputProps={{ 'aria-label': 'checkbox' }}
+								/>
+							</Grid>
+							<Grid item>Dark</Grid>
+						</Grid>
+					</Typography>}
+				</nav>
 			</Toolbar>
 		</AppBar>
 	)

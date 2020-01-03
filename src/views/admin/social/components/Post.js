@@ -152,7 +152,7 @@ const Post = props => {
                     postState.values.image.length > 1
                         ? <div className={classes.imageContainer}>
                             <img
-                                alt='post image'
+                                alt='post'
                                 src={postState.values.image} />
                         </div> :
                         <div />

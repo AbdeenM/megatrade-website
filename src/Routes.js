@@ -15,18 +15,18 @@ import RouteWithLayout from './components/RouteWithLayout'
 import AuthRouteWithLayout from './components/AuthRouteWithLayout'
 import AuthAdminRouteWithLayout from './components/AuthAdminRouteWithLayout'
 
+import Login from './views/web/auth/Login'
 import Terms from './views/web/terms/Terms'
 import Policy from './views/web/policy/Policy'
-import SignIn from './views/web/signIn/SignIn'
-import SignUp from './views/web/signUp/SignUp'
+import Register from './views/web/auth/Register'
 import Landing from './views/web/landing/Landing'
 import NotFound from './views/web/notFound/NotFound'
 
 import MarketUser from './views/user/market/Market'
 import AccountUser from './views/user/account/Account'
-import SupportUser from './views/user/support/Support'
+//import SupportUser from './views/user/support/Support'
 import DashboardUser from './views/user/dashboard/Dashboard'
-import EducationUser from './views/user/education/Education'
+//import EducationUser from './views/user/education/Education'
 import ViewSignalsUser from './views/user/viewSignals/ViewSignals'
 import SubscriptionsUser from './views/user/subscriptions/Subscriptions'
 
@@ -43,50 +43,50 @@ import EducationAdmin from './views/admin/education/Education'
 import SubscriptionsAdmin from './views/admin/subscriptions/Subscriptions'
 import UserDashboardAdmin from './views/admin/userDashboard/UserDashboard'
 
-const Routes = () => {
+const Routes = props => {
 	return (
 		<Switch>
 			<RouteWithLayout
 				exact
 				path='/'
 				layout={WebLayout}
-				component={Landing} />
+				component={() => (<Landing {...props} />)} />
 
 			<RouteWithLayout
 				exact
 				layout={WebLayout}
 				path='/admin/sign-in'
-				component={LoginAdmin} />
+				component={() => (<LoginAdmin {...props} />)} />
 
 			<RouteWithLayout
 				exact
-				path='/sign-up'
+				path='/register'
 				layout={WebLayout}
-				component={SignUp} />
+				component={() => (<Register {...props} />)} />
 
 			<RouteWithLayout
 				exact
-				path='/sign-in'
+				path='/login'
 				layout={WebLayout}
-				component={SignIn} />
+				component={() => (<Login {...props} />)} />
 
 			<RouteWithLayout
 				exact
 				path='/terms'
-				component={Terms}
-				layout={WebLayout} />
+				layout={WebLayout}
+				component={() => (<Terms {...props} />)} />
 
 			<RouteWithLayout
 				exact
 				path='/policy'
 				layout={WebLayout}
-				component={Policy} />
+				component={() => (<Policy {...props} />)} />
 
 			<RouteWithLayout
 				exact
 				path='/not-found'
 				layout={WebLayout}
-				component={NotFound} />
+				component={() => (<NotFound {...props} />)} />
 
 			<AuthRouteWithLayout
 				exact
@@ -143,62 +143,62 @@ const Routes = () => {
 
 			<AuthAdminRouteWithLayout
 				exact
+				layout={MainLayout}
 				path='/admin/market'
-				layout={AdminLayout}
 				component={MarketAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={AdminLayout}
+				layout={MainLayout}
 				path='/admin/userDashboard'
 				component={UserDashboardAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={AdminLayout}
+				layout={MainLayout}
 				path='/admin/signals'
 				component={SignalsAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={AdminLayout}
+				layout={MainLayout}
 				path='/admin/subscriptions'
 				component={SubscriptionsAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={AdminLayout}
+				layout={MainLayout}
 				path='/admin/support'
 				component={SupportAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={AdminLayout}
+				layout={MainLayout}
 				path='/admin/education'
 				component={EducationAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={AdminLayout}
+				layout={MainLayout}
 				path='/admin/account'
 				component={AccountAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
+				layout={MainLayout}
 				path='/admin/social'
-				layout={AdminLayout}
 				component={SocialAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
 				path='/admin/users'
-				layout={AdminLayout}
+				layout={MainLayout}
 				component={UsersAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
 				path='/admin/logs'
-				layout={AdminLayout}
+				layout={MainLayout}
 				component={LogsAdmin} />
 
 			<Redirect to='/not-found' />

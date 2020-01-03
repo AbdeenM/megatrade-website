@@ -5,39 +5,104 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React from 'react'
+import clsx from 'clsx'
 import PropTypes from 'prop-types'
+import React, { Fragment } from 'react'
+import { CssBaseline, Hidden, makeStyles, Container } from '@material-ui/core'
 
-import FAQ from './components/faq/FAQ'
-import Banner from './components/banner/Banner'
-import Offers from './components/offers/Offers'
-import Footer from './components/footer/Footer'
-import Pricing from './components/pricing/Pricing'
-import Features from './components/features/Features'
-import Disclaimer from './components/disclaimer/Disclaimer'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import Counter from './components/Counter'
+import Contact from './components/Contact'
+import Feature from './components/Feature'
+import PageNav from './components/PageNav'
+import Pricing from './components/Pricing'
+import Subscribe from './components/Subscribe'
+import Testimonials from './components/Testimonials'
+import AnimateSlider from './components/AnimateSlider'
 
-const Landing = () => {
+const sectionMargin = margin => (margin * 15)
+const useStyles = makeStyles(theme => ({
+	mainWrap: {
+		position: 'relative',
+		width: '100%',
+		overflow: 'hidden',
+	},
+	spaceBottom: {
+		marginBottom: sectionMargin(theme.spacing())
+	},
+	spaceTop: {
+		paddingTop: sectionMargin(theme.spacing())
+	},
+	containerWrap: {
+		marginTop: theme.spacing(15)
+	}
+}))
+
+const Landing = props => {
+	const classes = useStyles()
+	const { onToggleDark, onToggleDir } = props
+
 	return (
-		<section>
-			<Banner />
+		<Fragment>
+			<CssBaseline />
+			<section id='home' />
+			<div className={classes.mainWrap}>
+				<Header
+					onToggleDir={onToggleDir}
+					onToggleDark={onToggleDark} />
 
-			<Features />
+				<main className={classes.containerWrap}>
+					<section>
+						<Container fixed>
+							<AnimateSlider />
+						</Container>
+					</section>
 
-			<Pricing />
+					<section className={clsx(classes.spaceTop, classes.spaceBottom)} id='feature'>
+						<Container fixed>
+							<Feature />
+						</Container>
+					</section>
 
-			<FAQ />
+					<section className={classes.pageSection}>
+						<Counter />
+					</section>
 
-			<Offers />
+					<section className={classes.spaceTop} id='testimonials'>
+						<Testimonials />
+					</section>
 
-			<Disclaimer />
+					<section className={classes.spaceTop} id='pricing'>
+						<Pricing />
+					</section>
 
-			<Footer />
-		</section>
+					<section className={classes.spaceTop} id='subscribe'>
+						<Subscribe />
+					</section>
+
+					<section className={classes.spaceTop} id='contact'>
+						<Contact />
+					</section>
+				</main>
+
+				<Hidden mdDown>
+					<PageNav />
+				</Hidden>
+
+				<Footer toggleDir={onToggleDir} />
+			</div>
+		</Fragment>
 	)
 }
 
+Landing.getInitialProps = async () => ({
+	namespacesRequired: ['common']
+})
+
 Landing.propTypes = {
-	history: PropTypes.object
+	onToggleDir: PropTypes.func.isRequired,
+	onToggleDark: PropTypes.func.isRequired,
 }
 
 export default Landing

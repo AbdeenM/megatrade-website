@@ -13,8 +13,6 @@ import React, { useState, useEffect } from 'react'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { Card, CardContent, Table, TableBody, TableCell, TableHead, TableRow, CardHeader, Divider } from '@material-ui/core'
 
-import Palette from 'theme/Palette'
-
 const useStyles = makeStyles(theme => ({
     root: {},
     row: {
@@ -28,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     },
     Input: {
         marginRight: theme.spacing(1),
-        backgroundColor: Palette.background.paper
+        backgroundColor: theme.palette.background.paper
     },
     content: {
         padding: 0

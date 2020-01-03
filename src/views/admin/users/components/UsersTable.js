@@ -17,7 +17,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress, Menu, MenuItem } from '@material-ui/core'
 
-import Palette from 'theme/Palette'
 import { AdminApi } from 'config/Api'
 import getInitials from 'helpers/getInitials'
 
@@ -89,7 +88,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	searchInput: {
 		marginRight: theme.spacing(1),
-		backgroundColor: Palette.background.paper
+		backgroundColor: theme.palette.background.paper
 	},
 	content: {
 		padding: 0

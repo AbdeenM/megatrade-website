@@ -118,7 +118,7 @@ const AccountProfile = props => {
 				<div className={classes.details}>
 					<div>
 						<Typography
-							variant='h2'
+							variant='h3'
 							gutterBottom>
 							{profileState.firstName + ' ' + profileState.lastName}
 						</Typography>

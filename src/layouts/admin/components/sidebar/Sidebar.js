@@ -23,7 +23,7 @@ import MarketIcon from '@material-ui/icons/MonetizationOn'
 import VerifiedIcon from '@material-ui/icons/VerifiedUser'
 import TradeSignalIcon from '@material-ui/icons/TrendingUp'
 import DashboardUserIcon from '@material-ui/icons/DeveloperBoard'
-import { Divider, Drawer, Typography, Button, ListItem, colors } from '@material-ui/core'
+import { Divider, Drawer, Typography, Button, ListItem } from '@material-ui/core'
 
 import Profile from './components/Profile'
 import SidebarNav from './components/SidebarNav'
@@ -43,8 +43,7 @@ const useStyles = makeStyles(theme => ({
 		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
-		padding: theme.spacing(2),
-		backgroundColor: theme.palette.white
+		padding: theme.spacing(2)
 	},
 	divider: {
 		margin: theme.spacing(2, 0)
@@ -65,7 +64,7 @@ const useStyles = makeStyles(theme => ({
 		letterSpacing: 0,
 		padding: '10px 8px',
 		textTransform: 'none',
-		color: colors.blueGrey[800],
+		color: theme.palette.text,
 		justifyContent: 'flex-start',
 		fontWeight: theme.typography.fontWeightMedium
 	},
@@ -199,7 +198,7 @@ const Sidebar = props => {
 				<Divider className={classes.divider} />
 
 				<Typography
-					variant='h5'
+					variant='subtitle1'
 					className={classes.title}>
 					Administrator
 				</Typography>
@@ -209,7 +208,7 @@ const Sidebar = props => {
 					className={classes.nav} />
 
 				<Typography
-					variant='h5'
+					variant='subtitle1'
 					className={classes.title}>
 					Customers
 				</Typography>
@@ -219,7 +218,7 @@ const Sidebar = props => {
 					className={classes.nav} />
 
 				<Typography
-					variant='h5'
+					variant='subtitle1'
 					className={classes.title}>
 					Marketing
 				</Typography>
@@ -229,7 +228,7 @@ const Sidebar = props => {
 					className={classes.nav} />
 
 				<Typography
-					variant='h5'
+					variant='subtitle1'
 					className={classes.title}>
 					Technology
 				</Typography>
@@ -251,6 +250,7 @@ const Sidebar = props => {
 					</Button>
 				</ListItem>
 
+				<Divider className={classes.divider} />
 			</div>
 		</Drawer>
 	)

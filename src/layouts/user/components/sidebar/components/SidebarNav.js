@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import React, { forwardRef } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { NavLink as RouterLink } from 'react-router-dom'
-import { List, ListItem, Button, colors } from '@material-ui/core'
+import { List, ListItem, Button } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {},
@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 		letterSpacing: 0,
 		padding: '10px 8px',
 		textTransform: 'none',
-		color: colors.blueGrey[800],
+		color: theme.palette.text,
 		justifyContent: 'flex-start',
 		fontWeight: theme.typography.fontWeightMedium
 	},

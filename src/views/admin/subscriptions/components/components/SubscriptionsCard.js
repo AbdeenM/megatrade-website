@@ -92,7 +92,7 @@ const SubscriptionsCard = props => {
 				</div>
 
 				<Typography
-					variant='h2'
+					variant='h4'
 					gutterBottom
 					align='center'>
 					{subscription.title}

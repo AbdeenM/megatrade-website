@@ -6,55 +6,42 @@
  ************************************************************************** */
 
 import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-import { Grid, Typography } from '@material-ui/core'
+import { Button, Grid, Container, Typography } from '@material-ui/core'
 
-const useStyles = makeStyles(theme => ({
-	root: {
-		padding: theme.spacing(4)
-	},
-	content: {
-		paddingTop: 150,
-		textAlign: 'center'
-	},
-	image: {
-		width: 560,
-		marginTop: 50,
-		maxWidth: '100%',
-		display: 'inline-block'
-	}
-}))
+import useStyles from './notFound-style'
 
 const NotFound = () => {
 	const classes = useStyles()
 
 	return (
-		<div className={classes.root}>
-			<Grid
-				container
-				spacing={4}
-				justify='center'>
-				<Grid
-					item
-					lg={6}
-					xs={12}>
-					<div className={classes.content}>
-						<Typography variant='h1'>
-							404: The page you are looking for isn’t here
-            			</Typography>
+		<div className={classes.errorWrap}>
+			<Container maxWidth='md'>
+				<Grid container>
+					<Grid item md={5} xs={12}>
+						<div className={classes.flex}>
+							<div className={classes.deco}>
+								<Typography variant='h3'>
+									404
+								</Typography>
+							</div>
+						</div>
+					</Grid>
 
-						<Typography variant='subtitle2'>
-							You either tried some shady route or you came here by mistake.
-                            Whichever it is, try using the navigation
-            			</Typography>
+					<Grid item md={7} xs={12}>
+						<div className={classes.text}>
+							<Typography variant='h4'>This page could not be found.</Typography>
 
-						<img
-							alt='not found'
-							className={classes.image}
-							src='/images/not-found.png' />
-					</div>
+							<Typography>
+								You can either stay and chill here, or go back to the beginning.
+							</Typography>
+
+							<Button variant='outlined' color='primary' href='/' size='large' className={classes.button}>
+								Back Home
+							</Button>
+						</div>
+					</Grid>
 				</Grid>
-			</Grid>
+			</Container>
 		</div>
 	)
 }

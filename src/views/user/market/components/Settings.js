@@ -5,9 +5,11 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
+const theme = localStorage.getItem('theme') || 'light'
+
 export const dataTickers = {
     'locale': 'en',
-    'colorTheme': 'light',
+    'colorTheme': theme,
     'isTransparent': false,
     'symbols': [
         {
@@ -45,7 +47,7 @@ export const dataCalender = {
     'height': 600,
     'locale': 'en',
     'width': '100%',
-    'colorTheme': 'light',
+    'colorTheme': theme,
     'isTransparent': false,
     'importanceFilter': '-1,0,1',
     'currencyFilter': 'GBP,AUD,CNY,DEM,ITL,EUR,JPY,CAD,FRF,USD,NZD,SGD,HKD,TWD,CHF'
@@ -57,7 +59,7 @@ export const dataAnalysis = {
     'locale': 'en',
     'width': '980',
     'interval': 'D',
-    'theme': 'Light',
+    'colorTheme': theme,
     'timezone': 'Etc/UTC',
     'toolbar_bg': '#f1f3f6',
     'symbol': 'FX_IDC:USDEUR',
@@ -73,7 +75,7 @@ export const dataOverview = {
     'showChart': true,
     'dateRange': '12m',
     'largeChartUrl': '',
-    'colorTheme': 'light',
+    'colorTheme': theme,
     'isTransparent': false,
     'gridLineColor': 'rgba(233, 233, 234, 1)',
     'scaleFontColor': 'rgba(120, 123, 134, 1)',
@@ -265,6 +267,7 @@ export const dataHeatMap = {
     'height': 600,
     'locale': 'en',
     'width': '100%',
+    'colorTheme': theme,
     'currencies': [
         'EUR',
         'USD',
@@ -282,6 +285,7 @@ export const dataForexRates = {
     'height': 600,
     'locale': 'en',
     'width': '100%',
+    'colorTheme': theme,
     'currencies': [
         'EUR',
         'USD',
@@ -299,7 +303,7 @@ export const dataScreener = {
     'height': 600,
     'locale': 'en',
     'width': '100%',
-    'colorTheme': 'light',
+    'colorTheme': theme,
     'displayCurrency': 'USD',
     'defaultColumn': 'overview',
     'screener_type': 'crypto_mkt'

@@ -5,7 +5,7 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import { makeStyles } from '@material-ui/styles'
 import { Grid, Typography } from '@material-ui/core'
 
@@ -27,11 +27,11 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const Terms = () => {
+const Policy = () => {
 	const classes = useStyles()
 
 	return (
-		<div className={classes.root}>
+		<Fragment>
 			<Grid
 				container
 				spacing={4}
@@ -41,7 +41,7 @@ const Terms = () => {
 					lg={6}
 					xs={12}>
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Welcome to our Privacy Policy
             			</Typography>
 					</div>
@@ -63,7 +63,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Website Visitors
             			</Typography>
 					</div>
@@ -81,7 +81,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Gathering of Personally-Identifying Information
             			</Typography>
 					</div>
@@ -95,7 +95,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Security
             			</Typography>
 					</div>
@@ -109,7 +109,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Protection of Certain Personally-Identifying Information
             			</Typography>
 					</div>
@@ -127,7 +127,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Aggregated Statistics
             			</Typography>
 					</div>
@@ -141,7 +141,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Affiliate Disclosure
             			</Typography>
 					</div>
@@ -155,7 +155,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Cookies
             			</Typography>
 					</div>
@@ -177,7 +177,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Business Transfers
             			</Typography>
 					</div>
@@ -191,7 +191,7 @@ const Terms = () => {
 					</div>
 
 					<div className={classes.content}>
-						<Typography variant='h1'>
+						<Typography variant='h3'>
 							Privacy Policy Changes
             			</Typography>
 					</div>
@@ -205,8 +205,8 @@ const Terms = () => {
 					</div>
 				</Grid>
 			</Grid>
-		</div>
+		</Fragment>
 	)
 }
 
-export default Terms
+export default Policy

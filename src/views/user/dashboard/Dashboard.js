@@ -8,7 +8,7 @@
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState, useRef } from 'react'
-import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
+import { Grid, Dialog, CircularProgress, DialogContent, useTheme } from '@material-ui/core'
 
 import Budget from './components/Budget'
 import TradePie from './components/TradePie'
@@ -30,6 +30,8 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = () => {
 	const classes = useStyles()
+	const theme = useTheme()
+
 	const { enqueueSnackbar } = useSnackbar()
 
 	const userId = localStorage.getItem('userId')
@@ -66,7 +68,7 @@ const Dashboard = () => {
 			script.async = true
 			script.innerHTML = JSON.stringify({
 				'locale': 'en',
-				'colorTheme': 'light',
+				'colorTheme': theme.palette.type,
 				'isTransparent': false,
 				'displayMode': 'adaptive',
 				'symbols': [
@@ -112,7 +114,7 @@ const Dashboard = () => {
 			tickerTape.current.appendChild(script)
 			setIsTaperLoaded(true)
 		}
-	})
+	}, [])
 
 	const fetchStatistics = async () => {
 		const fetchStatisticsResult = await userApi.fetchStatistics({ userId })

@@ -45,8 +45,8 @@ const TradePie = props => {
 			{
 				borderWidth: 8,
 				data: focus.data,
-				borderColor: theme.palette.white,
-				hoverBorderColor: theme.palette.white,
+				borderColor: theme.palette.background.paper,
+				hoverBorderColor: theme.palette.background.paper,
 				backgroundColor: focus.backgroundColor
 			}
 		],
@@ -70,7 +70,7 @@ const TradePie = props => {
 			borderWidth: 1,
 			intersect: false,
 			borderColor: theme.palette.divider,
-			backgroundColor: theme.palette.white,
+			backgroundColor: theme.palette.background.paper,
 			titleFontColor: theme.palette.text.primary,
 			bodyFontColor: theme.palette.text.secondary,
 			footerFontColor: theme.palette.text.secondary

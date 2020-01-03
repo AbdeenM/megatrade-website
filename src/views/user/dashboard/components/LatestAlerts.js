@@ -11,9 +11,7 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import { Bar } from 'react-chartjs-2'
 import { makeStyles } from '@material-ui/styles'
-import { Card, CardHeader, CardContent, Divider, Button } from '@material-ui/core'
-
-import Palette from 'theme/Palette'
+import { Card, CardHeader, CardContent, Divider, Button, useTheme } from '@material-ui/core'
 
 const useStyles = makeStyles(() => ({
 	root: {},
@@ -30,6 +28,7 @@ const LatestAlerts = props => {
 	const { className, alerts, ...rest } = props
 
 	const classes = useStyles()
+	const theme = useTheme()
 
 	const getWeekDays = () => {
 		let weekDays = []
@@ -50,12 +49,12 @@ const LatestAlerts = props => {
 		datasets: [
 			{
 				label: 'This year',
-				backgroundColor: Palette.primary.main,
+				backgroundColor: theme.palette.primary.main,
 				data: alerts.thisYear
 			},
 			{
 				label: 'Last year',
-				backgroundColor: Palette.neutral,
+				backgroundColor: theme.palette.neutral,
 				data: alerts.lastYear
 			}
 		]
@@ -72,11 +71,11 @@ const LatestAlerts = props => {
 			enabled: true,
 			borderWidth: 1,
 			intersect: false,
-			borderColor: Palette.divider,
-			backgroundColor: Palette.white,
-			titleFontColor: Palette.text.primary,
-			bodyFontColor: Palette.text.secondary,
-			footerFontColor: Palette.text.secondary
+			borderColor: theme.palette.divider,
+			backgroundColor: theme.palette.white,
+			titleFontColor: theme.palette.text.primary,
+			bodyFontColor: theme.palette.text.secondary,
+			footerFontColor: theme.palette.text.secondary
 		},
 		layout: { padding: 0 },
 		scales: {
@@ -87,7 +86,7 @@ const LatestAlerts = props => {
 					maxBarThickness: 10,
 					categoryPercentage: 0.5,
 					ticks: {
-						fontColor: Palette.text.secondary
+						fontColor: theme.palette.text.secondary
 					},
 					gridLines: {
 						display: false,
@@ -100,16 +99,16 @@ const LatestAlerts = props => {
 					ticks: {
 						min: 0,
 						beginAtZero: true,
-						fontColor: Palette.text.secondary
+						fontColor: theme.palette.text.secondary
 					},
 					gridLines: {
 						borderDash: [2],
 						drawBorder: false,
 						borderDashOffset: [2],
-						color: Palette.divider,
+						color: theme.palette.divider,
 						zeroLineBorderDash: [2],
 						zeroLineBorderDashOffset: [2],
-						zeroLineColor: Palette.divider
+						zeroLineColor: theme.palette.divider
 					}
 				}
 			]

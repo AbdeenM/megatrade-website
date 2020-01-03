@@ -12,9 +12,8 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { Card, CardActions, CardContent, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, Button, TextField, IconButton, CardHeader, Divider } from '@material-ui/core'
+import { Card, CardActions, CardContent, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, Button, TextField, IconButton, CardHeader, Divider, Dialog, DialogContent, CircularProgress } from '@material-ui/core'
 
-import Palette from 'theme/Palette'
 import { AdminApi } from 'config/Api'
 
 const adminApi = new AdminApi()
@@ -32,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	Input: {
 		marginRight: theme.spacing(1),
-		backgroundColor: Palette.background.paper
+		backgroundColor: theme.palette.background.paper
 	},
 	content: {
 		padding: 0
@@ -71,16 +70,16 @@ const LogsTable = props => {
 
 		const searchTerm = event.target.value.toLowerCase()
 
-		setListedLogs(allLogs.filter(Logs => Logs.name.toLowerCase().includes(searchTerm)))
+		setListedLogs(allLogs.filter(log => log.name.toLowerCase().includes(searchTerm)))
 	}
 
 	const onSelectAll = event => {
-		const { Logs } = props
+		const { logs } = props
 
 		let selectedLogs
 
 		if (event.target.checked)
-			selectedLogs = Logs.map(Logs => Logs._id)
+			selectedLogs = logs.map(log => log._id)
 		else
 			selectedLogs = []
 
@@ -132,6 +131,15 @@ const LogsTable = props => {
 		setIsLoading(false)
 		window.location.reload()
 	}
+
+	if (isLoading)
+		return (
+			<Dialog open={isLoading}>
+				<DialogContent>
+					<CircularProgress />
+				</DialogContent>
+			</Dialog>
+		)
 
 	return (
 		<div
@@ -219,7 +227,7 @@ const LogsTable = props => {
 														value='true'
 														color='primary'
 														checked={selectedLogs.indexOf(log._id) !== -1}
-														onChange={event => onSelectOne(event, logs._id)} />
+														onChange={event => onSelectOne(event, log._id)} />
 												</TableCell>
 
 												<TableCell>{log.name}</TableCell>

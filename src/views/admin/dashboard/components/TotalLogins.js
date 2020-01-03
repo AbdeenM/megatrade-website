@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         width: 56,
         height: 56,
-        backgroundColor: theme.palette.warning.main
+        backgroundColor: theme.palette.secondary.main
     },
     icon: {
         height: 32,

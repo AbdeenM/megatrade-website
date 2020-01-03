@@ -14,8 +14,6 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { Card, CardActions, CardContent, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, Button, TextField, IconButton, CardHeader, Divider } from '@material-ui/core'
 
-import Palette from 'theme/Palette'
-
 const useStyles = makeStyles(theme => ({
     root: {},
     row: {
@@ -29,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     },
     Input: {
         marginRight: theme.spacing(1),
-        backgroundColor: Palette.background.paper
+        backgroundColor: theme.background.paper
     },
     content: {
         padding: 0

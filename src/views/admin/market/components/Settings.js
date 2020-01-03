@@ -5,11 +5,13 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
+const theme = localStorage.getItem('theme') || 'light'
+
 export const dataCalender = {
     'locale': 'en',
     'width': '100%',
     'height': '900',
-    'colorTheme': 'light',
+    'colorTheme': theme,
     'isTransparent': false,
     'importanceFilter': '-1,0,1',
     'currencyFilter': 'GBP,AUD,CNY,DEM,ITL,EUR,JPY,CAD,FRF,USD,NZD,SGD,HKD,TWD,CHF'
@@ -21,7 +23,7 @@ export const dataScreener = {
     'height': '900',
     'market': 'forex',
     'showToolbar': true,
-    'colorTheme': 'light',
+    'colorTheme': theme,
     'defaultScreen': 'general',
     'defaultColumn': 'overview'
 }
@@ -31,7 +33,7 @@ export const dataAnalysis = {
     'width': '100%',
     'height': '600',
     'interval': '1D',
-    'colorTheme': 'light',
+    'colorTheme': theme,
     'isTransparent': true,
     'symbol': 'OANDA:EURUSD',
     'showIntervalTabs': true

@@ -9,17 +9,22 @@ import React from 'react'
 import Validate from 'validate.js'
 import { Chart } from 'react-chartjs-2'
 import { Router } from 'react-router-dom'
-import 'react-chat-widget/lib/styles.css'
 import { SnackbarProvider } from 'notistack'
 import { createBrowserHistory } from 'history'
-import { ThemeProvider } from '@material-ui/styles'
-import { Widget, addResponseMessage } from 'react-chat-widget'
+import { CssBaseline, MuiThemeProvider, createMuiTheme } from '@material-ui/core'
 
 import theme from './theme'
 import Routes from './Routes'
 import './assets/scss/index.scss'
 import Chartjs from './helpers/chartjs'
 import Validators from './common/Validators'
+
+import 'animate.css/animate.css'
+import 'vendors/slick/slick.css'
+import 'vendors/animate-extends.css'
+import 'vendors/page-transition.css'
+import 'vendors/slick/slick-theme.css'
+import 'react-chat-widget/lib/styles.css'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 
 const browserHistory = createBrowserHistory()
@@ -33,38 +38,67 @@ Validate.validators = {
 	...Validators
 }
 
+let themeType = 'light'
+if (typeof Storage !== 'undefined')
+	themeType = localStorage.getItem('theme') || 'light'
+
 export default class App extends React.Component {
 	state = {
+		mainTheme: {
+			...theme('main', themeType)
+		},
 		isFirstMessage: true,
 		botResponse: 'Thank you for visiting our website! One of our team members will get back to you shortly. In the mean time feel free to create a free account and check out your personal dashboard.'
 	}
 
-	onUserMessage = message => {
-		console.log(`New message incoming! ${message}`)
-		console.log(localStorage.getItem('userId'))
+	toggleDarkTheme = () => {
+		const { mainTheme } = this.state
+		const newPaletteType = mainTheme.palette.type === 'light' ? 'dark' : 'light';
+		localStorage.setItem('theme', mainTheme.palette.type === 'light' ? 'dark' : 'light')
 
-		if (this.state.isFirstMessage)
-			this.setState({ isFirstMessage: false }, () => setTimeout(() => addResponseMessage(this.state.botResponse), 2000))
+		this.setState({
+			mainTheme: {
+				...theme('main', newPaletteType),
+				direction: theme.direction
+			}
+		})
+	}
+
+	toggleDirection = dir => {
+		const { mainTheme } = this.state
+		document.dir = dir
+
+		this.setState({
+			mainTheme: {
+				...mainTheme,
+				direction: dir,
+				palette: {
+					...mainTheme.palette
+				}
+			}
+		})
 	}
 
 	render() {
+		const { mainTheme } = this.state
+		const appTheme = createMuiTheme(mainTheme)
+
 		return (
-			<ThemeProvider theme={theme}>
+			<MuiThemeProvider theme={appTheme}>
+				<CssBaseline />
+
 				<SnackbarProvider
 					maxSnack={3}
 					anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
 					<Router history={browserHistory}>
-						<Widget
-							title='Mega Trade Chat'
-							subtitle='Got any questions for us?'
-							profileAvatar='/images/chat-avatar.png'
-							titleAvatar='/images/chat-header-logo.png'
-							handleNewUserMessage={() => this.onUserMessage()} />
-
-						<Routes />
+						<div id="main-wrap">
+							<Routes
+								onToggleDir={this.toggleDirection}
+								onToggleDark={this.toggleDarkTheme} />
+						</div>
 					</Router>
 				</SnackbarProvider>
-			</ThemeProvider>
+			</MuiThemeProvider>
 		)
 	}
 }

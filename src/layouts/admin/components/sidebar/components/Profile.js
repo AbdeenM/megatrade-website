@@ -60,7 +60,7 @@ const Profile = props => {
 				src={profileState.avatar || '/images/profile-avatar.png'} />
 
 			<Typography
-				variant='h4'
+				variant='h6'
 				className={classes.name}>
 				{profileState.firstName + ' ' + profileState.lastName}
 			</Typography>

@@ -15,7 +15,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import React, { useState, useEffect, useRef } from 'react'
 import { Card, CardActions, CardContent, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Menu, MenuItem, Typography, CircularProgress } from '@material-ui/core'
 
-import Palette from 'theme/Palette'
 import { AdminApi } from 'config/Api'
 
 const adminApi = new AdminApi()
@@ -66,7 +65,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	searchInput: {
 		marginRight: theme.spacing(1),
-		backgroundColor: Palette.background.paper
+		backgroundColor: theme.palette.background.paper
 	},
 	content: {
 		padding: 0
