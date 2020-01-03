@@ -40,6 +40,7 @@ import SignalsAdmin from './views/admin/signals/Signals'
 import SupportAdmin from './views/admin/support/Support'
 import DashboardAdmin from './views/admin/dashboard/Dashboard'
 import EducationAdmin from './views/admin/education/Education'
+import QuestionsAdmin from './views/admin/quesitons/Questions'
 import SubscriptionsAdmin from './views/admin/subscriptions/Subscriptions'
 import UserDashboardAdmin from './views/admin/userDashboard/UserDashboard'
 
@@ -110,7 +111,7 @@ const Routes = props => {
 				exact
 				path='/account'
 				layout={MainLayout}
-				component={AccountUser} />
+				component={() => (<AccountUser {...props} />)} />
 
 			<AuthRouteWithLayout
 				exact
@@ -143,62 +144,68 @@ const Routes = props => {
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={MainLayout}
+				layout={AdminLayout}
 				path='/admin/market'
 				component={MarketAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={MainLayout}
+				layout={AdminLayout}
 				path='/admin/userDashboard'
 				component={UserDashboardAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={MainLayout}
+				layout={AdminLayout}
 				path='/admin/signals'
 				component={SignalsAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={MainLayout}
+				layout={AdminLayout}
 				path='/admin/subscriptions'
 				component={SubscriptionsAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={MainLayout}
+				layout={AdminLayout}
 				path='/admin/support'
 				component={SupportAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={MainLayout}
+				layout={AdminLayout}
 				path='/admin/education'
 				component={EducationAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={MainLayout}
+				layout={AdminLayout}
 				path='/admin/account'
-				component={AccountAdmin} />
+				component={() => (<AccountAdmin {...props} />)} />
 
 			<AuthAdminRouteWithLayout
 				exact
-				layout={MainLayout}
+				layout={AdminLayout}
 				path='/admin/social'
 				component={SocialAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
+				layout={AdminLayout}
+				path='/admin/questions'
+				component={QuestionsAdmin} />
+
+			<AuthAdminRouteWithLayout
+				exact
 				path='/admin/users'
-				layout={MainLayout}
+				layout={AdminLayout}
 				component={UsersAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact
 				path='/admin/logs'
-				layout={MainLayout}
+				layout={AdminLayout}
 				component={LogsAdmin} />
 
 			<Redirect to='/not-found' />

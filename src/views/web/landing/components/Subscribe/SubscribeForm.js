@@ -5,20 +5,34 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
+import { useSnackbar } from 'notistack'
 import React, { useState } from 'react'
 import SendIcon from '@material-ui/icons/Send'
 import { Paper, Typography, TextField, Button, Grid } from '@material-ui/core'
 
 import useStyles from './subscribe-style'
+import { MiscellaneousApi } from 'config/Api'
 
-export default function Pricing() {
+const miscellaneousApi = new MiscellaneousApi()
+
+const Pricing = () => {
 	const classes = useStyles()
+	const { enqueueSnackbar } = useSnackbar()
+
 	const [values, setValues] = useState({
 		email: '',
 	})
 
 	const handleChange = name => event => {
 		setValues({ ...values, [name]: event.target.value })
+	}
+
+	const onSubscribePress = async () => {
+		const subscribeResult = await miscellaneousApi.newsLetter({ email: values.email })
+		if (subscribeResult.error)
+			enqueueSnackbar(subscribeResult.message, { variant: 'error' })
+		else
+			enqueueSnackbar(subscribeResult.message, { variant: 'success' })
 	}
 
 	return (
@@ -40,7 +54,7 @@ export default function Pricing() {
 						</Grid>
 
 						<Grid item md={3} xs={12}>
-							<Button variant='contained' color='primary' className={classes.button}>
+							<Button onClick={onSubscribePress} variant='contained' color='primary' className={classes.button}>
 								Send <SendIcon className={classes.rightIcon} />
 							</Button>
 						</Grid>
@@ -50,3 +64,5 @@ export default function Pricing() {
 		</div>
 	)
 }
+
+export default Pricing

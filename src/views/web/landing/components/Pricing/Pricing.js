@@ -90,7 +90,7 @@ export default function Pricing() {
 
 								<CardContent>
 									<div className={classes.cardPricing}>
-										<Typography component='h2' variant='h3' color='textPrimary'>
+										<Typography component='h4' variant='h4' color='textPrimary'>
 											$ {tier.price}
 										</Typography>
 

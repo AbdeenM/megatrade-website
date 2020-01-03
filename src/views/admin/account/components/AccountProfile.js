@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Avatar, Button, Divider, Typography, CardActions, CardContent, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
+import { Card, Avatar, Button, Divider, Typography, CardActions, CardContent, Dialog, CircularProgress, DialogContent, Grid, Switch, useTheme } from '@material-ui/core'
 
 import { AdminApi } from 'config/Api'
 
@@ -29,6 +29,9 @@ const useStyles = makeStyles(theme => ({
 		marginLeft: 'auto'
 	},
 	locationText: {},
+	spacer: {
+		flexGrow: 1
+	},
 	dateText: {},
 	uploadButton: {
 		marginRight: theme.spacing(2)
@@ -38,12 +41,14 @@ const useStyles = makeStyles(theme => ({
 const AccountProfile = props => {
 	const { className, profile, ...rest } = props
 
+	const theme = useTheme()
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
 	const adminId = localStorage.getItem('adminId')
 
 	const [isLoading, setIsLoading] = useState(false)
+	const [isDark, setDark] = useState(theme.palette.type === 'dark' ? true : false)
 	const [profileState, setProfileState] = useState({
 		city: '',
 		avatar: '',
@@ -70,6 +75,11 @@ const AccountProfile = props => {
 			reader.onload = () => { resolve(reader.result) }
 			reader.onerror = () => { return enqueueSnackbar('Error while uploading your picture, please try again', { variant: 'error' }) }
 		})
+	}
+
+	const handleChangeMode = () => {
+		setDark(!isDark)
+		props.onToggleDark()
 	}
 
 	const onUploadPicture = async event => {
@@ -162,6 +172,23 @@ const AccountProfile = props => {
 						Upload picture
 					</Button>
 				</label>
+
+				<span className={classes.spacer} />
+
+				<Typography component='div'>
+					<Grid component='label' container alignItems='center' spacing={1}>
+						<Grid item>Light</Grid>
+						<Grid item>
+							<Switch
+								checked={isDark}
+								onChange={handleChangeMode}
+								value={isDark}
+								inputProps={{ 'aria-label': 'checkbox' }}
+							/>
+						</Grid>
+						<Grid item>Dark</Grid>
+					</Grid>
+				</Typography>
 			</CardActions>
 		</Card>
 	)

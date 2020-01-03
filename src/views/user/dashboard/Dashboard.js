@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState, useRef } from 'react'
 import { Grid, Dialog, CircularProgress, DialogContent, useTheme } from '@material-ui/core'
 
+import { UserApi } from 'config/Api'
 import Budget from './components/Budget'
 import TradePie from './components/TradePie'
 import TotalPips from './components/TotalPips'
@@ -17,8 +18,6 @@ import TotalUsers from './components/TotalUsers'
 import LatestAlerts from './components/LatestAlerts'
 import SignalAlerts from './components/SignalAlerts'
 import TotalProfits from './components/TotalProfits'
-
-import { UserApi } from 'config/Api'
 
 const userApi = new UserApi()
 

@@ -28,13 +28,8 @@ function createData(name, url) {
 	}
 }
 
-let themeType = 'light'
-if (typeof Storage !== 'undefined')
-	themeType = localStorage.getItem('theme') || 'light'
-
 const Header = props => {
 	const [fixed, setFixed] = useState(false)
-	const [isDark, setDark] = useState(themeType === 'dark')
 
 	const userId = localStorage.getItem('userId')
 
@@ -55,6 +50,8 @@ const Header = props => {
 
 	const classes = useStyles()
 	const theme = useTheme()
+	const [isDark, setDark] = useState(theme.palette.type === 'dark' ? true : false)
+
 	const isDesktop = useMediaQuery(theme.breakpoints.up('lg'))
 	const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 	const [menuList] = useState([

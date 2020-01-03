@@ -24,7 +24,6 @@ import 'vendors/slick/slick.css'
 import 'vendors/animate-extends.css'
 import 'vendors/page-transition.css'
 import 'vendors/slick/slick-theme.css'
-import 'react-chat-widget/lib/styles.css'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 
 const browserHistory = createBrowserHistory()

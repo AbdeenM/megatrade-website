@@ -8,10 +8,13 @@
 import React, { useState } from 'react'
 import { useSnackbar } from 'notistack'
 import SendIcon from '@material-ui/icons/Send'
+import { Grid, Typography, Container, Button } from '@material-ui/core'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
-import { Grid, Snackbar, Typography, Container, Button } from '@material-ui/core'
 
 import useStyles from './form-style'
+import { MiscellaneousApi } from 'config/Api'
+
+const miscellaneousApi = new MiscellaneousApi()
 
 const Contact = () => {
 	const classes = useStyles()
@@ -30,7 +33,18 @@ const Contact = () => {
 	}
 
 	const handleSubmit = async () => {
-		enqueueSnackbar('Thank you for the message, we will get back to you shortly', { variant: 'success' })
+		const questionResult = await miscellaneousApi.question({
+			name: values.name,
+			email: values.email,
+			phone: values.phone,
+			company: values.company,
+			message: values.message
+		})
+
+		if (questionResult.error)
+			return enqueueSnackbar(questionResult.message, { variant: 'error' })
+		else
+			return enqueueSnackbar(questionResult.message, { variant: 'success' })
 	}
 
 	return (

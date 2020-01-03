@@ -105,15 +105,6 @@ class UserApi {
 			throw error
 		}
 	}
-
-	offersRegister = async args => {
-		try {
-			const { data } = await Axios.post(`${this.path}/offersRegister`, args)
-			return data
-		} catch (error) {
-			throw error
-		}
-	}
 }
 
 class AdminApi {
@@ -336,6 +327,33 @@ class AdminApi {
 			throw error
 		}
 	}
+
+	fetchQuestions = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/fetchQuestions`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	replyQuestion = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/replyQuestion`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	deleteQuestions = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/deleteQuestions`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
 }
 
 class MiscellaneousApi {
@@ -354,6 +372,24 @@ class MiscellaneousApi {
 
 	facebook = async () => {
 		try {
+		} catch (error) {
+			throw error
+		}
+	}
+
+	newsLetter = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/newsLetter`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	question = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/question`, args)
+			return data
 		} catch (error) {
 			throw error
 		}

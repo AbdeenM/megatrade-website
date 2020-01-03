@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }))
 
-const Account = () => {
+const Account = props => {
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
@@ -144,14 +144,16 @@ const Account = () => {
 					xl={5}
 					md={12}
 					xs={12}>
-					<AccountProfile profile={{
-						city: profileState.city,
-						avatar: profileState.avatar,
-						status: profileState.status,
-						country: profileState.country,
-						lastName: profileState.lastName,
-						firstName: profileState.firstName
-					}} />
+					<AccountProfile
+						{...props}
+						profile={{
+							city: profileState.city,
+							avatar: profileState.avatar,
+							status: profileState.status,
+							country: profileState.country,
+							lastName: profileState.lastName,
+							firstName: profileState.firstName
+						}} />
 				</Grid>
 
 				<Grid

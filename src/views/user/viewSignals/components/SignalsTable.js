@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     },
     Input: {
         marginRight: theme.spacing(1),
-        backgroundColor: theme.background.paper
+        backgroundColor: theme.palette.background.paper
     },
     content: {
         padding: 0

@@ -23,6 +23,12 @@ const company = {
 	link: ['#feature', '#testimonials', '#pricing', '#contact']
 }
 
+const resources = {
+	title: 'Resources',
+	description: ['Login', 'Register'],
+	link: ['/login', '/register']
+}
+
 const legal = {
 	title: 'Legal',
 	description: ['Privacy policy', 'Terms of use'],
@@ -120,6 +126,57 @@ const Footer = props => {
 											{company.description.map((item, index) => (
 												<li key={item}>
 													<Link href={company.link[index]} variant='subtitle1' color='textSecondary'>
+														{item}
+													</Link>
+												</li>
+											))}
+										</ul>
+									</ExpansionPanelDetails>
+								</ExpansionPanel>
+							)}
+						</Grid>
+
+						<Grid item xs={12} md={3} className={classes.siteMapItem}>
+							{isDesktop && (
+								<div>
+									<Typography variant='h6' className={classes.title} color='textPrimary' gutterBottom>
+										{resources.title}
+									</Typography>
+									<ul>
+										{resources.description.map((item, index) => (
+											<li key={item}>
+												<Link href={resources.link[index]} variant='subtitle1' color='textSecondary'>
+													{item}
+												</Link>
+											</li>
+										))}
+									</ul>
+								</div>
+							)}
+
+							{isMobile && (
+								<ExpansionPanel
+									square
+									classes={{
+										root: classes.accordionRoot,
+									}}>
+									<ExpansionPanelSummary
+										expandIcon={<ExpandMoreIcon className={classes.accordionIcon} />}
+										id='panel1a-header'
+										aria-controls='panel1a-content'
+										classes={{
+											content: classes.accordionContent,
+										}}>
+										<strong>
+											{resources.title}
+										</strong>
+									</ExpansionPanelSummary>
+
+									<ExpansionPanelDetails>
+										<ul>
+											{resources.description.map((item, index) => (
+												<li key={item}>
+													<Link href={resources.link[index]} variant='subtitle1' color='textSecondary'>
 														{item}
 													</Link>
 												</li>

@@ -15,13 +15,14 @@ import React, { useState, useEffect } from 'react'
 import EducationIcon from '@material-ui/icons/Book'
 import LogsIcon from '@material-ui/icons/Assignment'
 import MediaIcon from '@material-ui/icons/PermMedia'
-import SupportIcon from '@material-ui/icons/LiveHelp'
+import QuestionIcon from '@material-ui/icons/Message'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
 import MarketIcon from '@material-ui/icons/MonetizationOn'
 import VerifiedIcon from '@material-ui/icons/VerifiedUser'
 import TradeSignalIcon from '@material-ui/icons/TrendingUp'
+import LiveChatIcon from '@material-ui/icons/QuestionAnswer'
 import DashboardUserIcon from '@material-ui/icons/DeveloperBoard'
 import { Divider, Drawer, Typography, Button, ListItem } from '@material-ui/core'
 
@@ -166,9 +167,14 @@ const Sidebar = props => {
 			icon: <MediaIcon />
 		},
 		{
-			title: 'Support',
+			title: 'Questions',
+			href: '/admin/questions',
+			icon: <QuestionIcon />
+		},
+		{
+			title: 'Live Chat',
 			href: '/admin/support',
-			icon: <SupportIcon />
+			icon: <LiveChatIcon />
 		}
 	]
 
@@ -197,45 +203,29 @@ const Sidebar = props => {
 
 				<Divider className={classes.divider} />
 
-				<Typography
-					variant='subtitle1'
-					className={classes.title}>
-					Administrator
-				</Typography>
-
 				<SidebarNav
 					pages={admin}
 					className={classes.nav} />
 
-				<Typography
-					variant='subtitle1'
-					className={classes.title}>
-					Customers
-				</Typography>
+				<Divider className={classes.divider} />
 
 				<SidebarNav
 					pages={users}
 					className={classes.nav} />
 
-				<Typography
-					variant='subtitle1'
-					className={classes.title}>
-					Marketing
-				</Typography>
+				<Divider className={classes.divider} />
 
 				<SidebarNav
 					pages={marketing}
 					className={classes.nav} />
 
-				<Typography
-					variant='subtitle1'
-					className={classes.title}>
-					Technology
-				</Typography>
+				<Divider className={classes.divider} />
 
 				<SidebarNav
 					pages={tech}
 					className={classes.nav} />
+
+				<Divider className={classes.divider} />
 
 				<ListItem
 					disableGutters

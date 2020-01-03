@@ -48,9 +48,7 @@ const Landing = props => {
 			<CssBaseline />
 			<section id='home' />
 			<div className={classes.mainWrap}>
-				<Header
-					onToggleDir={onToggleDir}
-					onToggleDark={onToggleDark} />
+				<Header {...props} />
 
 				<main className={classes.containerWrap}>
 					<section>
@@ -90,7 +88,7 @@ const Landing = props => {
 					<PageNav />
 				</Hidden>
 
-				<Footer toggleDir={onToggleDir} />
+				<Footer {...props} />
 			</div>
 		</Fragment>
 	)

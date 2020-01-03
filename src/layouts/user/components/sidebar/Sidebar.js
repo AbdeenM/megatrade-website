@@ -13,11 +13,11 @@ import { makeStyles } from '@material-ui/styles'
 import LogoutIcon from '@material-ui/icons/Input'
 import React, { useState, useEffect } from 'react'
 //import EducationIcon from '@material-ui/icons/Book'
-//import SupportIcon from '@material-ui/icons/LiveHelp'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
 import MarketIcon from '@material-ui/icons/MonetizationOn'
+//import LiveChatIcon from '@material-ui/icons/QuestionAnswer'
 import { Divider, Drawer, Button, ListItem } from '@material-ui/core'
 
 import Profile from './components/Profile'
@@ -135,9 +135,9 @@ const Sidebar = props => {
 			icon: <SubscriptionIcon />
 		},
 		// {
-		// 	title: 'Support',
+		// 	title: 'Live Chat',
 		// 	href: '/support',
-		// 	icon: <SupportIcon />
+		// 	icon: <LiveChatIcon />
 		// }
 	]
 
