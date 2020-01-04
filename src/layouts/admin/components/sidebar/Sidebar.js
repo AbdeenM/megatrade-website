@@ -24,7 +24,7 @@ import VerifiedIcon from '@material-ui/icons/VerifiedUser'
 import TradeSignalIcon from '@material-ui/icons/TrendingUp'
 import LiveChatIcon from '@material-ui/icons/QuestionAnswer'
 import DashboardUserIcon from '@material-ui/icons/DeveloperBoard'
-import { Divider, Drawer, Typography, Button, ListItem } from '@material-ui/core'
+import { Divider, Drawer, Button, ListItem } from '@material-ui/core'
 
 import Profile from './components/Profile'
 import SidebarNav from './components/SidebarNav'

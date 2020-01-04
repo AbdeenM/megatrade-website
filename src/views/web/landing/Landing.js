@@ -41,7 +41,6 @@ const useStyles = makeStyles(theme => ({
 
 const Landing = props => {
 	const classes = useStyles()
-	const { onToggleDark, onToggleDir } = props
 
 	return (
 		<Fragment>

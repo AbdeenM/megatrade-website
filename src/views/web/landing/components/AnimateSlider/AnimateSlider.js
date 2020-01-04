@@ -20,7 +20,7 @@ const AnimateSlider = () => {
 	return (
 		<div className={classes.heroContent}>
 			<Slider
-				autoplay={2000}
+				autoplay={3000}
 				infinite={true}
 				className='slider-wrapper'>
 				<div

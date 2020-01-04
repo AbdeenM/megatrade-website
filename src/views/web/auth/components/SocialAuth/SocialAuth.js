@@ -19,8 +19,6 @@ const SocialAuth = props => {
 	const classes = useStyles()
 	const { onFacebook, onGoogle } = props
 
-	console.log(props);
-
 	return (
 		<section className={classes.socmedSideLogin}>
 			<FacebookLogin

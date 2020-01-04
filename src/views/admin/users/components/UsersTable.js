@@ -238,17 +238,12 @@ const UsersTable = props => {
 	}
 
 	const onSelectMembership = membership => {
-		let subscriptionId = userProfileState.values.subscriptionId
-		if (membership === 'Free Membership')
-			subscriptionId = 'FREE'
-
 		setUserProfileState(userProfileState => ({
 			...userProfileState,
 			errors: {},
 			values: {
 				...userProfileState.values,
-				membership,
-				subscriptionId
+				membership
 			},
 			touched: {},
 			isValid: false,
@@ -445,8 +440,14 @@ const UsersTable = props => {
 
 	const onEditUser = async () => {
 		setIsLoading(true)
+
+		let subscriptionId = userProfileState.values.subscriptionId
+		if (userProfileState.values.membership === 'Free Membership')
+			subscriptionId = 'FREE'
+
 		const editResult = await adminApi.editUser({
 			adminId,
+			subscriptionId,
 			city: userProfileState.values.city,
 			email: userProfileState.values.email,
 			avatar: userProfileState.values.avatar,
@@ -458,7 +459,6 @@ const UsersTable = props => {
 			password: userProfileState.values.password,
 			firstName: userProfileState.values.firstName,
 			membership: userProfileState.values.membership,
-			subscriptionId: userProfileState.values.subscriptionId,
 			notifications: {
 				alerts: {
 					email: userProfileState.values.notifications.alerts.email,

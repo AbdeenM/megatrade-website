@@ -10,11 +10,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
-import { Typography, Button, colors } from '@material-ui/core'
+import { Typography, Button } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		backgroundColor: colors.grey[50]
+		marginTop: 50,
+		borderRadius: 25,
+		backgroundColor: theme.palette.background.default
 	},
 	media: {
 		height: 80,

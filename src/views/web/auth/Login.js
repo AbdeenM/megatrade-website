@@ -77,6 +77,8 @@ const Login = () => {
 		if (response.status === 'unknown')
 			return enqueueSnackbar('Your login attempt with facebook failed', { variant: 'info' })
 
+		console.log(response);
+
 
 		setIsLoading(true)
 		const socialSignInResult = await userApi.socialLogin({

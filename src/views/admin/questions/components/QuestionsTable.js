@@ -238,8 +238,8 @@ const QuestionsTable = props => {
 			return enqueueSnackbar(replyQuestionResult.message, { variant: 'error' })
 		}
 
-		enqueueSnackbar(replyQuestionResult.message, { variant: 'success' })
 		setIsLoading(false)
+		enqueueSnackbar(replyQuestionResult.message, { variant: 'success' })
 		window.location.reload()
 	}
 
@@ -255,8 +255,8 @@ const QuestionsTable = props => {
 			return enqueueSnackbar(deleteQuestionsResult.message, { variant: 'error' })
 		}
 
-		enqueueSnackbar(deleteQuestionsResult.message, { variant: 'success' })
 		setIsLoading(false)
+		enqueueSnackbar(deleteQuestionsResult.message, { variant: 'success' })
 		window.location.reload()
 	}
 
@@ -413,8 +413,7 @@ const QuestionsTable = props => {
 						margin='normal'
 						variant='outlined'
 						name='theirMessage'
-						name='theirMessage'
-						label='Thier Message'
+						label='Their Message'
 						value={questionState.values.messageRecieved} />
 
 					<TextField

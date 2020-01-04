@@ -40,7 +40,7 @@ import SignalsAdmin from './views/admin/signals/Signals'
 import SupportAdmin from './views/admin/support/Support'
 import DashboardAdmin from './views/admin/dashboard/Dashboard'
 import EducationAdmin from './views/admin/education/Education'
-import QuestionsAdmin from './views/admin/quesitons/Questions'
+import QuestionsAdmin from './views/admin/questions/Questions'
 import SubscriptionsAdmin from './views/admin/subscriptions/Subscriptions'
 import UserDashboardAdmin from './views/admin/userDashboard/UserDashboard'
 
