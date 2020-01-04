@@ -45,7 +45,9 @@ const Landing = props => {
 	return (
 		<Fragment>
 			<CssBaseline />
+
 			<section id='home' />
+
 			<div className={classes.mainWrap}>
 				<Header {...props} />
 
