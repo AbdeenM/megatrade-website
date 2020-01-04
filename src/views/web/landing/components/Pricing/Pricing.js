@@ -21,7 +21,7 @@ const tiers = [
 		description: 'Have a free membership for a life time with limited trading signals'
 	},
 	{
-		price: '39.99',
+		price: '14.99',
 		durartion: '/mo',
 		title: 'Basic Membership',
 		buttonVariant: 'contained',

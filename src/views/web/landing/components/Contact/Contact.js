@@ -20,6 +20,7 @@ const Contact = () => {
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
+	const [isSent, setIsSent] = useState(false)
 	const [values, setValues] = useState({
 		name: '',
 		email: '',
@@ -43,8 +44,9 @@ const Contact = () => {
 
 		if (questionResult.error)
 			return enqueueSnackbar(questionResult.message, { variant: 'error' })
-		else
-			return enqueueSnackbar(questionResult.message, { variant: 'success' })
+
+		setIsSent(true)
+		return enqueueSnackbar(questionResult.message, { variant: 'success' })
 	}
 
 	return (
@@ -116,8 +118,8 @@ const Contact = () => {
 						</Grid>
 
 						<div className={classes.btnArea}>
-							<Button onClick={handleSubmit} variant='outlined' type='submit' color='primary' size='large'>
-								Send <SendIcon className={classes.rightIcon} />
+							<Button disabled={isSent || values.name.length < 1 || values.email.length < 1 || values.message.length < 1} onClick={handleSubmit} variant='outlined' color='primary' size='large'>
+								{isSent ? 'Sent!' : 'Send'} <SendIcon className={classes.rightIcon} />
 							</Button>
 						</div>
 					</ValidatorForm>

@@ -19,24 +19,70 @@ const AnimateSlider = () => {
 
 	return (
 		<div className={classes.heroContent}>
-			<Slider className='slider-wrapper'>
+			<Slider
+				autoplay={2000}
+				infinite={true}
+				className='slider-wrapper'>
 				<div
 					className='slider-content'
 					style={{ background: 'url(/images/banner-main.jpeg) no-repeat center center' }}>
 					<div className='inner'>
 						<Typography variant='h1'>World Class Trading Signals</Typography>
+
 						<Typography variant='body1'>99% Successful signal trades. We provide all you need to make the right trades.</Typography>
+
 						<div className={classes.heroButtons}>
 							<Grid container spacing={2} justify='center'>
 								<Grid item>
-									<Button variant='contained' color='secondary'>
-										Main call to action
-                    					</Button>
+									<Button href='/login' variant='contained' color='secondary'>
+										Subscribe Now
+                    				</Button>
 								</Grid>
 							</Grid>
 						</div>
 					</div>
 				</div>
+
+				<div
+					className='slider-content'
+					style={{ background: 'url(/images/banner-background.png) no-repeat center center' }}>
+					<div className='inner'>
+						<Typography variant='h1'>World Class Trading Signals</Typography>
+
+						<Typography variant='body1'>99% Successful signal trades. We provide all you need to make the right trades.</Typography>
+
+						<div className={classes.heroButtons}>
+							<Grid container spacing={2} justify='center'>
+								<Grid item>
+									<Button href='/login' variant='contained' color='secondary'>
+										Subscribe Now
+                    				</Button>
+								</Grid>
+							</Grid>
+						</div>
+					</div>
+				</div>
+
+				<div
+					className='slider-content'
+					style={{ background: 'url(/images/banner-background-2.jpg) no-repeat center center' }}>
+					<div className='inner'>
+						<Typography variant='h1'>World Class Trading Signals</Typography>
+
+						<Typography variant='body1'>99% Successful signal trades. We provide all you need to make the right trades.</Typography>
+
+						<div className={classes.heroButtons}>
+							<Grid container spacing={2} justify='center'>
+								<Grid item>
+									<Button href='/login' variant='contained' color='secondary'>
+										Subscribe Now
+                    				</Button>
+								</Grid>
+							</Grid>
+						</div>
+					</div>
+				</div>
+
 			</Slider>
 		</div>
 	)

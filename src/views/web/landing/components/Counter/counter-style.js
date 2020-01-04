@@ -18,6 +18,7 @@ const counterStyles = makeStyles(theme => ({
 		[theme.breakpoints.up('md')]: {
 			display: 'flex',
 		},
+		textAlign: 'center',
 		alignItems: 'center',
 		justifyContent: 'center',
 		'& svg': {

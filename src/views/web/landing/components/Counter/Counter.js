@@ -34,7 +34,7 @@ const Counter = () => {
 	return (
 		<div className={classes.counterWrap}>
 			<Container fixed>
-				<Grid container justify='center' alignItems='center' className={classes.root} spacing={6}>
+				<Grid container justify='center' alignItems='center' alignContent='center' className={classes.root} spacing={6}>
 					<Grid md={3} item>
 						<ReactWOW animation='fadeIn' offset={300} callback={handlePlay}>
 							<div className={classes.counterItem}>

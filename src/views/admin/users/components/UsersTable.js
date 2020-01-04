@@ -169,6 +169,7 @@ const UsersTable = props => {
 			lastName: '',
 			password: '',
 			firstName: '',
+			subscriptionId: 'FREE',
 			membership: 'Free Membership',
 			notifications: {
 				alerts: {
@@ -237,12 +238,17 @@ const UsersTable = props => {
 	}
 
 	const onSelectMembership = membership => {
+		let subscriptionId = userProfileState.values.subscriptionId
+		if (membership === 'Free Membership')
+			subscriptionId = 'FREE'
+
 		setUserProfileState(userProfileState => ({
 			...userProfileState,
 			errors: {},
 			values: {
 				...userProfileState.values,
-				membership
+				membership,
+				subscriptionId
 			},
 			touched: {},
 			isValid: false,
@@ -257,7 +263,7 @@ const UsersTable = props => {
 
 		const searchTerm = event.target.value.toLowerCase()
 
-		setListedUsers(allUsers.filter(user => user.firstName.toLowerCase().includes(searchTerm) || user.lastName.toLowerCase().includes(searchTerm)))
+		setListedUsers(allUsers.filter(user => user.firstName.toLowerCase().includes(searchTerm) || user.subscriptionId.toLowerCase().includes(searchTerm) || user.lastName.toLowerCase().includes(searchTerm)))
 	}
 
 	const onChangeAlerts = event => {
@@ -407,6 +413,7 @@ const UsersTable = props => {
 				lastName: userDetails.lastName,
 				firstName: userDetails.firstName,
 				membership: userDetails.membership,
+				subscriptionId: userDetails.subscriptionId,
 				notifications: {
 					alerts: {
 						email: userDetails.notifications.alerts.email,
@@ -451,6 +458,7 @@ const UsersTable = props => {
 			password: userProfileState.values.password,
 			firstName: userProfileState.values.firstName,
 			membership: userProfileState.values.membership,
+			subscriptionId: userProfileState.values.subscriptionId,
 			notifications: {
 				alerts: {
 					email: userProfileState.values.notifications.alerts.email,
@@ -500,6 +508,7 @@ const UsersTable = props => {
 				lastName: '',
 				password: '',
 				firstName: '',
+				subscriptionId: 'FREE',
 				membership: 'Free Membership',
 				notifications: {
 					alerts: {
@@ -665,6 +674,8 @@ const UsersTable = props => {
 
 										<TableCell>Membership</TableCell>
 
+										<TableCell>Subscription Id</TableCell>
+
 										<TableCell>Email</TableCell>
 
 										<TableCell>Location</TableCell>
@@ -703,6 +714,8 @@ const UsersTable = props => {
 												</TableCell>
 
 												<TableCell>{user.membership}</TableCell>
+
+												<TableCell>{user.subscriptionId}</TableCell>
 
 												<TableCell>{user.email}</TableCell>
 
@@ -769,6 +782,15 @@ const UsersTable = props => {
 						variant='outlined'
 						label='Profile Status'
 						value={userProfileState.values.status + ' %'} />
+
+					<TextField
+						disabled
+						fullWidth
+						name='id'
+						margin='normal'
+						label='Subscription ID'
+						variant='outlined'
+						value={userProfileState.values.subscriptionId} />
 
 					<div className={classes.rowStatus}>
 						<Typography

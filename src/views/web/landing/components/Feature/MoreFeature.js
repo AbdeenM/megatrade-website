@@ -65,11 +65,11 @@ const MainFeature = () => {
 
 						<ReactWOW animation='fadeInLeft' delay='0.3s' duration='0.6s'>
 							<Typography variant='body1' className={classes.text}>
-								<Typography variant='h3' className={classes.text} display='inline' color='primary'>Mega Trade</Typography> carefully analyse the trading markets all day every day to find thebest trading opportunities. Once you have registered, and whenever a trade is entered on our accounts you will automaticaaly recieve an email alert about the trade, as well as on your dashboard.
+								<Typography variant='h3' className={classes.text} display='inline' color='primary'>Mega Trade</Typography> carefully analyse the trading markets all day every day to find the best trading opportunities. Once you have registered, and whenever a trade is entered on our accounts you will automatically recieve an email alert about the trade, as well as on your dashboard.
               				</Typography>
 
 							<Typography variant='body1' className={classes.text}>
-								<Typography variant='h3' className={classes.text} display='inline' color='primary'>Mega Trade</Typography> ensures the execution of our trading alerts pior to providing them to you! <Typography variant='h3' className={classes.text} display='inline' color='secondary'>So you are not fooled</Typography>.
+								<Typography variant='h3' className={classes.text} display='inline' color='primary'>Mega Trade</Typography> ensures the execution of our trading alerts prior to providing them to you! <Typography variant='h3' className={classes.text} display='inline' color='secondary'>So you are not fooled</Typography>.
               				</Typography>
 						</ReactWOW>
 					</div>
@@ -187,7 +187,7 @@ const MainFeature = () => {
 							</Typography>
 
 							<Typography variant='body1' gutterBottom className={classes.text}>
-								Real time market information for <Typography variant='h3' className={classes.text} display='inline' color='secondary'>Forex, Stocks and Cryptocurrencies</Typography>.
+								Real time market information for <Typography variant='h3' className={classes.text} display='inline' color='secondary'>Forex, Stocks, Commodities and Cryptocurrencies</Typography>.
 							</Typography>
 						</ReactWOW>
 					</div>
