@@ -84,6 +84,7 @@ const SubscriptionsList = () => {
 			enqueueSnackbar('Your payment and subscription completed successfully', { variant: 'success' })
 
 			setIsLoading(true)
+
 			const createSubscriptionResult = await userApi.createSubscription({
 				userId,
 				planId: data.plan_id,
