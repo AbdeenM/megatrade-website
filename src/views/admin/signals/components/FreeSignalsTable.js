@@ -523,6 +523,7 @@ const SignalsTable = props => {
 						<MenuItem onClick={() => onSelectStatus('CLOSE')}>CLOSE</MenuItem>
 						<MenuItem onClick={() => onSelectStatus('BREAK EVEN')}>BREAK EVEN</MenuItem>
 						<MenuItem onClick={() => onSelectStatus('TAKE PROFIT')}>TAKE PROFIT</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('STOP LOSS')}>STOP LOSS</MenuItem>
 					</Menu>
 
 					<TextField
@@ -623,6 +624,7 @@ const SignalsTable = props => {
 						<MenuItem onClick={() => onSelectStatus('CLOSE')}>CLOSE</MenuItem>
 						<MenuItem onClick={() => onSelectStatus('BREAK EVEN')}>BREAK EVEN</MenuItem>
 						<MenuItem onClick={() => onSelectStatus('TAKE PROFIT')}>TAKE PROFIT</MenuItem>
+						<MenuItem onClick={() => onSelectStatus('STOP LOSS')}>STOP LOSS</MenuItem>
 					</Menu>
 
 					<TextField

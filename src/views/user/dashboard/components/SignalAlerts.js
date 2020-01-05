@@ -39,6 +39,7 @@ const SignalAlerts = props => {
 		hold: 'lightblue',
 		close: 'lightgrey',
 		sell: 'lightcoral',
+		'stop loss': 'red',
 		'break even': 'lightyellow',
 		'take profit': 'lightseagreen'
 	}
