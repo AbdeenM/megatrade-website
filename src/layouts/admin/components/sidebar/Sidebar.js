@@ -15,6 +15,7 @@ import React, { useState, useEffect } from 'react'
 import EducationIcon from '@material-ui/icons/Book'
 import LogsIcon from '@material-ui/icons/Assignment'
 import MediaIcon from '@material-ui/icons/PermMedia'
+import SponsorIcon from '@material-ui/icons/MoneyOff'
 import QuestionIcon from '@material-ui/icons/Message'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
@@ -170,6 +171,11 @@ const Sidebar = props => {
 			title: 'Questions',
 			href: '/admin/questions',
 			icon: <QuestionIcon />
+		},
+		{
+			title: 'Coupons',
+			href: '/admin/sponsor',
+			icon: <SponsorIcon />
 		},
 		{
 			title: 'Live Chat',

@@ -7,10 +7,10 @@
 
 import { useSnackbar } from 'notistack'
 import { Redirect } from 'react-router-dom'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator'
-import { Button, Typography, FormControlLabel, Checkbox, Grid, Dialog, DialogContent, CircularProgress } from '@material-ui/core'
+import { Button, Typography, FormControlLabel, Checkbox, Grid, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, CircularProgress, TextField } from '@material-ui/core'
 
 import useStyles from './form-style'
 import { UserApi } from 'config/Api'
@@ -27,7 +27,8 @@ const Login = () => {
 	const [values, setValues] = useState({
 		email: '',
 		password: '',
-		hasError: false
+		hasError: false,
+		forgotEmail: ''
 	})
 
 	useEffect(() => {
@@ -40,10 +41,10 @@ const Login = () => {
 		})
 	})
 
-
 	const [check, setCheck] = useState(false)
 	const [isLogged, setLogged] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
+	const [showForgotPasswordDialog, setShowForgotPasswordDialog] = useState(false)
 
 	const handleChange = name => event => {
 		setValues({ ...values, [name]: event.target.value })
@@ -76,9 +77,6 @@ const Login = () => {
 	const onFacebookLogin = async response => {
 		if (response.status === 'unknown')
 			return enqueueSnackbar('Your login attempt with facebook failed', { variant: 'info' })
-
-		console.log(response);
-
 
 		setIsLoading(true)
 		const socialSignInResult = await userApi.socialLogin({
@@ -121,6 +119,19 @@ const Login = () => {
 		setLogged(true)
 	}
 
+	const onForgotPassword = async () => {
+		const forgotResult = await userApi.forgotPassword({ email: values.forgotEmail })
+
+		if (forgotResult.error) {
+			setIsLoading(false)
+			return enqueueSnackbar(forgotResult.message, { variant: 'error' })
+		}
+
+		enqueueSnackbar(forgotResult.message, { variant: 'success' })
+		setShowForgotPasswordDialog(false)
+		setIsLoading(false)
+	}
+
 	if (isLogged)
 		return <Redirect to='/dashboard' />
 
@@ -134,85 +145,125 @@ const Login = () => {
 		)
 
 	return (
-		<AuthFrame title='Welcome back' subtitle='Please login to continue'>
-			<div>
-				<div className={classes.head}>
-					<Title align='left'>
-						Login
+		<Fragment>
+			<AuthFrame title='Welcome back' subtitle='Please login to continue'>
+				<div>
+					<div className={classes.head}>
+						<Title align='left'>
+							Login
 					</Title>
 
-					<Button size='small' className={classes.buttonLink} href='/register'>
-						<ArrowForwardIcon /> Create New Account
+						<Button size='small' className={classes.buttonLink} href='/register'>
+							<ArrowForwardIcon /> Create New Account
 					</Button>
-				</div>
+					</div>
 
-				<SocialAuth onFacebook={onFacebookLogin} onGoogle={onGoogleLogin} />
+					<SocialAuth onFacebook={onFacebookLogin} onGoogle={onGoogleLogin} />
 
-				<div className={classes.separator}>
-					<Typography>
-						Or login with email
+					<div className={classes.separator}>
+						<Typography>
+							Or login with email
 					</Typography>
-				</div>
+					</div>
 
-				<ValidatorForm
-					onSubmit={handleSubmit}
-					onError={errors => console.log(errors)}>
-					<Grid container spacing={3}>
-						<Grid item xs={12}>
-							<TextValidator
-								variant='filled'
-								className={classes.input}
-								label='Email'
-								name='email'
-								onChange={handleChange('email')}
-								value={values.email}
-								validators={['required', 'isEmail']}
-								errorMessages={['This field is required', 'Email is not valid']} />
+					<ValidatorForm
+						onSubmit={handleSubmit}
+						onError={errors => console.log(errors)}>
+						<Grid container spacing={3}>
+							<Grid item xs={12}>
+								<TextValidator
+									variant='filled'
+									className={classes.input}
+									label='Email'
+									name='email'
+									onChange={handleChange('email')}
+									value={values.email}
+									validators={['required', 'isEmail']}
+									errorMessages={['This field is required', 'Email is not valid']} />
+							</Grid>
+
+							<Grid item xs={12}>
+								<TextValidator
+									variant='filled'
+									type='password'
+									className={classes.input}
+									label='Password'
+									validators={['required']}
+									onChange={handleChange('password')}
+									errorMessages={['This field is required']}
+									name='password'
+									value={values.password} />
+							</Grid>
 						</Grid>
 
-						<Grid item xs={12}>
-							<TextValidator
-								variant='filled'
-								type='password'
-								className={classes.input}
-								label='Password'
-								validators={['required']}
-								onChange={handleChange('password')}
-								errorMessages={['This field is required']}
-								name='password'
-								value={values.password} />
-						</Grid>
-					</Grid>
-
-					<div className={classes.formHelper}>
-						<FormControlLabel
-							control={(
-								<Checkbox
-									checked={check}
-									onChange={(e) => handleCheck(e)}
-									color='secondary'
-									value={check}
-									className={classes.check} />
-							)}
-							label={(
-								<span>
-									Remember me
+						<div className={classes.formHelper}>
+							<FormControlLabel
+								control={(
+									<Checkbox
+										checked={check}
+										onChange={(e) => handleCheck(e)}
+										color='secondary'
+										value={check}
+										className={classes.check} />
+								)}
+								label={(
+									<span>
+										Remember me
 								</span>
-							)} />
+								)} />
 
-						<Button size='small' className={classes.buttonLink} href='/forgot-password'>
-							Forgot Password?
+							<Button size='small' className={classes.buttonLink} onClick={() => setShowForgotPasswordDialog(true)}>
+								Forgot Password?
 						</Button>
-					</div>
+						</div>
 
-					<div className={classes.btnArea}>
-						<Button onClick={handleSubmit} variant='contained' fullWidth type='submit' color='primary' size='large' disabled={!values.email.length || !values.password.length}>
-							Log In
+						<div className={classes.btnArea}>
+							<Button onClick={handleSubmit} variant='contained' fullWidth type='submit' color='primary' size='large' disabled={!values.email.length || !values.password.length}>
+								Log In
 						</Button>
-					</div>
-				</ValidatorForm>
-			</div>
-		</AuthFrame >
+						</div>
+					</ValidatorForm>
+				</div>
+			</AuthFrame>
+
+			<Dialog
+				open={showForgotPasswordDialog}
+				onClose={() => setShowForgotPasswordDialog(false)}>
+				<DialogTitle>Forgot Password</DialogTitle>
+
+				<DialogContent>
+					<DialogContentText>
+						Enter your email here if it is an email registered with us we can send you a reset password link:
+          			</DialogContentText>
+
+					<TextField
+						required
+						fullWidth
+						name='email'
+						margin='normal'
+						variant='outlined'
+						label='Email Address'
+						value={values.forgotEmail}
+						onChange={handleChange('forgotEmail')} />
+				</DialogContent>
+
+				<DialogActions>
+					<Button
+						color='secondary'
+						onClick={() => setShowForgotPasswordDialog(false)}>
+						CANCEL
+         			 </Button>
+
+					<Button
+						color='primary'
+						variant='contained'
+						onClick={onForgotPassword}
+						disabled={values.forgotEmail.length < 1}>
+						RESET PASSWORD
+         			 </Button>
+				</DialogActions>
+			</Dialog>
+		</Fragment>
 	)
 }
 

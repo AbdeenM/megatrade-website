@@ -15,6 +15,7 @@ import TotalLogins from './components/TotalLogins'
 import TotalSignals from './components/TotalSignals'
 import TotalFreeSignals from './components/TotalFreeSignals'
 import TotalPayingUsers from './components/TotalPayingUsers'
+import TotalSponsoredUsers from './components/TotalSponsoredUsers'
 
 import { AdminApi } from 'config/Api'
 
@@ -38,7 +39,8 @@ const Dashboard = () => {
         totalLogins: '',
         totalSignals: '',
         totalFreeSignals: '',
-        totalPayingUsers: ''
+        totalPayingUsers: '',
+        totalSponsoredUsers: ''
     })
 
     useEffect(() => {
@@ -58,7 +60,8 @@ const Dashboard = () => {
             totalLogins: fetchStatisticsResult.data.totalLogins,
             totalSignals: fetchStatisticsResult.data.totalSignals,
             totalFreeSignals: fetchStatisticsResult.data.totalFreeSignals,
-            totalPayingUsers: fetchStatisticsResult.data.totalPayingUsers
+            totalPayingUsers: fetchStatisticsResult.data.totalPayingUsers,
+            totalSponsoredUsers: fetchStatisticsResult.data.totalSponsoredUsers
         }))
 
         setIsLoading(false)
@@ -112,6 +115,15 @@ const Dashboard = () => {
                     xl={3}
                     xs={12}>
                     <TotalPayingUsers payingUsers={dashboardState.totalPayingUsers} />
+                </Grid>
+
+                <Grid
+                    item
+                    lg={3}
+                    sm={6}
+                    xl={3}
+                    xs={12}>
+                    <TotalSponsoredUsers sponsoredUsers={dashboardState.totalSponsoredUsers} />
                 </Grid>
 
                 <Grid

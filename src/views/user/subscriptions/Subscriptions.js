@@ -13,6 +13,7 @@ import { Grid, Dialog, DialogTitle, DialogContent, DialogActions, Button, Circul
 
 import { UserApi } from 'config/Api'
 import SubscriptionsCard from './components/SubscriptionsCard'
+import SubscriptionSponsored from './components/SubscriptionSponsored'
 
 const userApi = new UserApi()
 
@@ -120,6 +121,19 @@ const SubscriptionsList = () => {
 		}
 	}
 
+	const onGetSponsorCode = async (code, duration, durationPick) => {
+		setIsLoading(true)
+		const getSponsorResult = await userApi.getSponsor({ userId, code, duration, durationPick })
+		if (getSponsorResult.error) {
+			setIsLoading(false)
+			enqueueSnackbar(getSponsorResult.message, { variant: 'error' })
+		}
+
+		setIsLoading(false)
+		enqueueSnackbar(getSponsorResult.message, { variant: 'success' })
+		window.location.reload()
+	}
+
 	if (isLoading)
 		return (
 			<Dialog open={isLoading}>
@@ -135,6 +149,16 @@ const SubscriptionsList = () => {
 				<Grid
 					container
 					spacing={3}>
+					<Grid
+						item
+						lg={4}
+						md={6}
+						xs={12}>
+						<SubscriptionSponsored
+							membership={userMembershipState}
+							onGetSponsorCode={onGetSponsorCode} />
+					</Grid>
+
 					{
 						subscriptionsState.map((subscription, i) => (
 							<Grid

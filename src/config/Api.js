@@ -105,6 +105,42 @@ class UserApi {
 			throw error
 		}
 	}
+
+	checkSponsor = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/checkSponsor`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	getSponsor = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/getSponsor`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	forgotPassword = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/forgotPassword`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	resetPassword = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/resetPassword`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
 }
 
 class AdminApi {
@@ -349,6 +385,42 @@ class AdminApi {
 	deleteQuestions = async args => {
 		try {
 			const { data } = await Axios.post(`${this.path}/deleteQuestions`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	fetchSponsors = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/fetchSponsors`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	createSponsors = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/createSponsors`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	editSponsors = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/editSponsors`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
+
+	deleteSponsors = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/deleteSponsors`, args)
 			return data
 		} catch (error) {
 			throw error

@@ -115,6 +115,7 @@ const QuestionsTable = props => {
 			name: '',
 			email: '',
 			message: '',
+			questionId: '',
 			messageRecieved: ''
 		},
 		touched: {},
@@ -215,6 +216,7 @@ const QuestionsTable = props => {
 				message: '',
 				name: questionDetails.name,
 				email: questionDetails.email,
+				questionId: questionDetails._id,
 				messageRecieved: questionDetails.message
 			},
 			touched: {},
@@ -230,7 +232,8 @@ const QuestionsTable = props => {
 		const replyQuestionResult = await adminApi.replyQuestion({
 			adminId,
 			email: questionState.values.email,
-			message: questionState.values.message
+			message: questionState.values.message,
+			questionId: questionState.values.questionId
 		})
 
 		if (replyQuestionResult.error) {
@@ -279,8 +282,8 @@ const QuestionsTable = props => {
 			<div>
 				<div className={classes.row}>
 					<TextField
-						name='questions'
 						margin='normal'
+						name='questions'
 						variant='outlined'
 						value={searchState}
 						label='Search Questions'
@@ -337,8 +340,8 @@ const QuestionsTable = props => {
 													<Checkbox
 														value='true'
 														color='primary'
-														checked={selectedQuestions.indexOf(question._id) !== -1}
-														onChange={event => onSelectOne(event, question._id)} />
+														onChange={event => onSelectOne(event, question._id)}
+														checked={selectedQuestions.indexOf(question._id) !== -1} />
 												</TableCell>
 
 												<TableCell>
@@ -346,13 +349,13 @@ const QuestionsTable = props => {
 														<ExpansionPanelSummary
 															expandIcon={<ExpandIcon />}
 															aria-controls='panella-conent'>
-															<Typography variant='subtitle1'>
-																{question.name} | {question.email} | {`${question.number ? `${question.number} |` : ' '}`} {question.company ? `Company: ${question.company} |` : ' '} Sent on: {moment(question.createdAt).format('DD/MM hh:mm')}
+															<Typography color={question.isReplied ? 'inherit' : 'primary'} variant='subtitle1'>
+																{question.name} | {question.email} | {`${question.number ? `${question.number} |` : ' '}`} {question.company ? `Company: ${question.company} |` : ' '} Sent on: {moment(question.createdAt).format('DD/MM/YYYY')} at {moment(question.createdAt).format('hh:mm')}
 															</Typography>
 														</ExpansionPanelSummary>
 
 														<ExpansionPanelDetails>
-															<Typography variant='h6' gutterBottom>
+															<Typography variant='subtitle2' gutterBottom>
 																{question.message}
 															</Typography>
 														</ExpansionPanelDetails>
@@ -380,9 +383,8 @@ const QuestionsTable = props => {
 
 			<Dialog
 				open={showReplyQuestionDialog}
-				aria-labelledby='form-dialog-title'
 				onClose={() => setShowReplyQuestionDialog(false)}>
-				<DialogTitle id='form-dialog-title'>Reply to the message</DialogTitle>
+				<DialogTitle>Reply to the message</DialogTitle>
 
 				<DialogContent>
 					<DialogContentText>

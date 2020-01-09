@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
         width: 56,
         height: 56,
         color: theme.palette.primary.main,
-        backgroundColor: theme.palette.white
+        backgroundColor: theme.palette.background.paper
     },
     icon: {
         width: 32,

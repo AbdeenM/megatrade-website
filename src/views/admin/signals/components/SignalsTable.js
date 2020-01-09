@@ -421,8 +421,8 @@ const SignalsTable = props => {
 													<Checkbox
 														value='true'
 														color='primary'
-														checked={selectedSignals.indexOf(signal._id) !== -1}
-														onChange={event => onSelectOne(event, signal._id)} />
+														onChange={event => onSelectOne(event, signal._id)}
+														checked={selectedSignals.indexOf(signal._id) !== -1} />
 												</TableCell>
 
 												<TableCell>{signal.name}</TableCell>

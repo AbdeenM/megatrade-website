@@ -13,9 +13,10 @@ import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import Visibility from '@material-ui/icons/Visibility'
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import React, { useState, useEffect, useRef } from 'react'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress, Menu, MenuItem } from '@material-ui/core'
+import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress, Menu, MenuItem, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, MenuList } from '@material-ui/core'
 
 import { AdminApi } from 'config/Api'
 import getInitials from 'helpers/getInitials'
@@ -169,6 +170,7 @@ const UsersTable = props => {
 			lastName: '',
 			password: '',
 			firstName: '',
+			usedCodes: [],
 			subscriptionId: 'FREE',
 			membership: 'Free Membership',
 			notifications: {
@@ -407,6 +409,7 @@ const UsersTable = props => {
 				country: userDetails.country,
 				lastName: userDetails.lastName,
 				firstName: userDetails.firstName,
+				usedCodes: userDetails.usedCodes,
 				membership: userDetails.membership,
 				subscriptionId: userDetails.subscriptionId,
 				notifications: {
@@ -750,9 +753,8 @@ const UsersTable = props => {
 
 			<Dialog
 				open={showEditUserDialog}
-				aria-labelledby='form-dialog-title'
 				onClose={() => setShowEditUserDialog(false)}>
-				<DialogTitle id='form-dialog-title'>Edit User Profile</DialogTitle>
+				<DialogTitle>Edit User Profile</DialogTitle>
 
 				<DialogContent>
 					<DialogContentText>
@@ -764,6 +766,22 @@ const UsersTable = props => {
 							className={classes.image}
 							src={userProfileState.values.avatar.image || '/images/profile-avatar.png'} />
 					</div>
+
+					<ExpansionPanel>
+						<ExpansionPanelSummary
+							expandIcon={<ExpandMoreIcon className={classes.accordionIcon} />}
+							id='panel1a-header'
+							aria-controls='panel1a-content'>
+							Used Sponsor Codes
+						</ExpansionPanelSummary>
+						<ExpansionPanelDetails>
+							<MenuList>
+								{userProfileState.values.usedCodes.map((code, i) => (
+									<MenuItem key={i}>{code}</MenuItem>
+								))}
+							</MenuList>
+						</ExpansionPanelDetails>
+					</ExpansionPanel>
 
 					<TextField
 						disabled
@@ -1104,9 +1122,8 @@ const UsersTable = props => {
 
 			<Dialog
 				open={showCreateUserDialog}
-				aria-labelledby='form-dialog-title'
 				onClose={() => setShowCreateUserDialog(false)}>
-				<DialogTitle id='form-dialog-title'>Create User Profile</DialogTitle>
+				<DialogTitle>Create User Profile</DialogTitle>
 
 				<DialogContent>
 					<DialogContentText>

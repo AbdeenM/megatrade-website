@@ -21,6 +21,7 @@ import Policy from './views/web/policy/Policy'
 import Register from './views/web/auth/Register'
 import Landing from './views/web/landing/Landing'
 import NotFound from './views/web/notFound/NotFound'
+import ResetPassword from './views/web/resetPassword/ResetPassword'
 
 import MarketUser from './views/user/market/Market'
 import AccountUser from './views/user/account/Account'
@@ -38,6 +39,7 @@ import MarketAdmin from './views/admin/market/Market'
 import AccountAdmin from './views/admin/account/Account'
 import SignalsAdmin from './views/admin/signals/Signals'
 import SupportAdmin from './views/admin/support/Support'
+import SponsorAdmin from './views/admin/sponsor/Sponsor'
 import DashboardAdmin from './views/admin/dashboard/Dashboard'
 import EducationAdmin from './views/admin/education/Education'
 import QuestionsAdmin from './views/admin/questions/Questions'
@@ -52,6 +54,11 @@ const Routes = props => {
 				path='/'
 				layout={WebLayout}
 				component={() => (<Landing {...props} />)} />
+
+			<RouteWithLayout
+				layout={WebLayout}
+				path='/reset/:token?'
+				component={({ match }) => (<ResetPassword match={match} />)} />
 
 			<RouteWithLayout
 				exact
@@ -189,6 +196,12 @@ const Routes = props => {
 				layout={AdminLayout}
 				path='/admin/social'
 				component={SocialAdmin} />
+
+			<AuthAdminRouteWithLayout
+				exact
+				layout={AdminLayout}
+				path='/admin/sponsor'
+				component={SponsorAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact

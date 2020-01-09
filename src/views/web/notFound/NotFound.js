@@ -20,6 +20,10 @@ const NotFound = () => {
 					<Grid item md={5} xs={12}>
 						<div className={classes.flex}>
 							<div className={classes.deco}>
+								<img
+									alt='logo'
+									src='/images/sidebar-logo.png' />
+
 								<Typography variant='h3'>
 									404
 								</Typography>
