@@ -81,6 +81,9 @@ const useStyles = makeStyles(theme => ({
 	spacer: {
 		flexGrow: 1
 	},
+	messageButton: {
+		marginRight: theme.spacing(1)
+	},
 	deleteButton: {
 		marginRight: theme.spacing(1)
 	},
@@ -150,10 +153,14 @@ const UsersTable = props => {
 	const [rowsPerPage, setRowsPerPage] = useState(10)
 	const [searchState, setSearchState] = useState('')
 	const [listedUsers, setListedUsers] = useState([])
+	const [messageState, setMessageState] = useState('')
+	const [subjectState, setSubjectState] = useState('')
 	const [selectedUsers, setSelectedUsers] = useState([])
+	const [selectedUsersEmails, setSelectedUsersEmails] = useState([])
 	const [showMembershipMenu, setShowMembershipMenu] = useState(false)
 	const [showEditUserDialog, setShowEditUserDialog] = useState(false)
 	const [showCreateUserDialog, setShowCreateUserDialog] = useState(false)
+	const [showMessageUsersDialog, setMessageUsersDialog] = useState(false)
 	const [userProfileState, setUserProfileState] = useState({
 		errors: {},
 		values: {
@@ -351,33 +358,54 @@ const UsersTable = props => {
 		const { users } = props
 
 		let selectedUsers
+		let selectedUsersEmails
 
-		if (event.target.checked)
+		if (event.target.checked) {
 			selectedUsers = users.map(user => user._id)
-		else
+			selectedUsersEmails = users.map(user => user.email)
+		}
+		else {
 			selectedUsers = []
+			selectedUsersEmails = []
+		}
+
 
 		setSelectedUsers(selectedUsers)
+		setSelectedUsersEmails(selectedUsersEmails)
 	}
 
-	const onSelectOne = (event, id) => {
+	const onSelectOne = (event, id, email) => {
 		const selectedIndex = selectedUsers.indexOf(id)
-		let newSelectedUsers = []
 
-		if (selectedIndex === -1)
+		let newSelectedUsers = []
+		let newSelectedUsersEmail = []
+
+		if (selectedIndex === -1) {
 			newSelectedUsers = newSelectedUsers.concat(selectedUsers, id)
-		else if (selectedIndex === 0)
+			newSelectedUsersEmail = newSelectedUsersEmail.concat(selectedUsersEmails, email)
+		}
+		else if (selectedIndex === 0) {
 			newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(1))
-		else if (selectedIndex === selectedUsers.length - 1)
+			newSelectedUsersEmail = newSelectedUsersEmail.concat(selectedUsersEmails.slice(1))
+		}
+		else if (selectedIndex === selectedUsers.length - 1) {
 			newSelectedUsers = newSelectedUsers.concat(selectedUsers.slice(0, -1))
+			newSelectedUsersEmail = newSelectedUsersEmail.concat(selectedUsersEmails.slice(0, -1))
+		}
 		else if (selectedIndex > 0) {
 			newSelectedUsers = newSelectedUsers.concat(
 				selectedUsers.slice(0, selectedIndex),
 				selectedUsers.slice(selectedIndex + 1)
 			)
+
+			newSelectedUsersEmail = newSelectedUsersEmail.concat(
+				selectedUsersEmails.slice(0, selectedIndex),
+				selectedUsersEmails.slice(selectedIndex + 1)
+			)
 		}
 
 		setSelectedUsers(newSelectedUsers)
+		setSelectedUsersEmails(newSelectedUsersEmail)
 	}
 
 	const onPageChange = (event, page) => {
@@ -604,6 +632,25 @@ const UsersTable = props => {
 		window.location.reload()
 	}
 
+	const onMessageUsers = async () => {
+		setIsLoading(true)
+		const messageResult = await adminApi.messageUsers({
+			adminId,
+			message: messageState,
+			subject: subjectState,
+			emails: selectedUsersEmails
+		})
+
+		if (messageResult.error) {
+			setIsLoading(false)
+			return enqueueSnackbar(messageResult.message, { variant: 'error' })
+		}
+
+		enqueueSnackbar(messageResult.message, { variant: 'success' })
+		setIsLoading(false)
+		window.location.reload()
+	}
+
 	const hasError = field =>
 		userProfileState.touched[field] && userProfileState.errors[field] ? true : false
 
@@ -630,6 +677,15 @@ const UsersTable = props => {
 						label='Search Users'
 						className={classes.searchInput}
 						onChange={onChangeSearch} />
+
+					<span className={classes.spacer} />
+
+					<Button
+						color='primary'
+						variant='contained'
+						className={classes.messageButton}
+						disabled={selectedUsers.length < 1}
+						onClick={() => setMessageUsersDialog(true)}>MESSAGE</Button>
 
 					<span className={classes.spacer} />
 
@@ -701,7 +757,7 @@ const UsersTable = props => {
 														value='true'
 														color='primary'
 														checked={selectedUsers.indexOf(user._id) !== -1}
-														onChange={event => onSelectOne(event, user._id)} />
+														onChange={event => onSelectOne(event, user._id, user.email)} />
 												</TableCell>
 
 												<TableCell>
@@ -1443,6 +1499,48 @@ const UsersTable = props => {
 						disabled={!userProfileState.isChanged || hasError('firstName') || hasError('lastName') || hasError('email') || hasError('number') || hasError('city') || hasError('country') || userProfileState.values.membership.length < 1 || userProfileState.values.firstName.length < 1 || userProfileState.values.lastName.length < 1 || userProfileState.values.email.length < 1 || userProfileState.values.password.length < 1}>
 						CREATE USER
          			 </Button>
+				</DialogActions>
+			</Dialog>
+
+			<Dialog
+				open={showMessageUsersDialog}
+				onClose={() => setMessageUsersDialog(false)}>
+				<DialogTitle>Email User</DialogTitle>
+
+				<DialogContent>
+					<DialogContentText>
+						Enter the email message you want to send to the selected user(s):
+          			</DialogContentText>
+
+					<TextField
+						fullWidth
+						name='subject'
+						margin='normal'
+						variant='outlined'
+						value={subjectState}
+						label='Email Subject'
+						onChange={event => setSubjectState(event.target.value)} />
+
+					<TextField
+						multiline
+						fullWidth
+						name='message'
+						margin='normal'
+						variant='outlined'
+						value={messageState}
+						label='Email Message'
+						onChange={event => setMessageState(event.target.value)} />
+				</DialogContent>
+
+				<DialogActions>
+					<Button
+						fullWidth
+						color='primary'
+						variant='contained'
+						onClick={onMessageUsers}
+						disabled={messageState.length < 1 || subjectState.length < 1}>
+						SEND EMAIL(S)
+					</Button>
 				</DialogActions>
 			</Dialog>
 		</div>

@@ -113,7 +113,7 @@ const Dashboard = () => {
 			tickerTape.current.appendChild(script)
 			setIsTaperLoaded(true)
 		}
-	}, [])
+	})
 
 	const fetchStatistics = async () => {
 		const fetchStatisticsResult = await userApi.fetchStatistics({ userId })

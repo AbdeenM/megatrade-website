@@ -426,6 +426,15 @@ class AdminApi {
 			throw error
 		}
 	}
+
+	messageUsers = async args => {
+		try {
+			const { data } = await Axios.post(`${this.path}/messageUsers`, args)
+			return data
+		} catch (error) {
+			throw error
+		}
+	}
 }
 
 class MiscellaneousApi {
