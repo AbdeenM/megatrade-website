@@ -10,9 +10,10 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
-import { Card, Avatar, Button, Divider, Typography, CardActions, CardContent, Dialog, CircularProgress, DialogContent, Grid, Switch, useTheme } from '@material-ui/core'
+import { Card, Avatar, Button, Divider, Typography, CardActions, CardContent, Dialog, CircularProgress, DialogContent, Grid, Switch, useTheme, colors } from '@material-ui/core'
 
 import { AdminApi } from 'config/Api'
+import getInitials from 'helpers/getInitials'
 
 const adminApi = new AdminApi()
 
@@ -26,7 +27,8 @@ const useStyles = makeStyles(theme => ({
 		height: 110,
 		flexGrow: 0,
 		flexShrink: 0,
-		marginLeft: 'auto'
+		marginLeft: 'auto',
+		backgroundColor: colors.blue[500]
 	},
 	locationText: {},
 	spacer: {
@@ -148,8 +150,10 @@ const AccountProfile = props => {
 					</div>
 
 					<Avatar
-						className={classes.avatar}
-						src={profileState.avatar || '/images/profile-avatar.png'} />
+						src={profileState.avatar}
+						className={classes.avatar}>
+						{getInitials(profileState.firstName + ' ' + profileState.lastName)}
+					</Avatar>
 				</div>
 			</CardContent>
 

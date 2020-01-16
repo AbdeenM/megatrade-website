@@ -5,11 +5,9 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React, { useRef, useEffect } from 'react'
-
-import { dataScreener, dataCalender, dataAnalysis } from './components/Settings'
+import { Grid, useTheme } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,6 +17,7 @@ const useStyles = makeStyles(theme => ({
 
 const Market = () => {
     const classes = useStyles()
+    const theme = useTheme()
 
     const analysis = useRef(null)
     const calender = useRef(null)
@@ -28,28 +27,54 @@ const Market = () => {
         const script = document.createElement('script')
         script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-events.js'
         script.async = true
-        script.innerHTML = JSON.stringify(dataCalender)
+        script.innerHTML = JSON.stringify({
+            'locale': 'en',
+            'width': '100%',
+            'height': '900',
+            'colorTheme': theme.palette.type,
+            'isTransparent': false,
+            'importanceFilter': '-1,0,1',
+            'currencyFilter': 'GBP,AUD,CNY,DEM,ITL,EUR,JPY,CAD,FRF,USD,NZD,SGD,HKD,TWD,CHF'
+        })
 
         calender.current.appendChild(script)
-    }, [])
+    })
 
     useEffect(() => {
         const script = document.createElement('script')
         script.async = true
-        script.innerHTML = JSON.stringify(dataScreener)
+        script.innerHTML = JSON.stringify({
+            'locale': 'en',
+            'width': '100%',
+            'height': '900',
+            'market': 'forex',
+            'showToolbar': true,
+            'colorTheme': theme.palette.type,
+            'defaultScreen': 'general',
+            'defaultColumn': 'overview'
+        })
         script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-screener.js'
 
         screener.current.appendChild(script)
-    }, [])
+    })
 
     useEffect(() => {
         const script = document.createElement('script')
         script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js'
         script.async = true
-        script.innerHTML = JSON.stringify(dataAnalysis)
+        script.innerHTML = JSON.stringify({
+            'locale': 'en',
+            'width': '100%',
+            'height': '600',
+            'interval': '1D',
+            'colorTheme': theme.palette.type,
+            'isTransparent': true,
+            'symbol': 'OANDA:EURUSD',
+            'showIntervalTabs': true
+        })
 
         analysis.current.appendChild(script)
-    }, [])
+    })
 
     return (
         <div className={classes.root}>

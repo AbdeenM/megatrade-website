@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/styles'
 
 const useStyles = makeStyles(theme => ({
 	root: {
-		padding: theme.spacing(4)
+		padding: theme.spacing(1)
 	}
 }))
 
@@ -26,7 +26,7 @@ const Footer = props => {
 		<div
 			{...rest}
 			className={clsx(classes.root, className)}>
-			<Typography variant='caption'>© 2019 – Mega Trade, All rights reserved.</Typography>
+			<Typography variant='caption'>© 2020 – Mega Trade, All rights reserved.</Typography>
 		</div>
 	)
 }

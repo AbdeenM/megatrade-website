@@ -173,7 +173,7 @@ const LogsTable = props => {
 			<Card>
 				<CardHeader
 					title='Log Reports'
-					subheader='List of all our the logs for our system.'
+					subheader='List of all our the logs for our system'
 					action={
 						<IconButton
 							size='medium'

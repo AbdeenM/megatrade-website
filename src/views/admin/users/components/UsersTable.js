@@ -16,7 +16,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import React, { useState, useEffect, useRef } from 'react'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress, Menu, MenuItem, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, MenuList } from '@material-ui/core'
+import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress, Menu, MenuItem, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, MenuList, colors } from '@material-ui/core'
 
 import { AdminApi } from 'config/Api'
 import getInitials from 'helpers/getInitials'
@@ -105,14 +105,16 @@ const useStyles = makeStyles(theme => ({
 		alignItems: 'center'
 	},
 	avatar: {
-		marginRight: theme.spacing(2)
+		marginRight: theme.spacing(2),
+		backgroundColor: colors.blue[500]
 	},
 	actions: {
 		justifyContent: 'flex-end'
 	},
 	image: {
 		width: 150,
-		height: 150
+		height: 150,
+		backgroundColor: colors.blue[500]
 	},
 	imageContainer: {
 		display: 'flex',
@@ -820,7 +822,9 @@ const UsersTable = props => {
 					<div className={classes.imageContainer}>
 						<Avatar
 							className={classes.image}
-							src={userProfileState.values.avatar.image || '/images/profile-avatar.png'} />
+							src={userProfileState.values.avatar.image}>
+							{getInitials(userProfileState.values.firstName + ' ' + userProfileState.values.lastName)}
+						</Avatar>
 					</div>
 
 					<ExpansionPanel>
@@ -1189,7 +1193,9 @@ const UsersTable = props => {
 					<div className={classes.imageContainer}>
 						<Avatar
 							className={classes.image}
-							src={userProfileState.values.avatar.image || '/images/profile-avatar.png'} />
+							src={userProfileState.values.avatar.image}>
+							{getInitials(userProfileState.values.firstName + ' ' + userProfileState.values.lastName)}
+						</Avatar>
 					</div>
 
 					<div className={classes.rowStatus}>

@@ -26,6 +26,7 @@ import ResetPassword from './views/web/resetPassword/ResetPassword'
 import MarketUser from './views/user/market/Market'
 import AccountUser from './views/user/account/Account'
 //import SupportUser from './views/user/support/Support'
+import GroupChatUser from 'views/user/groupChat/GroupChat'
 import DashboardUser from './views/user/dashboard/Dashboard'
 //import EducationUser from './views/user/education/Education'
 import ViewSignalsUser from './views/user/viewSignals/ViewSignals'
@@ -131,6 +132,12 @@ const Routes = props => {
 				layout={MainLayout}
 				path='/subscriptions'
 				component={SubscriptionsUser} />
+
+			<AuthRouteWithLayout
+				exact
+				layout={MainLayout}
+				path='/group-chat'
+				component={GroupChatUser} />
 
 			{/* <AuthRouteWithLayout
 				exact

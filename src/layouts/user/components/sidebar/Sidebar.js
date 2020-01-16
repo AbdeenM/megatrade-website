@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/styles'
 import LogoutIcon from '@material-ui/icons/Input'
 import React, { useState, useEffect } from 'react'
 //import EducationIcon from '@material-ui/icons/Book'
+import GroupChatIcon from '@material-ui/icons/Forum'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
@@ -133,6 +134,11 @@ const Sidebar = props => {
 			title: 'Subscriptions',
 			href: '/subscriptions',
 			icon: <SubscriptionIcon />
+		},
+		{
+			title: 'Group Chat',
+			href: '/group-chat',
+			icon: <GroupChatIcon />
 		},
 		// {
 		// 	title: 'Live Chat',

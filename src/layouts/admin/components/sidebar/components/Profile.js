@@ -10,7 +10,9 @@ import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { Avatar, Typography } from '@material-ui/core'
+import { Avatar, Typography, colors } from '@material-ui/core'
+
+import getInitials from 'helpers/getInitials'
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -21,7 +23,8 @@ const useStyles = makeStyles(theme => ({
 	},
 	avatar: {
 		width: 60,
-		height: 60
+		height: 60,
+		backgroundColor: colors.blue[500]
 	},
 	name: {
 		marginTop: theme.spacing(1)
@@ -53,11 +56,12 @@ const Profile = props => {
 			{...rest}
 			className={clsx(classes.root, className)}>
 			<Avatar
-				alt='person'
 				to='/account'
 				component={RouterLink}
-				className={classes.avatar}
-				src={profileState.avatar || '/images/profile-avatar.png'} />
+				src={profileState.avatar}
+				className={classes.avatar}>
+				{getInitials(profileState.firstName + ' ' + profileState.lastName)}
+			</Avatar>
 
 			<Typography
 				variant='h6'

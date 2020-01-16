@@ -54,7 +54,7 @@ const History = props => {
             className={clsx(classes.root, className)}>
             <CardHeader
                 title='Membership History'
-                subheader='List of your previous membership packages and their details.' />
+                subheader='List of your previous membership packages and their details' />
 
             <Divider />
 

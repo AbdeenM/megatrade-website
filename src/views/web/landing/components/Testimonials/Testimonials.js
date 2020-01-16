@@ -80,7 +80,10 @@ const Testimonials = () => {
 									{item.text}
 								</Typography>
 								<div className={classes.name}>
-									<Avatar alt={item.name} src={item.avatar} className={classes.avatar} />
+									<Avatar
+										alt={item.name}
+										src={item.avatar}
+										className={classes.avatar} />
 									<Typography variant='caption'>
 										{item.name}
 									</Typography>

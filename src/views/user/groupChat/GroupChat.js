@@ -5,14 +5,16 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import IO from 'socket.io-client'
+import io from 'socket.io-client'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState } from 'react'
-import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
+import { Grid, Dialog, CircularProgress, DialogContent, Hidden } from '@material-ui/core'
 
 import { UserApi } from 'config/Api'
 import Constants from 'config/Constants'
+import GroupChatLive from './components/GroupChatLive'
+import GroupChatMembers from './components/GroupChatMembers'
 
 const userApi = new UserApi()
 
@@ -39,14 +41,16 @@ const GroupChat = () => {
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
+	let socket
 	const userId = localStorage.getItem('userId')
 
+	const [isPaid, setIsPaid] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
+	const [availableUsersState, setAvailableUsersState] = useState([])
+	const [groupChatHistoryState, setGroupChatHistoryState] = useState([])
 	const [profileState, setProfileState] = useState({
 		avatar: '',
-		fullName: '',
-		membership: '',
-		chatRoomName: 'Group Chat'
+		fullName: ''
 	})
 
 	useEffect(() => { fetchProfileDetails() }, [])
@@ -62,31 +66,33 @@ const GroupChat = () => {
 		setProfileState(profileState => ({
 			...profileState,
 			avatar: fetchAccountResult.data.avatar || '',
-			membership: fetchAccountResult.data.membership || '',
-			fullName: fetchAccountResult.data.firstName + ' ' + fetchAccountResult.data.firstName || ''
+			fullName: fetchAccountResult.data.firstName + ' ' + fetchAccountResult.data.lastName || ''
 		}))
+
+		if (fetchAccountResult.data.membership !== 'Free Membership')
+			setIsPaid(true)
 
 		setIsLoading(false)
 	}
 
-	const socket = IO.connect(Constants.SERVER_URL)
+	useEffect(() => {
+		if (isPaid) {
+			socket = io.connect(`${Constants.SERVER_URL}/chat-group`)
 
-	const registerHandler = onMessageRecieved => socket.on('message', onMessageRecieved)
+			socket.emit('sysConnected', {
+				id: userId,
+				fullName: profileState.fullName
+			})
 
-	const unRegisterHandler = () => socket.off('message')
+			socket.on('sysMessage', data => {
+				setGroupChatHistoryState(groupChatHistoryState => ([...groupChatHistoryState, data]))
+			})
+		}
+	}, [isPaid])
 
-	const register = (name, callback) => socket.emit('register', name, callback)
+	const onSendMessage = message => {
 
-	const join = (chatRoomName, callback) => socket.emit('join', chatRoomName, callback)
-
-	const leave = (chatRoomName, callback) => socket.emit('leave', chatRoomName, callback)
-
-	const message = (chatRoomName, msg, callback) => socket.emit('message', {
-		chatRoomName,
-		message: msg
-	}, callback)
-
-	const getAvailableUsers = callback => socket.emit('availableUsers', null, callback)
+	}
 
 	if (isLoading)
 		return (
@@ -103,11 +109,31 @@ const GroupChat = () => {
 				container
 				spacing={4}
 				justify='center'>
+				<Hidden mdDown>
+					<Grid
+						item
+						lg={3}
+						xl={3}
+						md={12}
+						xs={12}>
+						<GroupChatMembers
+							isPaid={isPaid}
+							profile={profileState}
+							users={availableUsersState} />
+					</Grid>
+				</Hidden>
+
 				<Grid
 					item
-					lg={12}
+					lg={9}
+					xl={9}
+					md={12}
 					xs={12}>
-
+					<GroupChatLive
+						isPaid={isPaid}
+						profile={profileState}
+						chats={groupChatHistoryState}
+						onSendMessage={onSendMessage} />
 				</Grid>
 			</Grid>
 		</div>

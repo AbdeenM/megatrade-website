@@ -5,6 +5,7 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
+import { colors } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 const testiStyles = makeStyles(theme => ({
@@ -33,7 +34,8 @@ const testiStyles = makeStyles(theme => ({
 	},
 	avatar: {
 		width: 30,
-		height: 30
+		height: 30,
+		backgroundColor: colors.blue[500]
 	}
 }))
 
