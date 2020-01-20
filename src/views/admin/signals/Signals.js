@@ -59,6 +59,11 @@ const Signals = () => {
 		setIsLoading(false)
 	}
 
+	const reloadData = () => {
+		fetchSignalsList()
+		fetchFreeSignalsList()
+	}
+
 	if (isLoading)
 		return (
 			<Dialog open={isLoading}>
@@ -79,7 +84,9 @@ const Signals = () => {
 					xl={12}
 					md={12}
 					xs={12}>
-					<SignalsTable signals={signalsState} />
+					<SignalsTable
+						signals={signalsState}
+						reloadData={reloadData} />
 				</Grid>
 
 				<Grid
@@ -88,7 +95,9 @@ const Signals = () => {
 					xl={12}
 					md={12}
 					xs={12}>
-					<FreeSignalsTable signals={freeSignalsState} />
+					<FreeSignalsTable
+						reloadData={reloadData}
+						signals={freeSignalsState} />
 				</Grid>
 			</Grid>
 		</div>

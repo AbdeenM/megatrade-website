@@ -56,6 +56,11 @@ const Users = () => {
 		setSubscriptionsState(fetchSubscriptionsResult.data)
 	}
 
+	const reloadData = () => {
+		fetchUsersList()
+		fetchSubscriptions()
+	}
+
 	if (isLoading)
 		return (
 			<Dialog open={isLoading}>
@@ -78,6 +83,7 @@ const Users = () => {
 					xs={12}>
 					<UsersTable
 						users={usersListState}
+						reloadData={reloadData}
 						subscriptions={subscriptionsState} />
 				</Grid>
 			</Grid>

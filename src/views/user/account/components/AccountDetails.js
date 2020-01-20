@@ -63,7 +63,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const AccountDetails = props => {
-	const { className, profile, ...rest } = props
+	const { className, profile, reloadData, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -152,7 +152,7 @@ const AccountDetails = props => {
 
 		setIsLoading(false)
 		enqueueSnackbar(saveResult.message, { variant: 'success' })
-		window.location.reload()
+		reloadData()
 	}
 
 	const hasError = field =>

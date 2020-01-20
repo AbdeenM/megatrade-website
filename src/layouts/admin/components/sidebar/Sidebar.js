@@ -14,16 +14,17 @@ import LogoutIcon from '@material-ui/icons/Input'
 import React, { useState, useEffect } from 'react'
 import EducationIcon from '@material-ui/icons/Book'
 import LogsIcon from '@material-ui/icons/Assignment'
+import GroupChatIcon from '@material-ui/icons/Forum'
 import MediaIcon from '@material-ui/icons/PermMedia'
 import SponsorIcon from '@material-ui/icons/MoneyOff'
 import QuestionIcon from '@material-ui/icons/Message'
+import LiveChatIcon from '@material-ui/icons/LiveHelp'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
 import MarketIcon from '@material-ui/icons/MonetizationOn'
 import VerifiedIcon from '@material-ui/icons/VerifiedUser'
 import TradeSignalIcon from '@material-ui/icons/TrendingUp'
-import LiveChatIcon from '@material-ui/icons/QuestionAnswer'
 import DashboardUserIcon from '@material-ui/icons/DeveloperBoard'
 import { Divider, Drawer, Button, ListItem } from '@material-ui/core'
 
@@ -111,7 +112,7 @@ const Sidebar = props => {
 	}
 
 	const onSignOut = () => {
-		localStorage.setItem('userId', '')
+		localStorage.setItem('adminId', '')
 		setLogged(false)
 	}
 
@@ -178,7 +179,12 @@ const Sidebar = props => {
 			icon: <SponsorIcon />
 		},
 		{
-			title: 'Live Chat',
+			title: 'Group Chat',
+			href: '/admin/group-chat',
+			icon: <GroupChatIcon />
+		},
+		{
+			title: 'Support',
 			href: '/admin/support',
 			icon: <LiveChatIcon />
 		}

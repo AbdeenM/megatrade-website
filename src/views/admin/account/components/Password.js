@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const Password = props => {
-	const { className, ...rest } = props
+	const { className, reloadData, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -68,7 +68,7 @@ const Password = props => {
 
 		enqueueSnackbar(saveResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	if (isLoading)

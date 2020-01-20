@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 const Alerts = props => {
-	const { className, notifications, ...rest } = props
+	const { className, notifications, reloadData, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -126,7 +126,7 @@ const Alerts = props => {
 
 		setIsLoading(false)
 		enqueueSnackbar(saveResult.message, { variant: 'success' })
-		window.location.reload()
+		reloadData()
 	}
 
 	if (isLoading)

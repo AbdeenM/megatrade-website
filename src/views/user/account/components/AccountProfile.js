@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AccountProfile = props => {
-	const { className, profile, ...rest } = props
+	const { className, profile, reloadData, ...rest } = props
 
 	const theme = useTheme()
 	const classes = useStyles()
@@ -110,7 +110,7 @@ const AccountProfile = props => {
 
 		setIsLoading(false)
 		enqueueSnackbar(uploadPictureResult.message, { variant: 'success' })
-		window.location.reload()
+		reloadData()
 	}
 
 	if (isLoading)
@@ -187,7 +187,7 @@ const AccountProfile = props => {
 						component='span'
 						className={classes.uploadButton}>
 						Upload picture
-								</Button>
+					</Button>
 				</label>
 
 				<span className={classes.spacer} />

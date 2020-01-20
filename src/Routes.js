@@ -41,6 +41,7 @@ import AccountAdmin from './views/admin/account/Account'
 import SignalsAdmin from './views/admin/signals/Signals'
 import SupportAdmin from './views/admin/support/Support'
 import SponsorAdmin from './views/admin/sponsor/Sponsor'
+import GroupChatAdmin from 'views/admin/groupChat/GroupChat'
 import DashboardAdmin from './views/admin/dashboard/Dashboard'
 import EducationAdmin from './views/admin/education/Education'
 import QuestionsAdmin from './views/admin/questions/Questions'
@@ -185,6 +186,12 @@ const Routes = props => {
 				layout={AdminLayout}
 				path='/admin/support'
 				component={SupportAdmin} />
+
+			<AuthAdminRouteWithLayout
+				exact
+				layout={AdminLayout}
+				path='/admin/group-chat'
+				component={GroupChatAdmin} />
 
 			<AuthAdminRouteWithLayout
 				exact

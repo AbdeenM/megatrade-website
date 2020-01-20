@@ -5,14 +5,4 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-const menu = [
-	'home',
-	'feature',
-	'testimonials',
-	'pricing',
-	'faq',
-	'subscribe',
-	'contact'
-]
-
-export default menu
+export { default } from './FAQ'

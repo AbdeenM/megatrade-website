@@ -10,6 +10,7 @@ import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import { CssBaseline, Hidden, makeStyles, Container } from '@material-ui/core'
 
+import FAQ from './components/FAQ'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Counter from './components/Counter'
@@ -74,6 +75,10 @@ const Landing = props => {
 
 					<section className={classes.spaceTop} id='pricing'>
 						<Pricing />
+					</section>
+
+					<section className={classes.spaceTop} id='faq'>
+						<FAQ />
 					</section>
 
 					<section className={classes.spaceTop} id='subscribe'>

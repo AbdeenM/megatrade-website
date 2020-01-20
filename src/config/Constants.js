@@ -5,8 +5,10 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
+// https://megatrade-server.herokuapp.com
+
 export default {
-    SERVER_URL: 'http://localhost:8000',
+    SERVER_URL: 'https://megatrade-server.herokuapp.com',
     FACEBOOK_APP_ID: '442263256673614',
     GOOGLE_CLIENT_ID: '94334450177-alqfl3cs59hmue1ebk5dvtuv973k3qa4.apps.googleusercontent.com'
 }

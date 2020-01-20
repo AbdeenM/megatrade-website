@@ -99,7 +99,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SponsorsTable = props => {
-	const { className, sponsors, ...rest } = props
+	const { className, sponsors, reloadData, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -287,7 +287,7 @@ const SponsorsTable = props => {
 
 		setIsLoading(false)
 		enqueueSnackbar(editSponsorResult.message, { variant: 'success' })
-		window.location.reload()
+		reloadData()
 	}
 
 	const onCreateSponsorClick = () => {
@@ -325,7 +325,7 @@ const SponsorsTable = props => {
 
 		setIsLoading(false)
 		enqueueSnackbar(createSponsorResult.message, { variant: 'success' })
-		window.location.reload()
+		reloadData()
 	}
 
 	const onDeleteSponsors = async () => {
@@ -342,7 +342,7 @@ const SponsorsTable = props => {
 
 		setIsLoading(false)
 		enqueueSnackbar(deleteSponsorsResult.message, { variant: 'success' })
-		window.location.reload()
+		reloadData()
 	}
 
 	const hasError = field =>

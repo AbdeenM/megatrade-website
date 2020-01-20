@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
 	},
 	stats: {
 		display: 'flex',
+		flexWrap: 'wrap',
 		justifyContent: 'center',
 		marginTop: theme.spacing(2)
 	},
@@ -56,17 +57,20 @@ const TradePie = props => {
 	const options = {
 		animation: false,
 		responsive: true,
-		cutoutPercentage: 80,
+		cutoutPercentage: 70,
 		maintainAspectRatio: false,
 		legend: {
-			display: false
+			display: true,
+			labels: {
+				fontColor: theme.palette.text.primary
+			}
 		},
 		layout: {
 			padding: 0
 		},
 		tooltips: {
 			mode: 'index',
-			enabled: true,
+			enabled: false,
 			borderWidth: 1,
 			intersect: false,
 			borderColor: theme.palette.divider,

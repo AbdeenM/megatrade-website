@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const LogsTable = props => {
-	const { className, logs, onRefreshLogs, ...rest } = props
+	const { className, logs, onRefreshLogs, reloadData, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -129,7 +129,7 @@ const LogsTable = props => {
 
 		enqueueSnackbar(deleteResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	if (isLoading)

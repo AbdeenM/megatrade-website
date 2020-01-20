@@ -11,12 +11,14 @@ import Validate from 'validate.js'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
+import DeleteIcon from '@material-ui/icons/Delete'
+import AttachIcon from '@material-ui/icons/AttachFile'
 import Visibility from '@material-ui/icons/Visibility'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import React, { useState, useEffect, useRef } from 'react'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress, Menu, MenuItem, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, MenuList, colors } from '@material-ui/core'
+import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, CircularProgress, Menu, MenuItem, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, MenuList, colors, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, IconButton } from '@material-ui/core'
 
 import { AdminApi } from 'config/Api'
 import getInitials from 'helpers/getInitials'
@@ -140,7 +142,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const UsersTable = props => {
-	const { className, users, subscriptions, ...rest } = props
+	const { className, users, subscriptions, reloadData, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -158,6 +160,7 @@ const UsersTable = props => {
 	const [messageState, setMessageState] = useState('')
 	const [subjectState, setSubjectState] = useState('')
 	const [selectedUsers, setSelectedUsers] = useState([])
+	const [attachmentState, setAttachmentState] = useState([])
 	const [selectedUsersEmails, setSelectedUsersEmails] = useState([])
 	const [showMembershipMenu, setShowMembershipMenu] = useState(false)
 	const [showEditUserDialog, setShowEditUserDialog] = useState(false)
@@ -334,7 +337,7 @@ const UsersTable = props => {
 			const reader = new FileReader()
 			reader.readAsDataURL(file)
 			reader.onload = () => { resolve(reader.result) }
-			reader.onerror = () => { return enqueueSnackbar('Error while uploading your picture, please try again', { variant: 'error' }) }
+			reader.onerror = () => { return enqueueSnackbar('Error while uploading your file, please try again', { variant: 'error' }) }
 		})
 	}
 
@@ -354,6 +357,31 @@ const UsersTable = props => {
 			},
 			isChanged: true
 		}))
+	}
+
+	const onUploadAttachment = async event => {
+		event.persist()
+
+		const path = await toBase64(event.target.files[0])
+
+		const filename = event.target.files[0].name
+		const size = event.target.files[0].size
+		const contentType = event.target.files[0].type
+
+		setAttachmentState(attachmentState => ([
+			...attachmentState,
+			{
+				size,
+				path,
+				filename,
+				contentType
+			}
+		]))
+	}
+
+	const onRemoveAttachement = index => {
+		const newListAttachement = attachmentState.filter((file, i) => i !== index)
+		setAttachmentState(newListAttachement)
 	}
 
 	const onSelectAll = event => {
@@ -521,7 +549,7 @@ const UsersTable = props => {
 
 		enqueueSnackbar(editResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	const onCreateUserClick = async () => {
@@ -614,7 +642,7 @@ const UsersTable = props => {
 
 		enqueueSnackbar(createResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	const onDeleteUsers = async () => {
@@ -631,7 +659,7 @@ const UsersTable = props => {
 
 		enqueueSnackbar(deleteResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	const onMessageUsers = async () => {
@@ -640,7 +668,8 @@ const UsersTable = props => {
 			adminId,
 			message: messageState,
 			subject: subjectState,
-			emails: selectedUsersEmails
+			emails: selectedUsersEmails,
+			attachments: attachmentState
 		})
 
 		if (messageResult.error) {
@@ -650,7 +679,7 @@ const UsersTable = props => {
 
 		enqueueSnackbar(messageResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	const hasError = field =>
@@ -1518,6 +1547,28 @@ const UsersTable = props => {
 						Enter the email message you want to send to the selected user(s):
           			</DialogContentText>
 
+					{attachmentState.map((file, i) => (
+						<ListItem>
+							<ListItemAvatar>
+								<Avatar>
+									<AttachIcon />
+								</Avatar>
+							</ListItemAvatar>
+
+							<ListItemText
+								primary={file.filename}
+								secondary={`Size: ${file.size} Bytes | Type: ${file.contentType}`} />
+							<ListItemSecondaryAction>
+								<IconButton
+									edge='end'
+									aria-label='delete'
+									onClick={() => onRemoveAttachement(i)}>
+									<DeleteIcon />
+								</IconButton>
+							</ListItemSecondaryAction>
+						</ListItem>
+					))}
+
 					<TextField
 						fullWidth
 						name='subject'
@@ -1539,6 +1590,24 @@ const UsersTable = props => {
 				</DialogContent>
 
 				<DialogActions>
+					<input
+						id='upload'
+						type='file'
+						accept='image/*'
+						style={{ display: 'none' }}
+						onChange={onUploadAttachment} />
+
+					<label htmlFor='upload'>
+						<Button
+							color='primary'
+							component='span'
+							variant='outlined'>
+							ATTACHEMENT
+						</Button>
+					</label>
+
+					<span className={classes.spacer} />
+
 					<Button
 						fullWidth
 						color='primary'

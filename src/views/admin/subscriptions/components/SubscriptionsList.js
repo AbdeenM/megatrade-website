@@ -5,15 +5,11 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
-import { useSnackbar } from 'notistack'
+import React from 'react'
+import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import React, { useState, useEffect } from 'react'
-import { Grid, Dialog, CircularProgress, DialogContent } from '@material-ui/core'
 
-import { AdminApi } from 'config/Api'
 import SubscriptionsCard from './components/SubscriptionsCard'
-
-const adminApi = new AdminApi()
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -34,36 +30,10 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const SubscriptionsList = () => {
+const SubscriptionsList = props => {
+    const { reloadData, subscriptionsState } = props
+
     const classes = useStyles()
-    const { enqueueSnackbar } = useSnackbar()
-
-    const adminId = localStorage.getItem('adminId')
-
-    const [isLoading, setIsLoading] = useState(true)
-    const [subscriptionsState, setSubscriptionsState] = useState([])
-
-    useEffect(() => { fetchSubscriptions() }, [])
-
-    const fetchSubscriptions = async () => {
-        const fetchSubscriptionsResult = await adminApi.fetchSubscriptions({ adminId })
-        if (fetchSubscriptionsResult.error) {
-            setIsLoading(false)
-            return enqueueSnackbar(fetchSubscriptionsResult.message, { variant: 'error' })
-        }
-
-        setSubscriptionsState(fetchSubscriptionsResult.data)
-        setIsLoading(false)
-    }
-
-    if (isLoading)
-        return (
-            <Dialog open={isLoading}>
-                <DialogContent>
-                    <CircularProgress />
-                </DialogContent>
-            </Dialog>
-        )
 
     return (
         <div className={classes.root}>
@@ -80,6 +50,7 @@ const SubscriptionsList = () => {
                                 xs={12}
                                 key={i}>
                                 <SubscriptionsCard
+                                    reloadData={reloadData}
                                     subscription={subscription} />
                             </Grid>
                         ))

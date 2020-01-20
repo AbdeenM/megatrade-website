@@ -115,6 +115,8 @@ const Account = props => {
 		setIsLoading(false)
 	}
 
+	const reloadData = () => fetchProfileDetails()
+
 	if (isLoading)
 		return (
 			<Dialog open={isLoading}>
@@ -131,21 +133,13 @@ const Account = props => {
 				spacing={4}>
 				<Grid
 					item
-					lg={4}
-					md={6}
-					xl={7}
-					xs={12}>
-					<Alerts notifications={profileState.notifications} />
-				</Grid>
-
-				<Grid
-					item
-					lg={8}
 					xl={5}
+					lg={12}
 					md={12}
 					xs={12}>
 					<AccountProfile
 						{...props}
+						reloadData={reloadData}
 						profile={{
 							city: profileState.city,
 							avatar: profileState.avatar,
@@ -158,26 +152,39 @@ const Account = props => {
 
 				<Grid
 					item
-					lg={4}
-					md={6}
 					xl={7}
+					lg={12}
+					md={12}
 					xs={12}>
-					<AccountDetails profile={{
-						city: profileState.city,
-						email: profileState.email,
-						number: profileState.number,
-						country: profileState.country,
-						lastName: profileState.lastName,
-						firstName: profileState.firstName,
-						membership: profileState.membership,
-						membershipAmount: profileState.membershipAmount
-					}} />
+					<Alerts
+						reloadData={reloadData}
+						notifications={profileState.notifications} />
 				</Grid>
 
 				<Grid
 					item
-					lg={8}
+					xl={7}
+					lg={12}
+					md={12}
+					xs={12}>
+					<AccountDetails
+						reloadData={reloadData}
+						profile={{
+							city: profileState.city,
+							email: profileState.email,
+							number: profileState.number,
+							country: profileState.country,
+							lastName: profileState.lastName,
+							firstName: profileState.firstName,
+							membership: profileState.membership,
+							membershipAmount: profileState.membershipAmount
+						}} />
+				</Grid>
+
+				<Grid
+					item
 					xl={5}
+					lg={12}
 					md={12}
 					xs={12}>
 					<Password />
@@ -189,7 +196,9 @@ const Account = props => {
 					xl={12}
 					md={12}
 					xs={12}>
-					<History subscriptions={profileState.membershipHistory} />
+					<History
+						reloadData={reloadData}
+						subscriptions={profileState.membershipHistory} />
 				</Grid>
 			</Grid>
 		</div>

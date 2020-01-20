@@ -45,6 +45,8 @@ const Sponsors = () => {
         setIsLoading(false)
     }
 
+    const reloadData = () => fetchSponsorsList()
+
     if (isLoading)
         return (
             <Dialog open={isLoading}>
@@ -65,7 +67,9 @@ const Sponsors = () => {
                     xl={12}
                     md={12}
                     xs={12}>
-                    <SponsorsTable sponsors={sponsorsState} />
+                    <SponsorsTable
+                        reloadData={reloadData}
+                        sponsors={sponsorsState} />
                 </Grid>
             </Grid>
         </div>

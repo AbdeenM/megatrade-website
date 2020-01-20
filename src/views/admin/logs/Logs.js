@@ -43,6 +43,8 @@ const Subscriptions = () => {
 		setIsLoading(false)
 	}
 
+	const reloadData = () => fetchLogs()
+
 	if (isLoading)
 		return (
 			<Dialog open={isLoading}>
@@ -65,6 +67,7 @@ const Subscriptions = () => {
 					xs={12}>
 					<LogsTable
 						logs={logsState}
+						reloadData={reloadData}
 						onRefreshLogs={fetchLogs} />
 				</Grid>
 			</Grid>

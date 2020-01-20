@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SubscriptionsCard = props => {
-	const { className, subscription, ...rest } = props
+	const { className, subscription, reloadData, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -67,7 +67,7 @@ const SubscriptionsCard = props => {
 
 		enqueueSnackbar(removeResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	if (isLoading)

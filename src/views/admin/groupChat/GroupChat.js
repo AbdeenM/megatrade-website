@@ -11,12 +11,12 @@ import { makeStyles } from '@material-ui/styles'
 import React, { useEffect, useState } from 'react'
 import { Grid, Dialog, CircularProgress, DialogContent, Hidden } from '@material-ui/core'
 
-import { UserApi } from 'config/Api'
+import { AdminApi } from 'config/Api'
 import Constants from 'config/Constants'
 import GroupChatLive from './components/GroupChatLive'
 import GroupChatMembers from './components/GroupChatMembers'
 
-const userApi = new UserApi()
+const adminApi = new AdminApi()
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -41,9 +41,8 @@ const GroupChat = () => {
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
 
-	const userId = localStorage.getItem('userId')
+	const adminId = localStorage.getItem('adminId')
 
-	const [isPaid, setIsPaid] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
 	const [socket] = useSocket(`${Constants.SERVER_URL}/chat-group`, {
 		autoConnect: false
@@ -58,7 +57,7 @@ const GroupChat = () => {
 	useEffect(() => { fetchProfileDetails() }, [])
 
 	const fetchProfileDetails = async () => {
-		const fetchAccountResult = await userApi.fetchAccount({ userId })
+		const fetchAccountResult = await adminApi.fetchAccount({ adminId })
 
 		if (fetchAccountResult.error) {
 			setIsLoading(false)
@@ -71,18 +70,16 @@ const GroupChat = () => {
 			fullName: fetchAccountResult.data.firstName + ' ' + fetchAccountResult.data.lastName || ''
 		}))
 
-		if (fetchAccountResult.data.membership !== 'Free Membership')
-			setIsPaid(true)
-
 		setIsLoading(false)
 	}
 
 	useEffect(() => {
-		if (isPaid && !isLoading) {
+		if (!isLoading) {
 			socket.connect()
 
 			socket.emit('userJoined', {
-				id: userId,
+				id: adminId,
+				isAdmin: true,
 				avatar: profileState.avatar,
 				fullName: profileState.fullName
 			})
@@ -93,7 +90,7 @@ const GroupChat = () => {
 
 			socket.on('message', data => setGroupChatHistoryState(groupChatHistoryState => ([...groupChatHistoryState, data])))
 		}
-	}, [isPaid, isLoading])
+	}, [isLoading])
 
 	if (isLoading)
 		return (
@@ -131,7 +128,6 @@ const GroupChat = () => {
 					xs={12}>
 					<GroupChatLive
 						socket={socket}
-						isPaid={isPaid}
 						profile={profileState}
 						chats={groupChatHistoryState} />
 				</Grid>

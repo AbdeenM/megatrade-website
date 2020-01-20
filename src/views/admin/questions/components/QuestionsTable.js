@@ -94,7 +94,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const QuestionsTable = props => {
-	const { className, questions, ...rest } = props
+	const { className, questions, reloadData, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -243,7 +243,7 @@ const QuestionsTable = props => {
 
 		setIsLoading(false)
 		enqueueSnackbar(replyQuestionResult.message, { variant: 'success' })
-		window.location.reload()
+		reloadData()
 	}
 
 	const onDeleteQuestions = async () => {
@@ -260,7 +260,7 @@ const QuestionsTable = props => {
 
 		setIsLoading(false)
 		enqueueSnackbar(deleteQuestionsResult.message, { variant: 'success' })
-		window.location.reload()
+		reloadData()
 	}
 
 	const hasError = field =>

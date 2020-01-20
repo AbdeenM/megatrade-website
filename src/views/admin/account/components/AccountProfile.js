@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const AccountProfile = props => {
-	const { className, profile, ...rest } = props
+	const { className, profile, reloadData, ...rest } = props
 
 	const theme = useTheme()
 	const classes = useStyles()
@@ -105,7 +105,7 @@ const AccountProfile = props => {
 
 		enqueueSnackbar(uploadPictureResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	if (isLoading)

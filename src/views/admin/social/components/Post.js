@@ -121,8 +121,6 @@ const Post = props => {
             setIsLoading(false)
             enqueueSnackbar(twitterPostResult.message, { variant: 'success' })
         }
-
-        window.location.reload()
     }
 
     const hasError = field =>
@@ -177,12 +175,13 @@ const Post = props => {
 
                 <Divider />
 
-                <CardActions><input
-                    type='file'
-                    accept='image/*'
-                    id='upload-image'
-                    onChange={onUploadPicture}
-                    style={{ display: 'none' }} />
+                <CardActions>
+                    <input
+                        type='file'
+                        accept='image/*'
+                        id='upload-image'
+                        onChange={onUploadPicture}
+                        style={{ display: 'none' }} />
 
                     <label htmlFor='upload-image'>
                         <Button

@@ -135,10 +135,7 @@ const featureStyles = makeStyles(theme => ({
 		position: 'absolute',
 		[theme.breakpoints.up('lg')]: {
 			transform: 'scale(0.3)'
-		},
-		[theme.breakpoints.up('xl')]: {
-			display: 'none'
-		},
+		}
 	},
 	parallaxDot: {
 		top: -20,

@@ -6,7 +6,6 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
-import moment from 'moment'
 import Validate from 'validate.js'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
@@ -78,7 +77,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const NewUserDashboard = props => {
-    const { className, ...rest } = props
+    const { className, weekdaysState, reloadData, userDashboard, ...rest } = props
 
     const classes = useStyles()
     const { enqueueSnackbar } = useSnackbar()
@@ -86,33 +85,7 @@ const NewUserDashboard = props => {
     const adminId = localStorage.getItem('adminId')
 
     const [isLoading, setIsLoading] = useState(false)
-    const [weekdaysState, setWeekdaysState] = useState([])
-    const [userDashboardState, setUserDashboardState] = useState({
-        errors: {},
-        values: {
-            totalPips: '',
-            totalUsers: '',
-            tradeBudget: '',
-            totalProfits: '',
-            tradeFocus: {
-                data: '',
-                labels: '',
-                backgroundColor: ''
-            },
-            latestAlerts: {
-                thisYear: [],
-                lastYear: []
-            }
-        },
-        touched: {},
-        isValid: false,
-        isChanged: false
-    })
-
-    useEffect(() => {
-        getWeekDays()
-        fetchUserDashboard()
-    }, [])
+    const [userDashboardState, setUserDashboardState] = useState(userDashboard)
 
     useEffect(() => {
         const errors = Validate(userDashboardState.values, schema)
@@ -123,20 +96,6 @@ const NewUserDashboard = props => {
             errors: errors || {}
         }))
     }, [userDashboardState.values])
-
-    const getWeekDays = () => {
-        let weekDays = []
-        const startOfWeek = moment().startOf('week')
-
-        Array(7).fill().map((each, i) => weekDays.push(moment(startOfWeek).add(i, 'days')))
-
-        const labels = []
-        weekDays.forEach(weekday => {
-            labels.push(moment(weekday).format('DD MMM'))
-        })
-
-        setWeekdaysState(labels)
-    }
 
     const onChange = event => {
         event.persist()
@@ -232,34 +191,6 @@ const NewUserDashboard = props => {
         }))
     }
 
-    const fetchUserDashboard = async () => {
-        setIsLoading(true)
-        const fetchUserDashboardResult = await adminApi.fetchUserDashboard({ adminId })
-        if (fetchUserDashboardResult.error) {
-            setIsLoading(false)
-            return enqueueSnackbar(fetchUserDashboardResult.message, { variant: 'error' })
-        }
-
-        setUserDashboardState(userDashboardState => ({
-            ...userDashboardState,
-            values: {
-                ...userDashboardState.values,
-                ...fetchUserDashboardResult.data,
-                tradeFocus: {
-                    data: fetchUserDashboardResult.data.tradeFocus.data.join(', '),
-                    labels: fetchUserDashboardResult.data.tradeFocus.labels.join(', '),
-                    backgroundColor: fetchUserDashboardResult.data.tradeFocus.backgroundColor.join(', ')
-                },
-                latestAlerts: {
-                    thisYear: fetchUserDashboardResult.data.latestAlerts.thisYear,
-                    lastYear: fetchUserDashboardResult.data.latestAlerts.lastYear
-                }
-            }
-        }))
-
-        setIsLoading(false)
-    }
-
     const onCreateUserDashboard = async () => {
         setIsLoading(true)
         const createResult = await adminApi.createUserDashboard({
@@ -286,7 +217,7 @@ const NewUserDashboard = props => {
 
         enqueueSnackbar(createResult.message, { variant: 'success' })
         setIsLoading(false)
-        window.location.reload()
+        reloadData()
     }
 
     const hasError = field =>
@@ -580,7 +511,7 @@ const NewUserDashboard = props => {
                     <Button
                         color='secondary'
                         variant='contained'
-                        onClick={() => window.location.reload()}>
+                        onClick={reloadData}>
                         RESET
           			</Button>
                 </CardActions>

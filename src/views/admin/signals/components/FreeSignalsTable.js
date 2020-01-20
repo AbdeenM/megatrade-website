@@ -95,7 +95,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const SignalsTable = props => {
-	const { className, signals, ...rest } = props
+	const { className, signals, reloadData, ...rest } = props
 
 	const classes = useStyles()
 	const { enqueueSnackbar } = useSnackbar()
@@ -266,7 +266,7 @@ const SignalsTable = props => {
 
 		enqueueSnackbar(editResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	const onCreateSignalClick = async () => {
@@ -307,7 +307,7 @@ const SignalsTable = props => {
 
 		enqueueSnackbar(createResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	const onDeleteSignals = async () => {
@@ -324,7 +324,7 @@ const SignalsTable = props => {
 
 		enqueueSnackbar(deleteResult.message, { variant: 'success' })
 		setIsLoading(false)
-		window.location.reload()
+		reloadData()
 	}
 
 	const hasError = field =>

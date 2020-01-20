@@ -72,7 +72,7 @@ const LatestAlerts = props => {
 			borderWidth: 1,
 			intersect: false,
 			borderColor: theme.palette.divider,
-			backgroundColor: theme.palette.white,
+			backgroundColor: theme.palette.background.paper,
 			titleFontColor: theme.palette.text.primary,
 			bodyFontColor: theme.palette.text.secondary,
 			footerFontColor: theme.palette.text.secondary

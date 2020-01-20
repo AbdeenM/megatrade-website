@@ -65,6 +65,8 @@ const Account = props => {
 		setIsLoading(false)
 	}
 
+	const reloadData = () => fetchProfileDetails()
+
 	if (isLoading)
 		return (
 			<Dialog open={isLoading}>
@@ -81,12 +83,13 @@ const Account = props => {
 				spacing={4}>
 				<Grid
 					item
-					lg={8}
 					xl={5}
+					lg={12}
 					md={12}
 					xs={12}>
 					<AccountProfile
 						{...props}
+						reloadData={reloadData}
 						profile={{
 							city: profileState.city,
 							avatar: profileState.avatar,
@@ -98,27 +101,29 @@ const Account = props => {
 
 				<Grid
 					item
-					lg={4}
-					md={6}
 					xl={7}
+					lg={12}
+					md={12}
 					xs={12}>
-					<AccountDetails profile={{
-						city: profileState.city,
-						email: profileState.email,
-						number: profileState.number,
-						country: profileState.country,
-						lastName: profileState.lastName,
-						firstName: profileState.firstName
-					}} />
+					<AccountDetails
+						reloadData={reloadData}
+						profile={{
+							city: profileState.city,
+							email: profileState.email,
+							number: profileState.number,
+							country: profileState.country,
+							lastName: profileState.lastName,
+							firstName: profileState.firstName
+						}} />
 				</Grid>
 
 				<Grid
 					item
-					lg={8}
 					xl={5}
+					lg={12}
 					md={12}
 					xs={12}>
-					<Password />
+					<Password reloadData={reloadData} />
 				</Grid>
 			</Grid>
 		</div>

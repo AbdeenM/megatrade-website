@@ -36,7 +36,7 @@ const GroupChatMembers = props => {
 
 	const classes = useStyles()
 
-	const userId = localStorage.getItem('userId')
+	const adminId = localStorage.getItem('adminId')
 
 	return (
 		<Card
@@ -63,7 +63,7 @@ const GroupChatMembers = props => {
 
 								<ListItemText
 									primary={user.fullName}
-									primaryTypographyProps={{ variant: 'subtitle2', color: user.id === userId ? 'primary' : 'default' }} />
+									primaryTypographyProps={{ variant: 'subtitle2', color: user.id === adminId ? 'primary' : 'default' }} />
 							</ListItem>
 
 							<Divider variant='inset' component='li' />

@@ -102,7 +102,7 @@ const SubscriptionsList = () => {
 				setIsLoading(false)
 				setShowPaymentDialog(false)
 				enqueueSnackbar(createSubscriptionResult.message, { variant: 'success' })
-				window.location.reload()
+				reloadData()
 			}
 		})
 	}
@@ -117,7 +117,7 @@ const SubscriptionsList = () => {
 			setIsLoading(false)
 			setShowPaymentDialog(false)
 			enqueueSnackbar(cancelSubscriptionResult.message, { variant: 'success' })
-			window.location.reload()
+			reloadData()
 		}
 	}
 
@@ -131,8 +131,10 @@ const SubscriptionsList = () => {
 
 		setIsLoading(false)
 		enqueueSnackbar(getSponsorResult.message, { variant: 'success' })
-		window.location.reload()
+		reloadData()
 	}
+
+	const reloadData = () => fetchSubscriptions()
 
 	if (isLoading)
 		return (

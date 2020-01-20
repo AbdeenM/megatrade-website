@@ -45,6 +45,8 @@ const Questions = () => {
 		setIsLoading(false)
 	}
 
+	const reloadData = () => fetchQuestionsList()
+
 	if (isLoading)
 		return (
 			<Dialog open={isLoading}>
@@ -65,7 +67,9 @@ const Questions = () => {
 					xl={12}
 					md={12}
 					xs={12}>
-					<QuestionsTable questions={questionsState} />
+					<QuestionsTable
+						reloadData={reloadData}
+						questions={questionsState} />
 				</Grid>
 			</Grid>
 		</div>
