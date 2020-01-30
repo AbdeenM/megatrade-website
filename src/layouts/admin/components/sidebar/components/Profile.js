@@ -56,7 +56,7 @@ const Profile = props => {
 			{...rest}
 			className={clsx(classes.root, className)}>
 			<Avatar
-				to='/account'
+				to='/admin/account'
 				component={RouterLink}
 				src={profileState.avatar}
 				className={classes.avatar}>
