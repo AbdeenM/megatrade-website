@@ -547,8 +547,9 @@ const UsersTable = props => {
 			return enqueueSnackbar(editResult.message, { variant: 'error' })
 		}
 
-		enqueueSnackbar(editResult.message, { variant: 'success' })
 		setIsLoading(false)
+		setShowEditUserDialog(false)
+		enqueueSnackbar(editResult.message, { variant: 'success' })
 		reloadData()
 	}
 
@@ -640,8 +641,9 @@ const UsersTable = props => {
 			return enqueueSnackbar(createResult.message, { variant: 'error' })
 		}
 
-		enqueueSnackbar(createResult.message, { variant: 'success' })
 		setIsLoading(false)
+		setShowCreateUserDialog(false)
+		enqueueSnackbar(createResult.message, { variant: 'success' })
 		reloadData()
 	}
 
@@ -677,8 +679,9 @@ const UsersTable = props => {
 			return enqueueSnackbar(messageResult.message, { variant: 'error' })
 		}
 
-		enqueueSnackbar(messageResult.message, { variant: 'success' })
 		setIsLoading(false)
+		setMessageUsersDialog(false)
+		enqueueSnackbar(messageResult.message, { variant: 'success' })
 		reloadData()
 	}
 

@@ -264,8 +264,9 @@ const SignalsTable = props => {
 			return enqueueSnackbar(editResult.message, { variant: 'error' })
 		}
 
-		enqueueSnackbar(editResult.message, { variant: 'success' })
 		setIsLoading(false)
+		setShowEditSignalsDialog(false)
+		enqueueSnackbar(editResult.message, { variant: 'success' })
 		reloadData()
 	}
 
@@ -305,8 +306,9 @@ const SignalsTable = props => {
 			return enqueueSnackbar(createResult.message, { variant: 'error' })
 		}
 
-		enqueueSnackbar(createResult.message, { variant: 'success' })
 		setIsLoading(false)
+		setShowCreateSignalDialog(false)
+		enqueueSnackbar(createResult.message, { variant: 'success' })
 		reloadData()
 	}
 

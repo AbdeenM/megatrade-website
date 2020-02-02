@@ -141,7 +141,10 @@ const SubscriptionsCard = props => {
 					<Button
 						color='primary'
 						variant='contained'
-						onClick={onCancelSubscription}>
+						onClick={() => {
+							onCancelSubscription()
+							setCancelDialog(false)
+						}}>
 						YES
 					</Button>
 				</DialogActions>

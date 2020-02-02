@@ -242,6 +242,7 @@ const QuestionsTable = props => {
 		}
 
 		setIsLoading(false)
+		setShowReplyQuestionDialog(false)
 		enqueueSnackbar(replyQuestionResult.message, { variant: 'success' })
 		reloadData()
 	}

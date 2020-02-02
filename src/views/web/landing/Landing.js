@@ -21,6 +21,7 @@ import Pricing from './components/Pricing'
 import Subscribe from './components/Subscribe'
 import Testimonials from './components/Testimonials'
 import AnimateSlider from './components/AnimateSlider'
+import Disclaimer from './components/Disclaimer/Disclaimer'
 
 const sectionMargin = margin => (margin * 15)
 const useStyles = makeStyles(theme => ({
@@ -87,6 +88,10 @@ const Landing = props => {
 
 					<section className={classes.spaceTop} id='contact'>
 						<Contact />
+					</section>
+
+					<section className={classes.spaceTop} id='contact'>
+						<Disclaimer />
 					</section>
 				</main>
 

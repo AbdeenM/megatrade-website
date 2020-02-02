@@ -127,9 +127,9 @@ const Login = () => {
 			return enqueueSnackbar(forgotResult.message, { variant: 'error' })
 		}
 
-		enqueueSnackbar(forgotResult.message, { variant: 'success' })
-		setShowForgotPasswordDialog(false)
 		setIsLoading(false)
+		setShowForgotPasswordDialog(false)
+		enqueueSnackbar(forgotResult.message, { variant: 'success' })
 	}
 
 	if (isLogged)

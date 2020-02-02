@@ -83,7 +83,7 @@ const Account = props => {
 				spacing={4}>
 				<Grid
 					item
-					xl={5}
+					xl={6}
 					lg={12}
 					md={12}
 					xs={12}>
@@ -101,7 +101,16 @@ const Account = props => {
 
 				<Grid
 					item
-					xl={7}
+					xl={6}
+					lg={12}
+					md={12}
+					xs={12}>
+					<Password reloadData={reloadData} />
+				</Grid>
+
+				<Grid
+					item
+					xl={12}
 					lg={12}
 					md={12}
 					xs={12}>
@@ -115,15 +124,6 @@ const Account = props => {
 							lastName: profileState.lastName,
 							firstName: profileState.firstName
 						}} />
-				</Grid>
-
-				<Grid
-					item
-					xl={5}
-					lg={12}
-					md={12}
-					xs={12}>
-					<Password reloadData={reloadData} />
 				</Grid>
 			</Grid>
 		</div>

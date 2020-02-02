@@ -123,7 +123,7 @@ const Sidebar = props => {
 			icon: <DashboardIcon />
 		},
 		{
-			title: 'Real-Time Market',
+			title: 'Real Time Market',
 			href: '/admin/market',
 			icon: <MarketIcon />
 		},

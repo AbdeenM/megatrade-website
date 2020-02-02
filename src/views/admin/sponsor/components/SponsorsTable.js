@@ -286,6 +286,7 @@ const SponsorsTable = props => {
 		}
 
 		setIsLoading(false)
+		setEditSponsorDialog(false)
 		enqueueSnackbar(editSponsorResult.message, { variant: 'success' })
 		reloadData()
 	}
@@ -324,6 +325,7 @@ const SponsorsTable = props => {
 		}
 
 		setIsLoading(false)
+		setCreateSponsorDialog(false)
 		enqueueSnackbar(createSponsorResult.message, { variant: 'success' })
 		reloadData()
 	}

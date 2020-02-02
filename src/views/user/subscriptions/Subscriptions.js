@@ -115,6 +115,7 @@ const SubscriptionsList = () => {
 			enqueueSnackbar(cancelSubscriptionResult.message, { variant: 'error' })
 		} else {
 			setIsLoading(false)
+			setShowFreeDialog(false)
 			setShowPaymentDialog(false)
 			enqueueSnackbar(cancelSubscriptionResult.message, { variant: 'success' })
 			reloadData()

@@ -117,7 +117,7 @@ const Sidebar = props => {
 		},
 		{
 			href: '/market',
-			title: 'Real-Time Market',
+			title: 'Real Time Market',
 			icon: <MarketIcon />
 		},
 		// {

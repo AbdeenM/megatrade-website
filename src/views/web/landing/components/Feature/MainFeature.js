@@ -28,7 +28,7 @@ const MainFeature = () => {
             			</Typography>
 
 						<Typography variant='body1'>
-							Recieve world class signals real-time from your personal dashboard, emails, SMS and any method you prefer.
+							Recieve world class signals real time from your personal dashboard, emails, SMS and any method you prefer.
             			</Typography>
 					</div>
 				</Grid>
