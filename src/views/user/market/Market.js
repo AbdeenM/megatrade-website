@@ -16,13 +16,18 @@ const useStyles = makeStyles(theme => ({
 	root: {
 		padding: theme.spacing(3)
 	},
+	groupButton: {
+		padding: theme.spacing(3),
+		[theme.breakpoints.down('md')]: {
+			display: 'flex',
+			flexDirection: 'column'
+		}
+	},
 	item: {
+		margin: 20,
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center'
-	},
-	analogClock: {
-		margin: 10
 	}
 }))
 
@@ -402,7 +407,7 @@ const Market = () => {
 					fullWidth
 					size='large'
 					color='primary'
-					className={classes.root}>
+					className={classes.groupButton}>
 					<Button
 						onClick={() => setSelectedState('Clocks')}
 						variant={selectedState === 'Clocks' ? 'contained' : 'outlined'}>Clocks</Button>
@@ -454,9 +459,10 @@ const Market = () => {
 									<AnalogClock
 										size={200}
 										renderNumbers={true}
-										className={classes.analogClock}
 										value={clockState[clock.country]} />
+								</div>
 
+								<div className={classes.item}>
 									<DigitalClock
 										ticking={true}
 										timezone={clock.timezone}
