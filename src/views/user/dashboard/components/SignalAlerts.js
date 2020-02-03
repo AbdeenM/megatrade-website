@@ -90,11 +90,19 @@ const SignalAlerts = props => {
 											<TableCell>{signal.name}</TableCell>
 
 											<TableCell>
-												<Button
-													variant='contained'
-													style={{ backgroundColor: statusColors[signal.status.toLowerCase()] }}>
-													{signal.status}
-												</Button>
+												{signal.status
+													? <Button
+														variant='contained'
+														style={{ backgroundColor: statusColors[signal.status.toLowerCase()] }}>
+														{signal.status}
+													</Button>
+													: <Button
+														color='primary'
+														component={Link}
+														to='/subscriptions'
+														variant='contained'>
+														SUBSCRIBE NOW
+													</Button>}
 											</TableCell>
 
 											<TableCell>
@@ -106,11 +114,11 @@ const SignalAlerts = props => {
 											</TableCell>
 
 											<TableCell>
-												{signal.entryPrice}
+												{signal.entryPrice || 'PREMIUM SIGNAL'}
 											</TableCell>
 
 											<TableCell>
-												{signal.stopLoss}
+												{signal.stopLoss || 'PREMIUM SIGNAL'}
 											</TableCell>
 										</TableRow>
 									))

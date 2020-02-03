@@ -8,6 +8,7 @@
 import clsx from 'clsx'
 import moment from 'moment'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
 import RefreshIcon from '@material-ui/icons/Refresh'
@@ -197,11 +198,19 @@ const SignalsTable = props => {
                                                 <TableCell>{signals.name}</TableCell>
 
                                                 <TableCell>
-                                                    <Button
-                                                        variant='contained'
-                                                        style={{ backgroundColor: statusColors[signals.status.toLowerCase()] }}>
-                                                        {signals.status}
-                                                    </Button>
+                                                    {signals.status
+                                                        ? <Button
+                                                            variant='contained'
+                                                            style={{ backgroundColor: statusColors[signals.status.toLowerCase()] }}>
+                                                            {signals.status}
+                                                        </Button>
+                                                        : <Button
+                                                            color='primary'
+                                                            component={Link}
+                                                            to='/subscriptions'
+                                                            variant='contained'>
+                                                            SUBSCRIBE NOW
+													</Button>}
                                                 </TableCell>
 
                                                 <TableCell>
@@ -213,11 +222,11 @@ const SignalsTable = props => {
                                                 </TableCell>
 
                                                 <TableCell>
-                                                    {signals.entryPrice}
+                                                    {signals.entryPrice || 'PREMIUM SIGNAL'}
                                                 </TableCell>
 
                                                 <TableCell>
-                                                    {signals.stopLoss}
+                                                    {signals.stopLoss || 'PREMIUM SIGNAL'}
                                                 </TableCell>
                                             </TableRow>
                                         ))
