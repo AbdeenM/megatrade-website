@@ -25,8 +25,9 @@ import ResetPassword from './views/web/resetPassword/ResetPassword'
 
 import MarketUser from './views/user/market/Market'
 import AccountUser from './views/user/account/Account'
-//import SupportUser from './views/user/support/Support'
+import SupportUser from './views/user/support/Support'
 import GroupChatUser from 'views/user/groupChat/GroupChat'
+import ContactUsUser from './views/user/contactUs/ContactUs'
 import DashboardUser from './views/user/dashboard/Dashboard'
 //import EducationUser from './views/user/education/Education'
 import ViewSignalsUser from './views/user/viewSignals/ViewSignals'
@@ -140,11 +141,17 @@ const Routes = props => {
 				path='/group-chat'
 				component={GroupChatUser} />
 
-			{/* <AuthRouteWithLayout
+			<AuthRouteWithLayout
 				exact
 				path='/support'
 				layout={MainLayout}
-				component={SupportUser} /> */}
+				component={SupportUser} />
+
+			<AuthRouteWithLayout
+				exact
+				path='/contact-us'
+				layout={MainLayout}
+				component={ContactUsUser} />
 
 			<Redirect
 				exact

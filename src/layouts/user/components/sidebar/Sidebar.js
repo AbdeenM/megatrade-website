@@ -12,13 +12,14 @@ import { Redirect } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import LogoutIcon from '@material-ui/icons/Input'
 import React, { useState, useEffect } from 'react'
+import LiveChatIcon from '@material-ui/icons/Chat'
 //import EducationIcon from '@material-ui/icons/Book'
 import GroupChatIcon from '@material-ui/icons/Forum'
 import DashboardIcon from '@material-ui/icons/Dashboard'
 import SubscriptionIcon from '@material-ui/icons/Payment'
 import AccountIcon from '@material-ui/icons/AccountCircle'
+import ContactUsIcon from '@material-ui/icons/ContactMail'
 import MarketIcon from '@material-ui/icons/MonetizationOn'
-//import LiveChatIcon from '@material-ui/icons/QuestionAnswer'
 import { Divider, Drawer, Button, ListItem } from '@material-ui/core'
 
 import Profile from './components/Profile'
@@ -140,11 +141,16 @@ const Sidebar = props => {
 			href: '/group-chat',
 			icon: <GroupChatIcon />
 		},
-		// {
-		// 	title: 'Live Chat',
-		// 	href: '/support',
-		// 	icon: <LiveChatIcon />
-		// }
+		{
+			title: 'Live Chat',
+			href: '/support',
+			icon: <LiveChatIcon />
+		},
+		{
+			title: 'Contact Us',
+			href: '/contact-us',
+			icon: <ContactUsIcon />
+		}
 	]
 
 	if (!isLogged)
