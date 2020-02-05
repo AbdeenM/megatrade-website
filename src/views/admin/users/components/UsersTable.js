@@ -1605,7 +1605,7 @@ const UsersTable = props => {
 							color='primary'
 							component='span'
 							variant='outlined'>
-							ATTACHEMENT
+							ADD ATTACHEMENT
 						</Button>
 					</label>
 

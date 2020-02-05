@@ -12,9 +12,11 @@ import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
+import DeleteIcon from '@material-ui/icons/Delete'
+import AttachIcon from '@material-ui/icons/AttachFile'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import ExpandIcon from '@material-ui/icons/ExpandMore'
-import { Card, CardActions, CardContent, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress, ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, Typography } from '@material-ui/core'
+import { Card, CardActions, CardContent, Avatar, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, Typography, TablePagination, Button, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CircularProgress, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, MenuList, colors, ListItem, ListItemAvatar, ListItemText, ListItemSecondaryAction, IconButton } from '@material-ui/core'
 
 import { AdminApi } from 'config/Api'
 
@@ -106,6 +108,7 @@ const QuestionsTable = props => {
 	const [rowsPerPage, setRowsPerPage] = useState(10)
 	const [searchState, setSearchState] = useState('')
 	const [allQuestions, setAllQuestions] = useState([])
+	const [attachmentState, setAttachmentState] = useState([])
 	const [listedQuestions, setListedQuestions] = useState([])
 	const [selectedQuestions, setSelectedQuestions] = useState([])
 	const [showReplyQuestionDialog, setShowReplyQuestionDialog] = useState(false)
@@ -161,6 +164,40 @@ const QuestionsTable = props => {
 		const searchTerm = event.target.value.toLowerCase()
 
 		setListedQuestions(allQuestions.filter(question => question.name.toLowerCase().includes(searchTerm) || question.email.toLowerCase().includes(searchTerm)))
+	}
+
+	const toBase64 = file => {
+		return new Promise(resolve => {
+			const reader = new FileReader()
+			reader.readAsDataURL(file)
+			reader.onload = () => { resolve(reader.result) }
+			reader.onerror = () => { return enqueueSnackbar('Error while uploading your file, please try again', { variant: 'error' }) }
+		})
+	}
+
+	const onUploadAttachment = async event => {
+		event.persist()
+
+		const path = await toBase64(event.target.files[0])
+
+		const filename = event.target.files[0].name
+		const size = event.target.files[0].size
+		const contentType = event.target.files[0].type
+
+		setAttachmentState(attachmentState => ([
+			...attachmentState,
+			{
+				size,
+				path,
+				filename,
+				contentType
+			}
+		]))
+	}
+
+	const onRemoveAttachement = index => {
+		const newListAttachement = attachmentState.filter((file, i) => i !== index)
+		setAttachmentState(newListAttachement)
 	}
 
 	const onSelectAll = event => {
@@ -231,6 +268,7 @@ const QuestionsTable = props => {
 		setIsLoading(true)
 		const replyQuestionResult = await adminApi.replyQuestion({
 			adminId,
+			attachments: attachmentState,
 			email: questionState.values.email,
 			message: questionState.values.message,
 			questionId: questionState.values.questionId
@@ -391,6 +429,29 @@ const QuestionsTable = props => {
 					<DialogContentText>
 						This message will be delivered to the recipent with the respective email.
           			</DialogContentText>
+
+					{attachmentState.map((file, i) => (
+						<ListItem>
+							<ListItemAvatar>
+								<Avatar>
+									<AttachIcon />
+								</Avatar>
+							</ListItemAvatar>
+
+							<ListItemText
+								primary={file.filename}
+								secondary={`Size: ${file.size} Bytes | Type: ${file.contentType}`} />
+							<ListItemSecondaryAction>
+								<IconButton
+									edge='end'
+									aria-label='delete'
+									onClick={() => onRemoveAttachement(i)}>
+									<DeleteIcon />
+								</IconButton>
+							</ListItemSecondaryAction>
+						</ListItem>
+					))}
+
 					<TextField
 						disabled
 						fullWidth
@@ -436,6 +497,24 @@ const QuestionsTable = props => {
 				</DialogContent>
 
 				<DialogActions>
+					<input
+						id='upload'
+						type='file'
+						accept='image/*'
+						style={{ display: 'none' }}
+						onChange={onUploadAttachment} />
+
+					<label htmlFor='upload'>
+						<Button
+							color='primary'
+							component='span'
+							variant='outlined'>
+							ADD ATTACHEMENT
+						</Button>
+					</label>
+
+					<span className={classes.spacer} />
+
 					<Button
 						color='secondary'
 						onClick={() => setShowReplyQuestionDialog(false)}>
