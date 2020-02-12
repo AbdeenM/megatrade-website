@@ -5,6 +5,7 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
+import ReactGA from 'react-ga'
 import { useSnackbar } from 'notistack'
 import { Redirect } from 'react-router-dom'
 import React, { useState, useEffect, Fragment } from 'react'
@@ -114,7 +115,10 @@ const Login = () => {
 		}
 
 		enqueueSnackbar(socialSignInResult.message, { variant: 'success' })
+
 		localStorage.setItem('userId', socialSignInResult.data._id)
+		ReactGA.set({ userId: socialSignInResult.data._id })
+
 		setIsLoading(false)
 		setLogged(true)
 	}

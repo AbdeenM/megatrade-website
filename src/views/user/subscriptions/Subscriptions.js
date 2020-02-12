@@ -5,6 +5,7 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
+import ReactGA from 'react-ga'
 import { useSnackbar } from 'notistack'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useEffect } from 'react'
@@ -68,6 +69,12 @@ const SubscriptionsList = () => {
 	}
 
 	const onGetMembership = async membership => {
+		ReactGA.event({
+			category: 'SUBSCRIPTIONS',
+			action: `User clicked get subscription`,
+			label: 'BUTTON'
+		})
+
 		if (membership.title === 'Free Membership') {
 			setShowFreeDialog(true)
 		} else {

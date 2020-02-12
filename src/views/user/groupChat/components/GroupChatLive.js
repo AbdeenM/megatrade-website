@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const GroupChatLive = props => {
-	const { className, isPaid, chats, profile, socket, ...rest } = props
+	const { className, /*isPaid,*/ chats, profile, socket, ...rest } = props
 
 	const classes = useStyles()
 
@@ -54,8 +54,8 @@ const GroupChatLive = props => {
 	const [messageState, setMessageState] = useState('')
 
 	useEffect(() => {
-		if (isPaid)
-			chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+		//if (isPaid)
+		chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
 	}, [chats])
 
 	const onSendMessage = () => {
@@ -69,38 +69,38 @@ const GroupChatLive = props => {
 		setMessageState('')
 	}
 
-	if (!isPaid)
-		return (
-			<Card
-				{...rest}
-				className={classes.root}>
-				<CardContent>
-					<Paper className={classes.paperUpgrade}>
-						<UpgradePlan />
-					</Paper>
-				</CardContent>
+	// if (!isPaid)
+	// 	return (
+	// 		<Card
+	// 			{...rest}
+	// 			className={classes.root}>
+	// 			<CardContent>
+	// 				<Paper className={classes.paperUpgrade}>
+	// 					<UpgradePlan />
+	// 				</Paper>
+	// 			</CardContent>
 
-				<CardActions>
-					<TextField
-						disabled
-						fullWidth
-						name='message'
-						label='Message'
-						margin='normal'
-						variant='outlined'
-						InputProps={{
-							endAdornment: <InputAdornment position='end'>
-								<IconButton
-									disabled
-									edge='end'
-									color='primary'>
-									<SendIcon />
-								</IconButton>
-							</InputAdornment>
-						}} />
-				</CardActions>
-			</Card>
-		)
+	// 			<CardActions>
+	// 				<TextField
+	// 					disabled
+	// 					fullWidth
+	// 					name='message'
+	// 					label='Message'
+	// 					margin='normal'
+	// 					variant='outlined'
+	// 					InputProps={{
+	// 						endAdornment: <InputAdornment position='end'>
+	// 							<IconButton
+	// 								disabled
+	// 								edge='end'
+	// 								color='primary'>
+	// 								<SendIcon />
+	// 							</IconButton>
+	// 						</InputAdornment>
+	// 					}} />
+	// 			</CardActions>
+	// 		</Card>
+	// 	)
 
 	return (
 		<Card

@@ -5,6 +5,7 @@
  * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
  ************************************************************************** */
 
+import ReactGA from 'react-ga'
 import { useSnackbar } from 'notistack'
 import { Redirect } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
@@ -68,7 +69,10 @@ const Register = props => {
 		}
 
 		enqueueSnackbar(signUpResult.message, { variant: 'success' })
+
 		localStorage.setItem('userId', signUpResult.data._id)
+		ReactGA.set({ userId: signUpResult.data._id })
+
 		setRegister(true)
 		setIsLoading(false)
 	}

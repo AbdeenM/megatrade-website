@@ -6,6 +6,7 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
+import ReactGA from 'react-ga'
 import PropTypes from 'prop-types'
 import { useSnackbar } from 'notistack'
 import { Redirect } from 'react-router-dom'
@@ -106,6 +107,12 @@ const Sidebar = props => {
 	}
 
 	const onSignOut = () => {
+		ReactGA.event({
+			category: 'SIGN OUT',
+			action: `User signed out`,
+			label: 'BUTTON'
+		})
+
 		localStorage.setItem('userId', '')
 		setLogged(false)
 	}

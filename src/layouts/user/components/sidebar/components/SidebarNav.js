@@ -6,6 +6,7 @@
  ************************************************************************** */
 
 import clsx from 'clsx'
+import ReactGA from 'react-ga'
 import PropTypes from 'prop-types'
 import React, { forwardRef } from 'react'
 import { makeStyles } from '@material-ui/styles'
@@ -72,7 +73,12 @@ const SidebarNav = props => {
 							to={page.href}
 							className={classes.button}
 							component={CustomRouterLink}
-							activeClassName={classes.active}>
+							activeClassName={classes.active}
+							onClick={() => ReactGA.event({
+								category: `${page.title.toUpperCase()}`,
+								action: `User Viewed ${page.title} from menu`,
+								label: 'SIDE MENU PAGE'
+							})}>
 							<div className={classes.icon}>{page.icon}</div>
 							{page.title}
 						</Button>

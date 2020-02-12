@@ -56,7 +56,7 @@ const Contact = () => {
 				</Typography>
 
 			<Typography className={classes.desc}>
-				Feel free to drop us a message anytime
+				Feel free to drop us a message anytime. (Keep an eye for your junk mail, your mailbox may send our reply there)
 				</Typography>
 
 			<div className={classes.form}>
