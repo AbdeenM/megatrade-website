@@ -179,7 +179,7 @@ const Sidebar = props => {
 			icon: <SponsorIcon />
 		},
 		{
-			title: 'Group Chat',
+			title: 'Mega Group Chat',
 			href: '/admin/group-chat',
 			icon: <GroupChatIcon />
 		},

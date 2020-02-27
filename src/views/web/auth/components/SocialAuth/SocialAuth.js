@@ -21,7 +21,7 @@ const SocialAuth = props => {
 
 	return (
 		<section className={classes.socmedSideLogin}>
-			<FacebookLogin
+			{/* <FacebookLogin
 				callback={onFacebook}
 				onFailure={onFacebook}
 				fields='name,email,picture'
@@ -34,7 +34,7 @@ const SocialAuth = props => {
 					size='large'>
 					<FacebookIcon />
 					Facebook
-      		</Button>} />
+      		</Button>} /> */}
 
 			<GoogleLogin
 				onSuccess={onGoogle}

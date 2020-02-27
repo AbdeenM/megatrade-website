@@ -144,7 +144,7 @@ const Sidebar = props => {
 			icon: <SubscriptionIcon />
 		},
 		{
-			title: 'Group Chat',
+			title: 'Mega Group Chat',
 			href: '/group-chat',
 			icon: <GroupChatIcon />
 		},
