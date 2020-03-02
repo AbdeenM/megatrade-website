@@ -44,6 +44,8 @@ const GroupChat = () => {
 	const adminId = localStorage.getItem('adminId')
 
 	const [isLoading, setIsLoading] = useState(true)
+	const [isFetching, setIsFetching] = useState(false)
+	const [fetchedMessages, setFetchedMessages] = useState(0)
 	const [socket] = useSocket(`${Constants.SERVER_URL}/chat-group`, {
 		autoConnect: false
 	})
@@ -55,6 +57,32 @@ const GroupChat = () => {
 	})
 
 	useEffect(() => { fetchProfileDetails() }, [])
+
+	useEffect(() => {
+		if (!isLoading) {
+			socket.connect()
+
+			socket.emit('userJoined', {
+				id: adminId,
+				isAdmin: true,
+				avatar: profileState.avatar,
+				fullName: profileState.fullName
+			})
+
+			socket.on('availableUsers', data => setAvailableUsersState(data))
+
+			socket.on('chatHistory', data => setGroupChatHistoryState(data))
+
+			socket.on('moreChatHistory', data => {
+				setIsFetching(false)
+
+				if (data.length > 0)
+					setGroupChatHistoryState(groupChatHistoryState => ([...data, ...groupChatHistoryState]))
+			})
+
+			socket.on('message', data => setGroupChatHistoryState(groupChatHistoryState => ([...groupChatHistoryState, data])))
+		}
+	}, [isLoading])
 
 	const fetchProfileDetails = async () => {
 		const fetchAccountResult = await adminApi.fetchAccount({ adminId })
@@ -73,24 +101,13 @@ const GroupChat = () => {
 		setIsLoading(false)
 	}
 
-	useEffect(() => {
-		if (!isLoading) {
-			socket.connect()
+	const fetchMoreChats = async () => {
+		setIsFetching(true)
 
-			socket.emit('userJoined', {
-				id: adminId,
-				isAdmin: true,
-				avatar: profileState.avatar,
-				fullName: profileState.fullName
-			})
-
-			socket.on('availableUsers', data => setAvailableUsersState(data))
-
-			socket.on('chatHistory', data => setGroupChatHistoryState(data))
-
-			socket.on('message', data => setGroupChatHistoryState(groupChatHistoryState => ([...groupChatHistoryState, data])))
-		}
-	}, [isLoading])
+		socket.emit('fetchMoreChatHistory', {
+			fetchedMessages: groupChatHistoryState.length
+		})
+	}
 
 	if (isLoading)
 		return (
@@ -129,7 +146,9 @@ const GroupChat = () => {
 					<GroupChatLive
 						socket={socket}
 						profile={profileState}
-						chats={groupChatHistoryState} />
+						isFetching={isFetching}
+						chats={groupChatHistoryState}
+						fetchMoreChats={fetchMoreChats} />
 				</Grid>
 			</Grid>
 		</div>

@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
 import SendIcon from '@material-ui/icons/Send'
 import { makeStyles } from '@material-ui/styles'
 import React, { useState, useRef, useEffect } from 'react'
-import { Card, CardContent, CardActions, TextField, InputAdornment, IconButton, Paper, ListItem, List, ListItemText, ListItemAvatar, Avatar, colors, Chip, Typography } from '@material-ui/core'
+import { Card, CardContent, CardActions, TextField, InputAdornment, IconButton, Paper, ListItem, List, ListItemText, ListItemAvatar, Avatar, colors, Chip, Typography, Button, LinearProgress } from '@material-ui/core'
 
 import getInitials from 'helpers/getInitials'
 
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const GroupChatLive = props => {
-	const { className, chats, profile, socket, ...rest } = props
+	const { className, chats, profile, socket, isFetching, fetchMoreChats, ...rest } = props
 
 	const classes = useStyles()
 
@@ -77,6 +77,19 @@ const GroupChatLive = props => {
 					<List
 						ref={chatContainerRef}
 						className={classes.content}>
+						<Button
+							fullWidth
+							color='primary'
+							variant='contained'
+							disabled={isFetching}
+							onClick={fetchMoreChats}>
+							FETCH MORE CHATS
+						</Button>
+
+						{isFetching
+							? <LinearProgress variant='query' />
+							: <React.Fragment />}
+
 						{chats.map((chat, i) => (
 							<React.Fragment key={i}>
 								{chat.isSystem
