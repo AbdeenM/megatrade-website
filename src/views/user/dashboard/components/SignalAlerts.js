@@ -16,6 +16,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
 import { Card, CardHeader, CardContent, Divider, Table, TableBody, TableCell, TableHead, TableRow, IconButton, CardActions, Button } from '@material-ui/core'
 
+import UpgradePlan from './UpgradePlan'
+
 const useStyles = makeStyles(theme => ({
 	root: {},
 	content: {
@@ -62,28 +64,28 @@ const SignalAlerts = props => {
 			<Divider />
 
 			<CardContent className={classes.content}>
-				<PerfectScrollbar>
-					<div className={classes.inner}>
-						<Table>
-							<TableHead>
-								<TableRow>
-									<TableCell>Signal</TableCell>
+				{signals.length > 0
+					? <PerfectScrollbar>
+						<div className={classes.inner}>
+							<Table>
+								<TableHead>
+									<TableRow>
+										<TableCell>Signal</TableCell>
 
-									<TableCell>Status</TableCell>
+										<TableCell>Status</TableCell>
 
-									<TableCell>Time</TableCell>
+										<TableCell>Time</TableCell>
 
-									<TableCell>Date</TableCell>
+										<TableCell>Date</TableCell>
 
-									<TableCell>Entry Price</TableCell>
+										<TableCell>Entry Price</TableCell>
 
-									<TableCell>Stop Loss</TableCell>
-								</TableRow>
-							</TableHead>
+										<TableCell>Stop Loss</TableCell>
+									</TableRow>
+								</TableHead>
 
-							<TableBody>
-								{
-									signals.slice(0, 10).map((signal, i) => (
+								<TableBody>
+									{signals.slice(0, 10).map((signal, i) => (
 										<TableRow
 											hover
 											key={i}>
@@ -121,12 +123,12 @@ const SignalAlerts = props => {
 												{signal.stopLoss || 'PREMIUM SIGNAL'}
 											</TableCell>
 										</TableRow>
-									))
-								}
-							</TableBody>
-						</Table>
-					</div>
-				</PerfectScrollbar>
+									))}
+								</TableBody>
+							</Table>
+						</div>
+					</PerfectScrollbar>
+					: <UpgradePlan />}
 			</CardContent>
 
 			<Divider />

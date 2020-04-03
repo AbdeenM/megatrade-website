@@ -14,51 +14,27 @@ import useStyles from './pricing-style'
 const tiers = [
 	{
 		price: '0',
-		durartion: '/mo',
+		durartion: '/wk',
 		title: 'Free Membership',
 		buttonVariant: 'contained',
 		buttonText: 'Sign up for free',
-		description: 'Have a free membership for a life time with limited trading signals'
+		description: ['Unlimited Trading Tools', 'Real Time Market News & Calendar']
 	},
 	{
-		price: '14.99',
-		durartion: '/mo',
+		price: '2.99',
+		durartion: '/wk',
 		title: 'Basic Membership',
 		buttonVariant: 'contained',
 		buttonText: 'Sign up for free',
-		description: 'Have a bronze membership for a month with unlimited trading signals'
+		description: ['Unlimited Trading Tools', 'Real Time Market News & Calendar', 'Unlimited Trading Signals']
 	},
 	{
-		price: '39.99',
-		durartion: '/mo',
-		title: 'Bronze Membership',
+		price: '9.99',
+		durartion: '/wk',
+		title: 'Premium Membership',
 		buttonVariant: 'contained',
 		buttonText: 'Sign up for free',
-		description: 'Have a bronze membership for a month with unlimited trading signals'
-	},
-	{
-		price: '99.99',
-		durartion: '/3 mo',
-		title: 'Silver Membership',
-		buttonVariant: 'contained',
-		buttonText: 'Sign up for free',
-		description: 'Have a silver membership for 3 month with unlimited trading signals'
-	},
-	{
-		price: '169.99',
-		durartion: '/6 mo',
-		title: 'Gold Membership',
-		buttonVariant: 'contained',
-		buttonText: 'Sign up for free',
-		description: 'Have a gold membership for 6 month with unlimited trading signals'
-	},
-	{
-		price: '299.99',
-		durartion: '/yr',
-		buttonVariant: 'contained',
-		title: 'Platinum Membership',
-		buttonText: 'Sign up for free',
-		description: 'Have a platinum membership for a year with unlimited trading signals'
+		description: ['Unlimited Trading Tools', 'Real Time Market News & Calendar', 'Unlimited Trading Signals', 'Unlimited Community Chat Access']
 	}
 ]
 
@@ -86,7 +62,7 @@ export default function Pricing() {
 									className={classes.cardHeader}
 									titleTypographyProps={{ align: 'center' }}
 									subheaderTypographyProps={{ align: 'center' }}
-									action={tier.title === 'Bronze Membership' ? <StarIcon /> : null} />
+									action={tier.title === 'Basic Membership' ? <StarIcon /> : null} />
 
 								<CardContent>
 									<div className={classes.cardPricing}>
@@ -99,9 +75,10 @@ export default function Pricing() {
 										</Typography>
 									</div>
 
-									<Typography component='li' variant='subtitle1' align='center'>
-										{tier.description}
-									</Typography>
+									{tier.description.map((item, i) => (
+										<Typography component='li' variant='subtitle1' align='center'>
+											{item}
+										</Typography>))}
 								</CardContent>
 
 								<CardActions>

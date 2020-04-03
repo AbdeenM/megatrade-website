@@ -43,7 +43,7 @@ const GroupChat = () => {
 
 	const userId = localStorage.getItem('userId')
 
-	//const [isPaid, setIsPaid] = useState(false)
+	const [isPaid, setIsPaid] = useState(false)
 	const [isLoading, setIsLoading] = useState(true)
 	const [socket] = useSocket(`${Constants.SERVER_URL}/chat-group`, {
 		autoConnect: false
@@ -71,14 +71,14 @@ const GroupChat = () => {
 			fullName: fetchAccountResult.data.firstName + ' ' + fetchAccountResult.data.lastName || ''
 		}))
 
-		// if (fetchAccountResult.data.membership !== 'Free Membership')
-		// 	setIsPaid(true)
+		if (fetchAccountResult.data.membership !== 'Free Membership')
+			setIsPaid(true)
 
 		setIsLoading(false)
 	}
 
 	useEffect(() => {
-		if (/*isPaid &&*/ !isLoading) {
+		if (isPaid && !isLoading) {
 			socket.connect()
 
 			socket.emit('userJoined', {
@@ -93,7 +93,7 @@ const GroupChat = () => {
 
 			socket.on('message', data => setGroupChatHistoryState(groupChatHistoryState => ([...groupChatHistoryState, data])))
 		}
-	}, [/*isPaid,*/ isLoading])
+	}, [isPaid, isLoading])
 
 	if (isLoading)
 		return (
@@ -131,7 +131,7 @@ const GroupChat = () => {
 					xs={12}>
 					<GroupChatLive
 						socket={socket}
-						//isPaid={isPaid}
+						isPaid={isPaid}
 						profile={profileState}
 						chats={groupChatHistoryState} />
 				</Grid>

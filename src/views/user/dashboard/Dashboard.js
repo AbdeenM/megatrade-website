@@ -151,9 +151,6 @@ const Dashboard = () => {
 
 		setSignalsState(fetchSignalsResult.data)
 		setIsLoading(false)
-
-		console.log(signalsState);
-
 	}
 
 	if (isLoading)
