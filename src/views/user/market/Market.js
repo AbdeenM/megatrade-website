@@ -1,10 +1,3 @@
-/* **************************************************************************
- * Copyright(C) Mega Trade Website, Inc - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * Written by Abdeen Mohamed < abdeen.mohamed@outlook.com>, September 2019
- ************************************************************************** */
-
 import AnalogClock from 'react-clock'
 import DigitalClock from 'react-live-clock'
 import { makeStyles } from '@material-ui/styles'
