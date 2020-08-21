@@ -9,8 +9,8 @@
 [![License](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](http://mit-license.org/)
 
 <p align="center">
-   <a href="https://github.com/AbdeenM/megatrade-website/blob/master/screenshots/website.png">
-    <img alt="megatrade-website" src="https://github.com/AbdeenM/megatrade-website/blob/master/screenshots/website.png" />
+   <a href="https://github.com/AbdeenM/megatrade-website/blob/master/screetshots/website.png">
+    <img alt="megatrade-website" src="https://github.com/AbdeenM/megatrade-website/blob/master/screetshots/website.png" />
  </a>
 </p>
 
