@@ -25,7 +25,7 @@ It includes many features that the business may need such as:
 7. Live Chat and Support
 8. Community Group Chat
 
-**You can see the live demo by visting https://megatrade.world**
+**You can see the live demo by visting https://megatrade.herokuapp.com**
 
 ## Features
 
